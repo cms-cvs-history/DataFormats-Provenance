@@ -13,36 +13,18 @@
 namespace edm
 {
   struct EventAuxiliary {
-    // These types are very tentative for now
-    enum ExperimentType {
-      Any = 0,
-      Align = 1,
-      Calib = 2,
-      Cosmic = 3, 
-      Data = 4,
-      Mc = 5,
-      Raw = 6,
-      Test = 7
-    };
     EventAuxiliary() :
 	processHistoryID_(),
 	id_(),
 	time_(),
 	luminosityBlock_(),
-	isRealData_(false), 
-	experimentType_(Any),
-	bunchCrossing_(),
-        storeNumber_() {}
-    EventAuxiliary(EventID const& theId, Timestamp const& theTime, LuminosityBlockNumber_t lb,
-                     bool isReal, ExperimentType eType = Any, int bunchXing = 0, int storeNo = 0) :
+	isRealData_(false) {}
+    EventAuxiliary(EventID const& theId, Timestamp const& theTime, LuminosityBlockNumber_t lb, bool isReal) :
 	processHistoryID_(),
 	id_(theId),
 	time_(theTime),
 	luminosityBlock_(lb),
-	isRealData_(isReal),
-        experimentType_(eType),
-	bunchCrossing_(bunchXing),
-	storeNumber_(storeNo) {}
+	isRealData_(isReal) {}
     ~EventAuxiliary() {}
     void write(std::ostream& os) const;
     ProcessHistoryID& processHistoryID() const {return processHistoryID_;}
@@ -52,10 +34,6 @@ namespace edm
     EventNumber_t event() const {return id_.event();}
     RunNumber_t run() const {return id_.run();}
     bool isRealData() const {return isRealData_;}
-    ExperimentType experimentType() const {return experimentType_;}
-    int bunchCrossing() const {return bunchCrossing_;}
-    int storeNumber() const {return storeNumber_;}
-
     // most recently process that processed this event
     // is the last on the list, this defines what "latest" is
     mutable ProcessHistoryID processHistoryID_;
@@ -63,16 +41,10 @@ namespace edm
     EventID id_;
     // Time from DAQ
     Timestamp time_;
-    // Associated Luminosity Block identifier
+    // Associated Luminosity Block identifier.
     LuminosityBlockNumber_t luminosityBlock_;
     // Is this real data (i.e. not simulated)
     bool isRealData_;
-    // Something descriptive of the source of the data
-    ExperimentType experimentType_;
-    //  The bunch crossing number
-    int bunchCrossing_;
-    //  The LHC store number
-    int storeNumber_;
   };
 
   inline
