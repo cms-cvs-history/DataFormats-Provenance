@@ -1,9 +1,8 @@
 #ifndef DataFormats_Provenance_ProcessConfiguration_h
 #define DataFormats_Provenance_ProcessConfiguration_h
 
-#include <iosfwd>
 #include <string>
-#include <vector>
+#include <iosfwd>
 
 #include "DataFormats/Provenance/interface/ParameterSetID.h"
 #include "DataFormats/Provenance/interface/PassID.h"
@@ -26,16 +25,13 @@ namespace edm {
     ParameterSetID const& parameterSetID() const {return parameterSetID_;}
     ReleaseVersion const& releaseVersion() const {return releaseVersion_;}
     PassID const& passID() const {return passID_;}
-    ProcessConfigurationID id() const;
 
     std::string processName_;
     ParameterSetID parameterSetID_;
     ReleaseVersion releaseVersion_; 
     PassID passID_;
 
-    typedef std::vector<std::string> ModulesOnPath_t;
-    std::map<std::string, ModulesOnPath_t> module_names_by_path_;
-    //std::map<std::string, ?> 
+    ProcessConfigurationID id() const;
   };
 
   inline
