@@ -1,4 +1,5 @@
 #include "DataFormats/Provenance/interface/ProcessConfiguration.h"
+#include <assert.h>
 
 int main()
 {

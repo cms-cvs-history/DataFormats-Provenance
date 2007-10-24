@@ -1,4 +1,5 @@
 #include "DataFormats/Provenance/interface/ModuleDescription.h"
+#include <assert.h>
 
 int main()
 {
