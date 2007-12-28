@@ -1,6 +1,7 @@
 <use name=boost>
 <use name=cppunit>
 <use name=DataFormats/Provenance>
+<use name=FWCore/Utilities>
 
 <bin name=testDataFormatsProvenance file=testRunner.cpp,eventid_t.cppunit.cc,timestamp_t.cppunit.cc,parametersetid_t.cppunit.cc>
 </bin>

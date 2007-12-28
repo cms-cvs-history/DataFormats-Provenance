@@ -4,6 +4,7 @@
 #include "DataFormats/Provenance/interface/ParameterSetID.h"
 #include "FWCore/Utilities/interface/GetPassID.h"
 #include "FWCore/Utilities/interface/GetReleaseVersion.h"
+#include "FWCore/Utilities/interface/GlobalIdentifier.h"
 
 int main()
 {
@@ -11,8 +12,8 @@ int main()
   assert(pnl1 == pnl1);
   edm::ProcessHistory pnl2;
   assert(pnl1 == pnl2);
-  edm::ProcessConfiguration iHLT(std::string("HLT"), edm::ParameterSetID(), edm::getReleaseVersion(), edm::getPassID());
-  edm::ProcessConfiguration iRECO(std::string("RECO"), edm::ParameterSetID(), edm::getReleaseVersion(), edm::getPassID());
+  edm::ProcessConfiguration iHLT(std::string("HLT"), edm::createGlobalIdentifier(), edm::ParameterSetID(), edm::getReleaseVersion(), edm::getPassID());
+  edm::ProcessConfiguration iRECO(std::string("RECO"), edm::createGlobalIdentifier(), edm::ParameterSetID(), edm::getReleaseVersion(), edm::getPassID());
   pnl2.push_back(iHLT);
   assert(pnl1 != pnl2);
   edm::ProcessHistory pnl3;
