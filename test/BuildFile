@@ -6,6 +6,7 @@
 </bin>
 
 <bin file=ModuleDescription_t.cpp></bin>
+<bin file=EntryDescription_t.cpp></bin>
 <bin file=ProcessHistory_t.cpp></bin>
 <bin file=ProcessConfiguration_t.cpp></bin>
 
