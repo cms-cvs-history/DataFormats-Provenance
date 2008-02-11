@@ -46,6 +46,7 @@ namespace {
   std::vector<std::basic_string<char> > dummyVectorString;
   std::set<std::basic_string<char> > dummySetString;
   std::vector<edm::EventProcessHistoryID> dummyEventProcessHistory;
-  std::vector<edm::EventID> dummyEventID;
+  std::vector<edm::EventID> dummyVectorEventID;
+  std::vector<std::vector<edm::EventID> > dummyVectorVectorEventID;
 };
 }
