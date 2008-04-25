@@ -51,6 +51,10 @@ namespace edm {
     std::string const entryDescriptionIDBranch = "Hash";
     std::string const entryDescriptionBranch   = "Description";
 
+    std::string const branchMapperTree     = "BranchMapper";
+    std::string const branchMapperIDBranch = "Hash";
+    std::string const branchMapperBranch   = "Description";
+
     std::string const metaDataTree = "MetaData";
     std::string const productRegistry = "ProductRegistry";
     std::string const parameterSetMap = "ParameterSetMap";
@@ -61,6 +65,7 @@ namespace edm {
     std::string const fileIdentifier = "FileIdentifier";
     std::string const fileIndex = "FileIndex";
     std::string const eventHistory = "EventHistory";
+    std::string const eventBranchMapper = "EventBranchMapper";
   }
 
   std::string const& BranchTypeToString(BranchType const& branchType) {
@@ -114,6 +119,19 @@ namespace edm {
       return entryDescriptionBranch;
     }
 
+    // BranchMapper tree (1 branch per recorded distinct value of BranchMapper)
+    std::string const& branchMapperTreeName() {
+      return branchMapperTree;
+    }
+
+    std::string const& branchMapperIDBranchName() {
+      return branchMapperIDBranch;
+    }
+
+    std::string const& branchMapperBranchName() {
+      return branchMapperBranch;
+    }
+
     // MetaData Tree (1 entry per file)
     std::string const& metaDataTreeName() {
       return metaDataTree;
@@ -159,9 +177,14 @@ namespace edm {
       return fileIndex;
     }
 
-    // Branch on MetaData Tree
+    // Branch on Event History Tree
     std::string const& eventHistoryBranchName() {
       return eventHistory;
+    }
+
+    // Branch on Event History Tree
+    std::string const& eventbranchMapperBranchName() {
+      return eventBranchMapper;
     }
 
     std::string const& eventTreeName() {

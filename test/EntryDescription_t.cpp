@@ -14,8 +14,10 @@ int main()
   edm::EntryDescription ed2;
   assert(ed1 == ed2);
 
+  ed2.productID_ = edm::ProductID(3);
   ed2.parents_ = std::vector<edm::ProductID>(1);
   edm::EntryDescription ed3;
+  ed3.productID_ = edm::ProductID(4);
   ed3.parents_ = std::vector<edm::ProductID>(2);
 
   edm::EntryDescriptionID id1 = ed1.id();
@@ -30,6 +32,7 @@ int main()
   assert(ed2 != ed3); 
 
   edm::EntryDescription ed4;
+  ed4.productID_ = edm::ProductID(3);
   ed4.parents_ = std::vector<edm::ProductID>(1);
   edm::EntryDescriptionID id4 = ed4.id();
   assert(ed4 == ed2);
@@ -65,10 +68,13 @@ int main()
   edm::ProductID pid1(1); 
   edm::ProductID pid2(2); 
   edm::ProductID pid3(3);
+  edm::ProductID pid4(4);
 
+  ed101.productID_ = pid4;
   ed101.parents_.push_back(pid3);
   ed101.parents_.push_back(pid2);
 
+  ed102.productID_ = pid4;
   ed102.parents_.push_back(pid2);
   ed102.parents_.push_back(pid1);
 
@@ -76,4 +82,5 @@ int main()
   assert(ed101.parents_[0] == pid1);
   assert(ed101.parents_[1] == pid2);
   assert(ed101.parents_[2] == pid3);  
+  assert(ed101.productID_ == pid4);  
 }

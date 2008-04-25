@@ -6,7 +6,7 @@
 BranchEntryDescription: The event dependent portion of the description of a product
 and how it came into existence.
 
-$Id: BranchEntryDescription.h,v 1.2 2008/01/23 23:34:53 wdd Exp $
+$Id: BranchEntryDescription.h,v 1.3 2008/01/30 00:17:51 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <vector>
@@ -87,6 +87,7 @@ namespace edm {
     ModuleDescription const& moduleDescription() const {init(); return *moduleDescriptionPtr_;}
     std::auto_ptr<EntryDescription> convertToEntryDescription() const {
 	std::auto_ptr<EntryDescription> entryDescription(new EntryDescription);
+	entryDescription->productID_ = productID_;
 	entryDescription->parents_ = parents_;
 	entryDescription->moduleDescriptionID_ = moduleDescriptionID_;
 	entryDescription->moduleDescriptionPtr_ = moduleDescriptionPtr_;

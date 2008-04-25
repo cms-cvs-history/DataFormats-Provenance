@@ -1,9 +1,8 @@
 #include "DataFormats/Provenance/interface/Provenance.h"
-#include "DataFormats/Provenance/interface/BranchKey.h"
 
 /*----------------------------------------------------------------------
 
-$Id: Provenance.cc,v 1.8 2008/01/30 00:17:54 wmtan Exp $
+$Id: Provenance.cc,v 1.9 2008/04/04 22:33:03 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -58,7 +57,7 @@ namespace edm {
 
   EntryDescription const& 
   Provenance::resolve () const {
-    std::auto_ptr<EntryDescription> prov = store_->getProvenance(BranchKey(product_));
+    std::auto_ptr<EntryDescription> prov = store_->getProvenance(product());
     setEvent(boost::shared_ptr<EntryDescription>(prov.release()));
     return *event_; 
   }

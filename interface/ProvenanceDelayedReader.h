@@ -6,7 +6,7 @@
 DelayedReader: The abstract interface through which the EventPrincipal
 uses input sources to retrieve per-event provenance from external storage.
 
-$Id: ProvenanceDelayedReader.h,v 1.3 2008/01/30 00:17:51 wmtan Exp $
+$Id: ProvenanceDelayedReader.h,v 1.4 2008/02/06 06:24:43 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -14,16 +14,16 @@ $Id: ProvenanceDelayedReader.h,v 1.3 2008/01/30 00:17:51 wmtan Exp $
 #include "DataFormats/Provenance/interface/EntryDescription.h"
 
 namespace edm {
-  class BranchKey;
+  class BranchDescription;
   class EntryDescription;
   class ProvenanceDelayedReader {
   public:
     virtual ~ProvenanceDelayedReader();
-    std::auto_ptr<EntryDescription> getProvenance(BranchKey const& k) const {
-      return getProvenance_(k);
+    std::auto_ptr<EntryDescription> getProvenance(BranchDescription const& desc) const {
+      return getProvenance_(desc);
     }
  private: 
-    virtual std::auto_ptr<EntryDescription> getProvenance_(BranchKey const& k) const = 0;
+    virtual std::auto_ptr<EntryDescription> getProvenance_(BranchDescription const& desc) const = 0;
   };
 }
 

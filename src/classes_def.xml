@@ -1,5 +1,6 @@
 <lcgdict>
  <class name="edm::ProductID"/>
+ <class name="edm::BranchID"/>
  <class name="edm::EventID"/>
  <class name="edm::LuminosityBlockID"/>
  <class name="edm::RunID"/>
@@ -8,7 +9,9 @@
  <class name="std::basic_string<char>"/>
  <class name="std::vector<std::basic_string<char> >"/>
  <class name="std::set<std::basic_string<char> >"/>
- <class name="edm::EventAuxiliary"/>
+ <class name="edm::EventAuxiliary">
+   <field name="branchMapperID_" transient="true"/>
+ </class>
  <class name="edm::History"/>
  <class name="edm::LuminosityBlockAuxiliary"/>
  <class name="edm::RunAuxiliary"/>
@@ -31,6 +34,7 @@
  <class name="std::vector<edm::EventID>"/>
  <class name="std::vector<std::vector<edm::EventID> >"/>
  <class name="edm::ModuleDescription"/>
+ <class name="edm::BranchMapper"/>
  <class name="edm::BranchEntryDescription">
    <field name="moduleDescriptionPtr_" transient="true"/>
  </class>
@@ -79,4 +83,5 @@
  <class name="std::map<edm::Hash<3>,edm::ProcessConfiguration>"/>
  <class name="std::pair<edm::Hash<3>,edm::ProcessConfiguration>"/>
  <class name="edm::Hash<4>"/>
+ <class name="edm::Hash<5>"/>
 </lcgdict>

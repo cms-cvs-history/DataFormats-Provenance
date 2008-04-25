@@ -1,7 +1,7 @@
 #ifndef DataFormats_CommonHashedTypes_h
 #define DataFormats_CommonHashedTypes_h
 
-// $Id: HashedTypes.h,v 1.1 2007/03/04 04:48:08 wmtan Exp $
+// $Id: HashedTypes.h,v 1.2 2008/01/25 21:06:48 paterno Exp $
 //
 
 /// Declaration of the enum HashedTypes, used in defining several "id"
@@ -15,7 +15,8 @@ namespace edm
       ParameterSetType,
       ProcessHistoryType,
       ProcessConfigurationType,
-      EntryDescriptionType
+      EntryDescriptionType,
+      BranchMapperType
     };		     
 }
 
