@@ -6,7 +6,7 @@
 BranchDescription: The full description of a Branch.
 This description also applies to every product instance on the branch.  
 
-$Id: BranchDescription.h,v 1.8 2008/02/06 22:32:43 wmtan Exp $
+$Id: BranchDescription.h,v 1.8.2.1 2008/04/25 17:20:40 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <string>
@@ -70,7 +70,8 @@ namespace edm {
     std::string const& moduleLabel() const {return moduleLabel_;}
     std::string const& processName() const {return processName_;}
     BranchID const& branchID() const {return branchID_;}
-    ProductID const& productID() const {return productID_;}
+    ProductID const& oldProductID() const {return productID_;}
+    ProductID const& productIDtoAssign() const {return productIDtoAssign_;}
     std::string const& fullClassName() const {return fullClassName_;}
     std::string const& className() const {return fullClassName();}
     std::string const& friendlyClassName() const {return friendlyClassName_;}
@@ -115,7 +116,10 @@ namespace edm {
     // An ID uniquely identifying the branch
     // This is persistent only for backward compatibility
     // with file format 7 and earlier.
+private:
     ProductID productID_;
+public:
+    ProductID productIDtoAssign_;
 
     // the full name of the type of product this is
     std::string fullClassName_;

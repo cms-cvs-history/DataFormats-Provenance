@@ -6,7 +6,7 @@
 Provenance: The full description of a product and how it came into
 existence.
 
-$Id: Provenance.h,v 1.6 2008/01/30 00:17:51 wmtan Exp $
+$Id: Provenance.h,v 1.7 2008/04/04 22:33:03 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 
@@ -45,13 +45,14 @@ namespace edm {
     EntryDescription const& event() const {if (event_.get()) return *event_; return resolve();}
     EntryDescription const& resolve() const;
     boost::shared_ptr<EntryDescription> entryDescription()  const {return event_;}
+    BranchID const& branchID() const {return product().branchID();}
     std::string const& branchName() const {return product().branchName();}
     std::string const& className() const {return product().className();}
     std::string const& moduleLabel() const {return product().moduleLabel();}
     std::string const& moduleName() const {return event().moduleName();}
     PassID const& passID() const {return event().passID();}
     std::string const& processName() const {return product().processName();}
-    ProductID const& productID() const {return product().productID();}
+    ProductID const& productID() const {return event().productID();}
     std::string const& productInstanceName() const {return product().productInstanceName();}
     std::string const& friendlyClassName() const {return product().friendlyClassName();}
     std::set<ParameterSetID> const& psetIDs() const {return product().psetIDs();}

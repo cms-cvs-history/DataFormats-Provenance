@@ -24,8 +24,6 @@
    <field name="constProductList_" transient="true"/>
    <field name="productLookup_" transient="true"/>
    <field name="elementLookup_" transient="true"/>
-   <field name="fixedProductIDs_" transient="true"/>
-   <field name="preExistingFixedProductIDs_" transient="true"/>
  </class>
  <class name="std::map<edm::BranchKey,edm::BranchDescription>"/>
  <class name="std::pair<edm::BranchKey,edm::BranchDescription>"/>
@@ -34,9 +32,11 @@
  <class name="std::vector<edm::EventID>"/>
  <class name="std::vector<std::vector<edm::EventID> >"/>
  <class name="edm::ModuleDescription"/>
- <class name="edm::BranchMapper"/>
+ <class name="edm::BranchMapper">
+   <field name="branchToProduct_" transient="true"/>
+   <field name="highWaterMark_" transient="true"/>
+ </class>
  <class name="edm::BranchEntryDescription">
-   <field name="moduleDescriptionPtr_" transient="true"/>
  </class>
  <class name="edm::EntryDescription">
    <field name="moduleDescriptionPtr_" transient="true"/>
@@ -52,6 +52,7 @@
    <field name="basketSize_" transient="true"/>
    <field name="moduleDescriptionID_" transient="true"/>
    <field name="type_" transient="true"/>
+   <field name="productIDtoAssign_" transient="true"/>
  </class>
  <class name="edm::ParameterSetBlob"/>
  <class name="edm::ProcessConfiguration"/>

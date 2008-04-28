@@ -10,7 +10,7 @@ namespace edm {
 
   std::ostream&
   operator<<(std::ostream& os, BranchID const& id) {
-    os << id.id_;
+    os << id.id();
     return os;
   }
 }

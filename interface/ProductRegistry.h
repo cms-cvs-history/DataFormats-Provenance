@@ -7,7 +7,7 @@
 
    \original author Stefano ARGIRO
    \current author Bill Tanenbaum
-   \version $Id: ProductRegistry.h,v 1.6 2008/03/24 02:26:02 wmtan Exp $
+   \version $Id: ProductRegistry.h,v 1.7 2008/04/01 23:12:38 wmtan Exp $
    \date 19 Jul 2005
 */
 
@@ -45,8 +45,8 @@ namespace edm {
 
     typedef std::map<BranchKey, ConstBranchDescription> ConstProductList;
     
-    // Used for indices to find product IDs by type and process
-    typedef std::map<std::string, std::vector<ProductID> > ProcessLookup;
+    // Used for indices to find branch IDs by type and process
+    typedef std::map<std::string, std::vector<BranchID> > ProcessLookup;
     typedef std::map<std::string, ProcessLookup> TypeLookup;
 
     void addProduct(BranchDescription const& productdesc, bool iFromListener=false);
@@ -109,7 +109,7 @@ namespace edm {
     void throwIfNotFrozen() const;
     void throwIfFrozen() const;
     void fillElementLookup(const ROOT::Reflex::Type & type,
-                           const ProductID& slotNumber,
+                           const BranchID& slotNumber,
                            const BranchKey& bk) const;
     
     ProductList productList_;
@@ -124,10 +124,6 @@ namespace edm {
     // an EDProduct
     mutable TypeLookup productLookup_; // 1->many
     mutable TypeLookup elementLookup_; // 1->many
-    
-    // Fix some product ID's to facilitate merging.
-    std::map<std::string, unsigned int> fixedProductIDs_;
-    std::set<unsigned int> preExistingFixedProductIDs_;
   };
 
   inline

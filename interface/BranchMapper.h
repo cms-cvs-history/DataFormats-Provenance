@@ -5,9 +5,10 @@
   
 BranchMapper: The mapping from per event product ID's to BranchID's.
 
-$Id: BranchMapper.h,v 1.2 2008/01/25 21:06:48 paterno Exp $
+$Id: BranchMapper.h,v 1.1.2.1 2008/04/25 17:21:36 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
+#include <map>
 #include <vector>
 #include "boost/shared_ptr.hpp"
 
@@ -29,13 +30,22 @@ namespace edm {
     BranchMapperID id() const;
 
     void write(std::ostream& os) const;
-   
-    void push_back(BranchID const& bid) {mapping_.push_back(bid);}
+
+    ProductID branchToProduct(BranchID const& bid) const;
+
+    BranchID productToBranch(ProductID const& pid) const;
+    
+    void insert(ProductID const& pid, BranchID const& bid);
+
+    void expand() const;
 
     std::vector<BranchID> const& mapping() const {return mapping_;}
 
     std::vector<BranchID> mapping_;
 
+    std::map<BranchID, ProductID> branchToProduct_; //! transient
+
+    ProductID highWaterMark_; //!transient
   };
   
   inline

@@ -8,7 +8,7 @@
 
 /*----------------------------------------------------------------------
 
-$Id: BranchDescription.cc,v 1.9 2008/02/07 00:43:07 wmtan Exp $
+$Id: BranchDescription.cc,v 1.9.2.1 2008/04/25 17:20:40 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -155,6 +155,10 @@ namespace edm {
     branchName_ += underscore;
     branchName_ += processName();
     branchName_ += period;
+
+    if (branchID_.empty()) {
+      branchID_.setID(branchName_);
+    }
 
     ROOT::Reflex::Type t = ROOT::Reflex::Type::ByName(fullClassName());
     ROOT::Reflex::PropertyList p = t.Properties();
