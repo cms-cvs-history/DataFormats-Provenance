@@ -1,5 +1,6 @@
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 #include "DataFormats/Provenance/interface/BranchEntryDescription.h"
+#include "DataFormats/Provenance/interface/BranchEntryInfo.h"
 #include "DataFormats/Provenance/interface/BranchID.h"
 #include "DataFormats/Provenance/interface/BranchKey.h"
 #include "DataFormats/Provenance/interface/BranchMapper.h"
@@ -56,5 +57,6 @@ namespace {
   std::vector<std::vector<edm::EventID> > dummyVectorVectorEventID;
   edm::Hash<4> dummyEntryDescriptionID;
   edm::Hash<5> dummyBranchMapperID;
+  std::vector<edm::BranchEntryInfo> dummyVectorBranchEntryInfo;
 };
 }

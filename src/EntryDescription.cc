@@ -5,20 +5,12 @@
 
 /*----------------------------------------------------------------------
 
-$Id: EntryDescription.cc,v 1.3 2008/02/08 17:34:39 wdd Exp $
+$Id: EntryDescription.cc,v 1.3.2.1 2008/04/25 17:20:40 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
 namespace edm {
   EntryDescription::EntryDescription() :
-    productID_(),
-    parents_(),
-    moduleDescriptionID_(),
-    moduleDescriptionPtr_()
-  { }
-
-  EntryDescription::EntryDescription(ProductID const& pid) :
-    productID_(pid),
     parents_(),
     moduleDescriptionID_(),
     moduleDescriptionPtr_()
@@ -46,7 +38,6 @@ namespace edm {
     // This implementation is ripe for optimization.
     std::ostringstream oss;
     oss << moduleDescriptionID_ << ' ';
-    oss << productID_ << ' ';
     for (std::vector<ProductID>::const_iterator 
 	   i = parents_.begin(),
 	   e = parents_.end();
@@ -72,8 +63,7 @@ namespace edm {
   bool
   operator==(EntryDescription const& a, EntryDescription const& b) {
     return
-      a.productID() == b.productID()
-      && a.parents() == b.parents()
+      a.parents() == b.parents()
       && a.moduleDescriptionID() == b.moduleDescriptionID();
   }
 

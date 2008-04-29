@@ -8,6 +8,7 @@ namespace edm {
   class BranchKey;
   class BranchMapper;
   class ConstBranchDescription;
+  class BranchEntryInfo;
   class BranchKey;
   class EventAuxiliary;
   class EventID;

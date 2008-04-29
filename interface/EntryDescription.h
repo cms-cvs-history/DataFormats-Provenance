@@ -6,7 +6,7 @@
 EntryDescription: The event dependent portion of the description of a product
 and how it came into existence.
 
-$Id: EntryDescription.h,v 1.2 2008/01/25 21:06:48 paterno Exp $
+$Id: EntryDescription.h,v 1.2.2.1 2008/04/25 17:20:40 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <vector>
@@ -30,14 +30,11 @@ $Id: EntryDescription.h,v 1.2 2008/01/25 21:06:48 paterno Exp $
 namespace edm {
   struct EntryDescription {
     EntryDescription();
-    explicit EntryDescription(ProductID const& pid);
 
     ~EntryDescription() {}
 
     // Only the 'salient attributes' are encoded into the ID.
     EntryDescriptionID id() const;
-
-    ProductID productID_;
 
     // The EDProduct IDs of the parents
     std::vector<ProductID> parents_;
@@ -49,13 +46,12 @@ namespace edm {
     ModuleDescriptionID moduleDescriptionID_;
 
     // transient.  Filled in from the hash when needed.
-    mutable boost::shared_ptr<ModuleDescription> moduleDescriptionPtr_;
+    mutable boost::shared_ptr<ModuleDescription> moduleDescriptionPtr_; //! transient
 
     void init() const;
 
     void write(std::ostream& os) const;
 
-    ProductID const& productID() const {return productID_;}
     std::string const& moduleName() const {init(); return moduleDescriptionPtr_->moduleName_;}
     PassID const& passID() const {init(); return moduleDescriptionPtr_->passID();}
     ParameterSetID const& psetID() const {init(); return moduleDescriptionPtr_->parameterSetID();}

@@ -2,64 +2,34 @@
 
 /*----------------------------------------------------------------------
 
-$Id: Provenance.cc,v 1.9 2008/04/04 22:33:03 wmtan Exp $
+$Id: Provenance.cc,v 1.9.2.1 2008/04/25 17:20:40 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
 namespace edm {
-  Provenance::Provenance(BranchDescription const& p, bool present) :
-    product_(ConstBranchDescription(p)),
-    event_(),
-    isPresent_(present),
-    store_()
+
+  Provenance::Provenance(BranchDescription const& p, ProductStatus status, boost::shared_ptr<EntryDescription> entryDesc) :
+    branchDescription_(p),
+    branchEntryInfo_(p.branchID(), p.productIDtoAssign(), status, entryDesc)
   { }
 
-  Provenance::Provenance(ConstBranchDescription const& p, bool present) :
-    product_(p),
-    event_(),
-    isPresent_(present),
-    store_()
-  { }
-
-  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<EntryDescription> e, bool present) :
-    product_(ConstBranchDescription(p)),
-    event_(e),
-    isPresent_(present),
-    store_()
-  { }
-
-  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<EntryDescription> e, bool present) :
-    product_(p),
-    event_(e),
-    isPresent_(present),
-    store_()
-  { }
-
- Provenance::Provenance(BranchDescription const& p, EntryDescription const& e, bool present) :
-    product_(ConstBranchDescription(p)),
-    event_(new EntryDescription(e)),
-    isPresent_(present),
-    store_()
-  { }
-
- Provenance::Provenance(ConstBranchDescription const& p, EntryDescription const& e, bool present) :
-    product_(p),
-    event_(new EntryDescription(e)),
-    isPresent_(present),
-    store_()
+  Provenance::Provenance(ConstBranchDescription const& p, ProductStatus status, boost::shared_ptr<EntryDescription> entryDesc) :
+    branchDescription_(p),
+    branchEntryInfo_(p.me().branchID(), p.productIDtoAssign(), status, entryDesc)
   { }
 
   void
-  Provenance::setEvent(boost::shared_ptr<EntryDescription> e) const {
-    assert(event_.get() == 0);
-    event_ = e;
+  Provenance::setPresent() {
+    if (productstatus::present(productStatus())) return;
+    assert(productstatus::unknown(productStatus()));
+    branchEntryInfo_.setStatus(productstatus::present());
   }
 
-  EntryDescription const& 
-  Provenance::resolve () const {
-    std::auto_ptr<EntryDescription> prov = store_->getProvenance(product());
-    setEvent(boost::shared_ptr<EntryDescription>(prov.release()));
-    return *event_; 
+  void
+  Provenance::setNotPresent() {
+    if (productstatus::neverCreated(productStatus())) return;
+    assert(productstatus::unknown(productStatus()));
+    branchEntryInfo_.setStatus(productstatus::neverCreated());
   }
 
   void
@@ -67,14 +37,14 @@ namespace edm {
     // This is grossly inadequate, but it is not critical for the
     // first pass.
     product().write(os);
-    event().write(os);
+    entryDescription().write(os);
   }
 
     
   bool operator==(Provenance const& a, Provenance const& b) {
     return
       a.product() == b.product()
-      && a.event() == b.event();
+      && a.entryDescription() == b.entryDescription();
   }
 
 }
