@@ -4,11 +4,11 @@
 
    \Original author Stefano ARGIRO
    \Current author Bill Tanenbaum
-   \version $Id: ProductRegistry.cc,v 1.9 2008/04/01 23:12:38 wmtan Exp $
+   \version $Id: ProductRegistry.cc,v 1.9.2.1 2008/04/28 17:58:32 wmtan Exp $
    \date 19 Jul 2005
 */
 
-static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9 2008/04/01 23:12:38 wmtan Exp $";
+static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9.2.1 2008/04/28 17:58:32 wmtan Exp $";
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
@@ -23,7 +23,6 @@ namespace edm {
   ProductRegistry::ProductRegistry() :
       productList_(),
       nextID_(1),
-      maxID_(0),
       frozen_(false),
       constProductList_(),
       productLookup_(),
@@ -33,6 +32,7 @@ namespace edm {
   void
   ProductRegistry::addProduct(BranchDescription const& productDesc,
 			      bool fromListener) {
+    assert(productDesc.produced());
     throwIfFrozen();
     productDesc.init();
     checkDictionaries(productDesc.fullClassName(), productDesc.transient());
@@ -42,6 +42,7 @@ namespace edm {
  
   void
   ProductRegistry::copyProduct(BranchDescription const& productDesc) {
+    assert(!productDesc.produced());
     throwIfFrozen();
     productDesc.init();
     BranchKey k = BranchKey(productDesc);
@@ -55,16 +56,15 @@ namespace edm {
   }
   
   void
-  ProductRegistry::setProductIDs() {
-    checkAllDictionaries();
-    throwIfFrozen();
+  ProductRegistry::setProductIDs(unsigned int startingID) {
+    throwIfNotFrozen();
+    --startingID;
     for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
         it != itEnd; ++it) {
-      if (it->second.productIDtoAssign().id_ == 0) {
-        it->second.productIDtoAssign_.id_ = nextID_++;
+      if (it->second.produced()) {
+        it->second.productIDtoAssign_.id_ = ++startingID;
       }
     }
-    frozen_ = true;
     initializeTransients();
   }
 
@@ -86,6 +86,7 @@ namespace edm {
   
   void
   ProductRegistry::setFrozen() const {
+    checkAllDictionaries();
     if(frozen_) return;
     frozen_ = true;
     initializeTransients();
@@ -101,12 +102,10 @@ namespace edm {
   
   void
   ProductRegistry::throwIfNotFrozen() const {
-/*
     if (!frozen_) {
       throw cms::Exception("ProductRegistry", "throwIfNotFrozen")
             << "cannot read the ProductRegistry because it is not yet frozen";
     }
-*/
   }
   
   void
@@ -158,10 +157,6 @@ namespace edm {
     elementLookup_.clear();
     for (ProductList::const_iterator i = productList_.begin(), e = productList_.end(); i != e; ++i) {
       constProductList_.insert(std::make_pair(i->first, ConstBranchDescription(i->second)));
-      if (i->second.productIDtoAssign().id() > maxID_) {
-        maxID_ = i->second.productIDtoAssign().id();    
-      }
-	
 
       ProcessLookup& processLookup = productLookup_[i->first.friendlyClassName_];
       std::vector<BranchID>& vint = processLookup[i->first.processName_];

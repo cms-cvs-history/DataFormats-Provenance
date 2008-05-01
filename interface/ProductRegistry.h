@@ -7,7 +7,7 @@
 
    \original author Stefano ARGIRO
    \current author Bill Tanenbaum
-   \version $Id: ProductRegistry.h,v 1.7 2008/04/01 23:12:38 wmtan Exp $
+   \version $Id: ProductRegistry.h,v 1.7.2.1 2008/04/28 17:58:32 wmtan Exp $
    \date 19 Jul 2005
 */
 
@@ -53,7 +53,7 @@ namespace edm {
 
     void copyProduct(BranchDescription const& productdesc);
 
-    void setProductIDs();
+    void setProductIDs(unsigned int startingID);
 
     void setFrozen() const;
 
@@ -62,20 +62,18 @@ namespace edm {
 	BranchDescription::MatchMode m);
 
     ProductList const& productList() const {
-      throwIfNotFrozen();
+      //throwIfNotFrozen();
       return productList_;
     }
 
     ConstProductList const& constProductList() const {
-      throwIfNotFrozen();
+      //throwIfNotFrozen();
       return constProductList_;
     }
 
     unsigned int nextID() const {return nextID_;}
 
     void setNextID(unsigned int next) {nextID_ = next;}
-
-    unsigned int maxID() const {return maxID_;}
 
     const TypeLookup& productLookup() const {
       return productLookup_;
@@ -114,7 +112,6 @@ namespace edm {
     
     ProductList productList_;
     unsigned int nextID_;
-    mutable unsigned int maxID_;
     mutable bool frozen_;
     mutable ConstProductList constProductList_;
     

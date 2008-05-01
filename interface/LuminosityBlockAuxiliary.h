@@ -3,7 +3,7 @@
 
 #include <iosfwd>
 
-#include "DataFormats/Provenance/interface/BranchMapperID.h"
+//#include "DataFormats/Provenance/interface/BranchMapperID.h"
 #include "DataFormats/Provenance/interface/ProcessHistoryID.h"
 #include "DataFormats/Provenance/interface/LuminosityBlockID.h"
 #include "DataFormats/Provenance/interface/RunID.h"
@@ -16,7 +16,7 @@ namespace edm
   struct LuminosityBlockAuxiliary {
     LuminosityBlockAuxiliary() :
 	processHistoryID_(),
-	branchMapperID_(),
+//	branchMapperID_(),
 	id_(),
 	beginTime_(),
 	endTime_() {}
@@ -24,7 +24,7 @@ namespace edm
 			     Timestamp const& theTime,
 			     Timestamp const& theEndTime) :
 	processHistoryID_(),
-	branchMapperID_(),
+//	branchMapperID_(),
 	id_(theId),
 	beginTime_(theTime),
 	endTime_(theEndTime) {}
@@ -33,14 +33,14 @@ namespace edm
 			     Timestamp const& theTime,
 			     Timestamp const& theEndTime) :
 	processHistoryID_(),
-	branchMapperID_(),
+//	branchMapperID_(),
 	id_(theRun, theLumi),
 	beginTime_(theTime),
 	endTime_(theEndTime) {}
     ~LuminosityBlockAuxiliary() {}
     void write(std::ostream& os) const;
     ProcessHistoryID& processHistoryID() const {return processHistoryID_;}
-    BranchMapperID& branchMapperID() const {return branchMapperID_;}
+//    BranchMapperID& branchMapperID() const {return branchMapperID_;}
     LuminosityBlockNumber_t luminosityBlock() const {return id().luminosityBlock();}
     RunNumber_t run() const {return id().run();}
     LuminosityBlockID const& id() const {return id_;}
@@ -54,7 +54,7 @@ namespace edm
     // most recent process that processed this lumi block
     // is the last on the list, this defines what "latest" is
     mutable ProcessHistoryID processHistoryID_;
-    mutable BranchMapperID branchMapperID_;
+//    mutable BranchMapperID branchMapperID_;
     // LuminosityBlock ID
     LuminosityBlockID id_;
     // Times from DAQ
