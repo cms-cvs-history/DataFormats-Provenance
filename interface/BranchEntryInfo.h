@@ -6,7 +6,7 @@
 BranchEntryInfo: The event dependent portion of the description of a product
 and how it came into existence, plus the product identifier and the status.
 
-$Id: BranchEntryInfo.h,v 1.2.2.1 2008/04/25 17:20:40 wmtan Exp $
+$Id: BranchEntryInfo.h,v 1.1.2.1 2008/04/29 07:57:26 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 
@@ -60,5 +60,7 @@ namespace edm {
   // Only the 'salient attributes' are testing in equality comparison.
   bool operator==(BranchEntryInfo const& a, BranchEntryInfo const& b);
   inline bool operator!=(BranchEntryInfo const& a, BranchEntryInfo const& b) { return !(a==b); }
+
+  typedef std::vector<BranchEntryInfo> BranchEntryInfoVector;
 }
 #endif

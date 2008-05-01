@@ -7,6 +7,7 @@ namespace edm {
     std::string const auxiliary = "Auxiliary";
     std::string const aux = "Aux";
     std::string const productStatus = "ProductStatus";
+    std::string const branchEntryInfo = "BranchEntryInfo";
 
     // Prefixes
     std::string const run = "Run";
@@ -33,6 +34,10 @@ namespace edm {
     std::string const runProductStatus = run + productStatus;
     std::string const lumiProductStatus = lumi + productStatus;
     std::string const eventProductStatus = event + productStatus;
+
+    std::string const runBranchEntryInfo = run + branchEntryInfo;
+    std::string const lumiBranchEntryInfo = lumi + branchEntryInfo;
+    std::string const eventBranchEntryInfo = event + branchEntryInfo;
 
     std::string const majorIndex = ".id_.run_";
     std::string const runMajorIndex = runAuxiliary + majorIndex;
@@ -94,6 +99,10 @@ namespace edm {
 
   std::string const& BranchTypeToProductStatusBranchName(BranchType const& branchType) {
     return ((branchType == InEvent) ? eventProductStatus : ((branchType == InRun) ? runProductStatus : lumiProductStatus));
+  }
+
+  std::string const& BranchTypeToBranchEntryInfoBranchName(BranchType const& branchType) {
+    return ((branchType == InEvent) ? eventBranchEntryInfo : ((branchType == InRun) ? runBranchEntryInfo : lumiBranchEntryInfo));
   }
 
   std::string const& BranchTypeToMajorIndexName(BranchType const& branchType) {
