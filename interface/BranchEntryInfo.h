@@ -8,6 +8,7 @@ and how it came into existence, plus the product identifier and the status.
 
 ----------------------------------------------------------------------*/
 #include <iosfwd>
+#include <vector>
 
 #include "boost/shared_ptr.hpp"
 
