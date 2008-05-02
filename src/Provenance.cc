@@ -6,28 +6,34 @@
 
 namespace edm {
 
-  Provenance::Provenance(BranchDescription const& p, ProductStatus status, boost::shared_ptr<EntryDescription> entryDesc) :
+  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<BranchEntryInfo> bei) :
     branchDescription_(p),
-    branchEntryInfo_(p.branchID(), p.productIDtoAssign(), status, entryDesc)
+    branchEntryInfoPtr_(bei)
   { }
 
-  Provenance::Provenance(ConstBranchDescription const& p, ProductStatus status, boost::shared_ptr<EntryDescription> entryDesc) :
+  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<BranchEntryInfo> bei) :
     branchDescription_(p),
-    branchEntryInfo_(p.me().branchID(), p.productIDtoAssign(), status, entryDesc)
+    branchEntryInfoPtr_(bei)
   { }
 
   void
   Provenance::setPresent() {
     if (productstatus::present(productStatus())) return;
     assert(productstatus::unknown(productStatus()));
-    branchEntryInfo_.setStatus(productstatus::present());
+    branchEntryInfoPtr_->setStatus(productstatus::present());
   }
 
   void
   Provenance::setNotPresent() {
     if (productstatus::neverCreated(productStatus())) return;
     assert(productstatus::unknown(productStatus()));
-    branchEntryInfo_.setStatus(productstatus::neverCreated());
+    branchEntryInfoPtr_->setStatus(productstatus::neverCreated());
+  }
+
+  void
+  Provenance::setBranchEntryInfo(boost::shared_ptr<BranchEntryInfo> bei) const {
+    assert(branchEntryInfoPtr_.get() == 0);
+    branchEntryInfoPtr_ = bei;
   }
 
   void
@@ -35,7 +41,7 @@ namespace edm {
     // This is grossly inadequate, but it is not critical for the
     // first pass.
     product().write(os);
-    entryDescription().write(os);
+    branchEntryInfo().write(os);
   }
 
     

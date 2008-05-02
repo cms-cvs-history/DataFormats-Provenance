@@ -30,18 +30,17 @@ namespace edm {
   class Provenance {
   public:
     Provenance(ConstBranchDescription const& p,
-	       ProductStatus status,
-	       boost::shared_ptr<EntryDescription> entryDesc = boost::shared_ptr<EntryDescription>()); 
+	       boost::shared_ptr<BranchEntryInfo> entryDesc = boost::shared_ptr<BranchEntryInfo>()); 
     Provenance(BranchDescription const& p,
-	       ProductStatus status,
-	       boost::shared_ptr<EntryDescription> entryDesc = boost::shared_ptr<EntryDescription>()); 
+	       boost::shared_ptr<BranchEntryInfo> entryDesc = boost::shared_ptr<BranchEntryInfo>()); 
 
     ~Provenance() {}
 
     EntryDescription const& event() const {return entryDescription();}
     BranchDescription const& product() const {return branchDescription_.me();}
-    BranchEntryInfo const& branchEntryInfo() const {return branchEntryInfo_;}
-    EntryDescription const& entryDescription() const {return branchEntryInfo_.entryDescription();}
+    BranchEntryInfo const* branchEntryInfoPtr() const {return branchEntryInfoPtr_.get();}
+    BranchEntryInfo const& branchEntryInfo() const {return *branchEntryInfoPtr_;}
+    EntryDescription const& entryDescription() const {return branchEntryInfo().entryDescription();}
     BranchID const& branchID() const {return product().branchID();}
     std::string const& branchName() const {return product().branchName();}
     std::string const& className() const {return product().className();}
@@ -49,8 +48,8 @@ namespace edm {
     std::string const& moduleName() const {return entryDescription().moduleName();}
     PassID const& passID() const {return entryDescription().passID();}
     std::string const& processName() const {return product().processName();}
-    ProductID const& productID() const {return branchEntryInfo_.productID();}
-    ProductStatus const& productStatus() const {return branchEntryInfo_.productStatus();}
+    ProductID const& productID() const {return branchEntryInfo().productID();}
+    ProductStatus const& productStatus() const {return branchEntryInfo().productStatus();}
     std::string const& productInstanceName() const {return product().productInstanceName();}
     std::string const& friendlyClassName() const {return product().friendlyClassName();}
     std::set<ParameterSetID> const& psetIDs() const {return product().psetIDs();}
@@ -69,9 +68,11 @@ namespace edm {
 
     void setNotPresent();
 
+    void setBranchEntryInfo(boost::shared_ptr<BranchEntryInfo> bei) const;
+
   private:
     ConstBranchDescription const branchDescription_;
-    BranchEntryInfo branchEntryInfo_;
+    mutable boost::shared_ptr<BranchEntryInfo> branchEntryInfoPtr_;
   };
   
   inline

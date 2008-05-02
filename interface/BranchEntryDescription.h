@@ -83,7 +83,6 @@ namespace edm {
 
     ModuleDescriptionID const& moduleDescriptionID() const {return moduleDescriptionID_;}
     ModuleDescription const& moduleDescription() const {init(); return *moduleDescriptionPtr_;}
-  private:
     std::auto_ptr<EntryDescription> convertToEntryDescription() const;
   };
   
