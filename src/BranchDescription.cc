@@ -1,6 +1,7 @@
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 #include "DataFormats/Provenance/interface/ModuleDescription.h"
 #include "FWCore/Utilities/interface/Exception.h"
+#include "FWCore/Utilities/interface/FriendlyName.h"
 #include "FWCore/Utilities/interface/WrappedClassName.h"
 #include <ostream>
 #include <sstream>
@@ -8,7 +9,7 @@
 
 /*----------------------------------------------------------------------
 
-$Id: BranchDescription.cc,v 1.9.2.1 2008/04/25 17:20:40 wmtan Exp $
+$Id: BranchDescription.cc,v 1.9.2.2 2008/04/28 17:58:32 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -26,6 +27,7 @@ namespace edm {
     psetIDs_(),
     processConfigurationIDs_(),
     branchAliases_(),
+    productIDtoAssign_(),
     branchName_(),
     wrappedName_(),
     produced_(false),
@@ -60,6 +62,7 @@ namespace edm {
     psetIDs_(),
     processConfigurationIDs_(),
     branchAliases_(aliases),
+    productIDtoAssign_(),
     branchName_(),
     wrappedName_(),
     produced_(true),
@@ -245,7 +248,10 @@ namespace edm {
       throwExceptionWithText("Invalid ModuleDescriptionID detected");    
   }
 
-
+  void
+  BranchDescription::updateFriendlyClassName() {
+    friendlyClassName_ = friendlyname::friendlyName(fullClassName());
+  }
 
   bool
   operator<(BranchDescription const& a, BranchDescription const& b) {

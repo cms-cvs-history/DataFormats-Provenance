@@ -4,11 +4,11 @@
 
    \Original author Stefano ARGIRO
    \Current author Bill Tanenbaum
-   \version $Id: ProductRegistry.cc,v 1.9.2.1 2008/04/28 17:58:32 wmtan Exp $
+   \version $Id: ProductRegistry.cc,v 1.9.2.2 2008/05/01 23:53:58 wmtan Exp $
    \date 19 Jul 2005
 */
 
-static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9.2.1 2008/04/28 17:58:32 wmtan Exp $";
+static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9.2.2 2008/05/01 23:53:58 wmtan Exp $";
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
@@ -51,7 +51,7 @@ namespace edm {
       productList_.insert(std::make_pair(k, productDesc));
     } else {
       assert(combinable(iter->second, productDesc));
-      iter->second.present_ = iter->second.present() || productDesc.present();
+      iter->second.setPresent(iter->second.present() || productDesc.present());
     }
   }
   
@@ -62,7 +62,7 @@ namespace edm {
     for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
         it != itEnd; ++it) {
       if (it->second.produced()) {
-        it->second.productIDtoAssign_.id_ = ++startingID;
+        it->second.setProductIDtoAssign(ProductID(++startingID));
       }
     }
     initializeTransients();

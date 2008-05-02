@@ -6,7 +6,7 @@
 BranchDescription: The full description of a Branch.
 This description also applies to every product instance on the branch.  
 
-$Id: BranchDescription.h,v 1.8.2.1 2008/04/25 17:20:40 wmtan Exp $
+$Id: BranchDescription.h,v 1.8.2.2 2008/04/28 17:58:32 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <string>
@@ -90,15 +90,18 @@ namespace edm {
     bool isPsetIDUnique() const {return psetIDs().size() == 1;}
     std::set<ProcessConfigurationID> const& processConfigurationIDs() const {return processConfigurationIDs_;}
     std::set<std::string> const& branchAliases() const {return branchAliases_;}
+    std::set<std::string> & branchAliases() {return branchAliases_;}
     std::string const& branchName() const {return branchName_;}
     BranchType const& branchType() const {return branchType_;}
     std::string const& wrappedName() const {return wrappedName_;}
 
+    void setPresent(bool present) const {present_ = present;}
+    void setProvenancePresent(bool present) const {provenancePresent_ = present;}
+    void setProductIDtoAssign(ProductID const& id) const {productIDtoAssign_ = id;}
+    void updateFriendlyClassName();
+
   private:
     void throwIfInvalid_() const;
-
-  //TODO: Make all the data private!
-  public:
 
     // What tree is the branch in?
     BranchType branchType_;
@@ -114,12 +117,9 @@ namespace edm {
     BranchID branchID_;
 
     // An ID uniquely identifying the branch
-    // This is persistent only for backward compatibility
+    // This is needed only for backward compatibility
     // with file format 7 and earlier.
-private:
     ProductID productID_;
-public:
-    ProductID productIDtoAssign_;
 
     // the full name of the type of product this is
     std::string fullClassName_;
@@ -147,6 +147,9 @@ public:
 
     // The branch ROOT alias(es), which are settable by the user.
     std::set<std::string> branchAliases_;
+
+    // An ID to be assigned to products on the branch,
+    mutable ProductID productIDtoAssign_; //!transient
 
     // The branch name, which is currently derivable fron the other attributes.
     mutable std::string branchName_; //! transient
