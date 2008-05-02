@@ -7,7 +7,6 @@ ConstBranchDescription: A class containing a constant shareable branch descripti
 that is inexpensive to copy.
 This class is not persistable.
 
-$Id: ConstBranchDescription.h,v 1.3 2007/10/09 07:04:28 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <string>

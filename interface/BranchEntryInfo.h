@@ -6,7 +6,6 @@
 BranchEntryInfo: The event dependent portion of the description of a product
 and how it came into existence, plus the product identifier and the status.
 
-$Id: BranchEntryInfo.h,v 1.1.2.2 2008/05/01 20:36:22 wdd Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 

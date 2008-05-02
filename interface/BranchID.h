@@ -5,8 +5,6 @@
   
 BranchID: A unique identifier for each branch.
 
-$Id: BranchID.h,v 1.1.2.1 2008/04/25 17:21:35 wmtan Exp $
-
 ----------------------------------------------------------------------*/
 
 #include <iosfwd>

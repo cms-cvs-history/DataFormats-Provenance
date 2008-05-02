@@ -5,7 +5,6 @@
   
 ProductStatus: 
 
-$Id: ProductStatus.h,v 1.3 2008/02/02 21:24:23 wmtan Exp $
 ----------------------------------------------------------------------*/
 /*
   ProductStatus

@@ -6,7 +6,6 @@
 EntryDescription: The event dependent portion of the description of a product
 and how it came into existence.
 
-$Id: EntryDescription.h,v 1.2.2.1 2008/04/25 17:20:40 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <vector>

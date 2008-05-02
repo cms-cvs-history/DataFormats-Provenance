@@ -7,7 +7,6 @@
 
    \original author Stefano ARGIRO
    \current author Bill Tanenbaum
-   \version $Id: ProductRegistry.h,v 1.7.2.1 2008/04/28 17:58:32 wmtan Exp $
    \date 19 Jul 2005
 */
 

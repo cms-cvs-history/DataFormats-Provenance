@@ -5,7 +5,6 @@
   
 BranchMapper: The mapping from per event product ID's to BranchID's.
 
-$Id: BranchMapper.h,v 1.1.2.2 2008/04/28 17:58:32 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <set>
