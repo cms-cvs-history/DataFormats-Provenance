@@ -6,7 +6,7 @@
 BranchEntryInfo: The event dependent portion of the description of a product
 and how it came into existence, plus the product identifier and the status.
 
-$Id: BranchEntryInfo.h,v 1.1.2.1 2008/04/29 07:57:26 wmtan Exp $
+$Id: BranchEntryInfo.h,v 1.1.2.2 2008/05/01 20:36:22 wdd Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 
@@ -26,6 +26,7 @@ namespace edm {
   class BranchEntryInfo {
   public:
     BranchEntryInfo();
+    explicit BranchEntryInfo(BranchID const& bid);
     BranchEntryInfo(BranchID const& bid,
 		    ProductID const& pid,
 		    ProductStatus status,
@@ -49,6 +50,12 @@ namespace edm {
     EntryDescriptionID entryDescriptionID_;
     mutable boost::shared_ptr<EntryDescription> entryDescriptionPtr_;
   };
+
+  inline
+  bool
+  operator < (BranchEntryInfo const& a, BranchEntryInfo const& b) {
+    return a.branchID() < b.branchID();
+  }
   
   inline
   std::ostream&

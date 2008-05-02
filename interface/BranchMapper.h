@@ -5,16 +5,14 @@
   
 BranchMapper: The mapping from per event product ID's to BranchID's.
 
-$Id: BranchMapper.h,v 1.1.2.1 2008/04/25 17:21:36 wmtan Exp $
+$Id: BranchMapper.h,v 1.1.2.2 2008/04/28 17:58:32 wmtan Exp $
 ----------------------------------------------------------------------*/
 #include <iosfwd>
-#include <map>
-#include <vector>
-#include "boost/shared_ptr.hpp"
+#include <set>
 
 #include "DataFormats/Provenance/interface/ProductID.h"
 #include "DataFormats/Provenance/interface/BranchID.h"
-#include "DataFormats/Provenance/interface/BranchMapperID.h"
+#include "DataFormats/Provenance/interface/BranchEntryInfo.h"
 
 /*
   BranchMapper
@@ -22,12 +20,11 @@ $Id: BranchMapper.h,v 1.1.2.1 2008/04/25 17:21:36 wmtan Exp $
 */
 
 namespace edm {
-  struct BranchMapper {
+  class BranchMapper {
+  public:
     BranchMapper();
 
     ~BranchMapper() {}
-
-    BranchMapperID id() const;
 
     void write(std::ostream& os) const;
 
@@ -35,17 +32,15 @@ namespace edm {
 
     BranchID productToBranch(ProductID const& pid) const;
     
-    void insert(ProductID const& pid, BranchID const& bid);
+    void insert(BranchEntryInfo const& bei);
 
-    void expand() const;
+  private:
+    typedef std::set<BranchEntryInfo> beiSet;
+    typedef std::map<ProductID, beiSet::const_iterator> beiMap;
 
-    std::vector<BranchID> const& mapping() const {return mapping_;}
+    beiSet branchEntryInfoSet_;
 
-    std::vector<BranchID> mapping_;
-
-    std::map<BranchID, ProductID> branchToProduct_; //! transient
-
-    ProductID highWaterMark_; //!transient
+    beiMap branchEntryInfoMap_;
   };
   
   inline

@@ -4,13 +4,21 @@
 
 /*----------------------------------------------------------------------
 
-$Id: BranchEntryInfo.cc,v 1.3.2.1 2008/04/25 17:20:40 wmtan Exp $
+$Id: BranchEntryInfo.cc,v 1.1.2.1 2008/04/29 07:57:27 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
 namespace edm {
   BranchEntryInfo::BranchEntryInfo() :
     branchID_(),
+    productID_(),
+    productStatus_(),
+    entryDescriptionID_(),
+    entryDescriptionPtr_()
+  { }
+
+  BranchEntryInfo::BranchEntryInfo(BranchID const& bid) :
+    branchID_(bid),
     productID_(),
     productStatus_(),
     entryDescriptionID_(),

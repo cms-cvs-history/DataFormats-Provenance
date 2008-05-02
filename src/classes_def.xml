@@ -31,10 +31,6 @@
  <class name="std::vector<edm::EventID>"/>
  <class name="std::vector<std::vector<edm::EventID> >"/>
  <class name="edm::ModuleDescription"/>
- <class name="edm::BranchMapper">
-   <field name="branchToProduct_" transient="true"/>
-   <field name="highWaterMark_" transient="true"/>
- </class>
  <class name="edm::BranchEntryDescription">
    <field name="moduleDescriptionPtr_" transient="true"/>
  </class>
@@ -88,5 +84,4 @@
  <class name="std::map<edm::Hash<3>,edm::ProcessConfiguration>"/>
  <class name="std::pair<edm::Hash<3>,edm::ProcessConfiguration>"/>
  <class name="edm::Hash<4>"/>
- <class name="edm::Hash<5>"/>
 </lcgdict>
