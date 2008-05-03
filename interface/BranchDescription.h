@@ -77,7 +77,6 @@ namespace edm {
     std::string const& productInstanceName() const {return productInstanceName_;} 
     bool const& produced() const {return produced_;}
     bool const& present() const {return present_;}
-    bool const& provenancePresent() const {return provenancePresent_;}
     bool const& transient() const {return transient_;}
     ROOT::Reflex::Type const& type() const {return type_;}
     int const& splitLevel() const {return splitLevel_;}
@@ -95,7 +94,6 @@ namespace edm {
     std::string const& wrappedName() const {return wrappedName_;}
 
     void setPresent(bool present) const {present_ = present;}
-    void setProvenancePresent(bool present) const {provenancePresent_ = present;}
     void setProductIDtoAssign(ProductID const& id) const {productIDtoAssign_ = id;}
     void updateFriendlyClassName();
 
@@ -163,10 +161,6 @@ namespace edm {
     // Is the branch present in the product tree
     // in the input file (or any of the input files)
     mutable bool present_; //! transient
-
-    // Is the branch present in the provenance tree
-    // in the input file (or any of the input files)
-    mutable bool provenancePresent_; //! transient
 
     // Is the class of the branch marked as transient
     // in the data dictionary

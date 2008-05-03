@@ -46,7 +46,6 @@
    <field name="wrappedName_" transient="true"/>
    <field name="produced_" transient="true"/>
    <field name="present_" transient="true"/>
-   <field name="provenancePresent_" transient="true"/>
    <field name="transient_" transient="true"/>
    <field name="splitLevel_" transient="true"/>
    <field name="basketSize_" transient="true"/>
