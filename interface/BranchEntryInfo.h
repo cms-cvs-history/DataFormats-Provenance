@@ -29,6 +29,9 @@ namespace edm {
     explicit BranchEntryInfo(BranchID const& bid);
     BranchEntryInfo(BranchID const& bid,
 		    ProductID const& pid,
+		    ProductStatus status);
+    BranchEntryInfo(BranchID const& bid,
+		    ProductID const& pid,
 		    ProductStatus status,
 		    boost::shared_ptr<EntryDescription> edPtr);
 

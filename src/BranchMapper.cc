@@ -19,6 +19,14 @@ namespace edm {
     }
   }
     
+  std::auto_ptr<BranchEntryInfo>
+  BranchMapper::branchToEntryInfo(BranchID const& bid) const {
+    BranchEntryInfo bei(bid);
+    beiSet::const_iterator it = branchEntryInfoSet_.find(bei);
+    assert(it != branchEntryInfoSet_.end());
+    return std::auto_ptr<BranchEntryInfo>(new BranchEntryInfo(*it));
+  }
+
   ProductID 
   BranchMapper::branchToProduct(BranchID const& bid) const {
     BranchEntryInfo bei(bid);

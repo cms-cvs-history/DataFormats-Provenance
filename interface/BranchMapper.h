@@ -7,6 +7,7 @@ BranchMapper: The mapping from per event product ID's to BranchID's.
 
 ----------------------------------------------------------------------*/
 #include <iosfwd>
+#include <memory>
 #include <set>
 
 #include "DataFormats/Provenance/interface/ProductID.h"
@@ -31,6 +32,8 @@ namespace edm {
 
     BranchID productToBranch(ProductID const& pid) const;
     
+    std::auto_ptr<BranchEntryInfo> branchToEntryInfo(BranchID const& bid) const;
+
     void insert(BranchEntryInfo const& bei);
 
   private:

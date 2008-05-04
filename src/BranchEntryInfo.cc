@@ -10,18 +10,28 @@ namespace edm {
   BranchEntryInfo::BranchEntryInfo() :
     branchID_(),
     productID_(),
-    productStatus_(),
+    productStatus_(productstatus::uninitialized()),
     entryDescriptionID_(),
     entryDescriptionPtr_()
-  { }
+  {}
 
   BranchEntryInfo::BranchEntryInfo(BranchID const& bid) :
     branchID_(bid),
     productID_(),
-    productStatus_(),
+    productStatus_(productstatus::uninitialized()),
     entryDescriptionID_(),
     entryDescriptionPtr_()
-  { }
+  {}
+
+   BranchEntryInfo::BranchEntryInfo(BranchID const& bid,
+				    ProductID const& pid,
+				    ProductStatus status) :
+    branchID_(bid),
+    productID_(pid),
+    productStatus_(status),
+    entryDescriptionID_(),
+    entryDescriptionPtr_()
+  {}
 
    BranchEntryInfo::BranchEntryInfo(BranchID const& bid,
 				    ProductID const& pid,

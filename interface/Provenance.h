@@ -29,10 +29,10 @@ existence.
 namespace edm {
   class Provenance {
   public:
-    Provenance(ConstBranchDescription const& p,
-	       boost::shared_ptr<BranchEntryInfo> entryDesc = boost::shared_ptr<BranchEntryInfo>()); 
-    Provenance(BranchDescription const& p,
-	       boost::shared_ptr<BranchEntryInfo> entryDesc = boost::shared_ptr<BranchEntryInfo>()); 
+    explicit Provenance(ConstBranchDescription const& p);
+    explicit Provenance(BranchDescription const& p);
+    Provenance(ConstBranchDescription const& p, boost::shared_ptr<BranchEntryInfo> entryDesc);
+    Provenance(BranchDescription const& p, boost::shared_ptr<BranchEntryInfo> entryDesc);
 
     ~Provenance() {}
 

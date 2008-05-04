@@ -6,6 +6,16 @@
 
 namespace edm {
 
+  Provenance::Provenance(BranchDescription const& p) :
+    branchDescription_(p),
+    branchEntryInfoPtr_() {
+  }
+
+  Provenance::Provenance(ConstBranchDescription const& p) :
+    branchDescription_(p),
+    branchEntryInfoPtr_() {
+  }
+
   Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<BranchEntryInfo> bei) :
     branchDescription_(p),
     branchEntryInfoPtr_(bei)
