@@ -38,8 +38,6 @@ namespace edm {
     // The EDProduct IDs of the parents
     std::vector<ProductID> parents_;
 
-    void mergeEntryDescription(EntryDescription const* entry);
-
     // the last of these is not in the roadmap, but is on the board
 
     ModuleDescriptionID moduleDescriptionID_;

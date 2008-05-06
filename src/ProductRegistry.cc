@@ -58,7 +58,7 @@ namespace edm {
     --startingID;
     for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
         it != itEnd; ++it) {
-      if (it->second.produced()) {
+      if (it->second.produced() && it->second.branchType() == InEvent) {
         it->second.setProductIDtoAssign(ProductID(++startingID));
       }
     }
