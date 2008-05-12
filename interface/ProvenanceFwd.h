@@ -6,9 +6,9 @@ namespace edm {
   class EntryDescription;
   class BranchID;
   class BranchKey;
-  class BranchMapper;
   class ConstBranchDescription;
-  class BranchEntryInfo;
+  class EventEntryInfo;
+  class RunLumiEntryInfo;
   class BranchKey;
   class EventAuxiliary;
   class EventID;
@@ -24,13 +24,13 @@ namespace edm {
   class RunAuxiliary;
   class RunID;
   class Timestamp;
+  template <typename T> class BranchMapper;
 }
 #include "DataFormats/Provenance/interface/EntryDescriptionID.h"
 #include "DataFormats/Provenance/interface/PassID.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"
 #include "DataFormats/Provenance/interface/ReleaseVersion.h"
 #include "DataFormats/Provenance/interface/ProcessHistoryID.h"
-//#include "DataFormats/Provenance/interface/BranchMapperID.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationRegistry.h"
 #include "DataFormats/Provenance/interface/ModuleDescriptionID.h"

@@ -10,8 +10,9 @@ existence.
 #include <iosfwd>
 
 #include "DataFormats/Provenance/interface/BranchDescription.h"
-#include "DataFormats/Provenance/interface/BranchEntryInfo.h"
+#include "DataFormats/Provenance/interface/EventEntryInfo.h"
 #include "DataFormats/Provenance/interface/EntryDescription.h"
+#include "DataFormats/Provenance/interface/RunLumiEntryInfo.h"
 #include "DataFormats/Provenance/interface/ConstBranchDescription.h"
 #include "boost/shared_ptr.hpp"
 
@@ -31,15 +32,21 @@ namespace edm {
   public:
     explicit Provenance(ConstBranchDescription const& p);
     explicit Provenance(BranchDescription const& p);
-    Provenance(ConstBranchDescription const& p, boost::shared_ptr<BranchEntryInfo> entryDesc);
-    Provenance(BranchDescription const& p, boost::shared_ptr<BranchEntryInfo> entryDesc);
+    Provenance(ConstBranchDescription const& p, boost::shared_ptr<EventEntryInfo> entryDesc);
+    Provenance(BranchDescription const& p, boost::shared_ptr<EventEntryInfo> entryDesc);
+    Provenance(ConstBranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> entryDesc);
+    Provenance(BranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> entryDesc);
 
     ~Provenance() {}
 
     EntryDescription const& event() const {return entryDescription();}
     BranchDescription const& product() const {return branchDescription_.me();}
-    BranchEntryInfo const* branchEntryInfoPtr() const {return branchEntryInfoPtr_.get();}
-    BranchEntryInfo const& branchEntryInfo() const {return *branchEntryInfoPtr_;}
+
+    BranchDescription const& branchDescription() const {return branchDescription_.me();}
+    ConstBranchDescription const& constBranchDescription() const {return branchDescription_;}
+    EventEntryInfo const* branchEntryInfoPtr() const {return branchEntryInfoPtr_.get();}
+    boost::shared_ptr<EventEntryInfo> branchEntryInfoSharedPtr() const {return branchEntryInfoPtr_;}
+    EventEntryInfo const& branchEntryInfo() const {return *branchEntryInfoPtr_;}
     EntryDescription const& entryDescription() const {return branchEntryInfo().entryDescription();}
     BranchID const& branchID() const {return product().branchID();}
     std::string const& branchName() const {return product().branchName();}
@@ -64,15 +71,11 @@ namespace edm {
 
     void write(std::ostream& os) const;
 
-    void setPresent();
-
-    void setNotPresent();
-
-    void setBranchEntryInfo(boost::shared_ptr<BranchEntryInfo> bei) const;
+    void setEventEntryInfo(boost::shared_ptr<EventEntryInfo> bei) const;
 
   private:
     ConstBranchDescription const branchDescription_;
-    mutable boost::shared_ptr<BranchEntryInfo> branchEntryInfoPtr_;
+    mutable boost::shared_ptr<EventEntryInfo> branchEntryInfoPtr_;
   };
   
   inline

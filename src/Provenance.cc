@@ -16,32 +16,32 @@ namespace edm {
     branchEntryInfoPtr_() {
   }
 
-  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<BranchEntryInfo> bei) :
+  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<EventEntryInfo> ei) :
     branchDescription_(p),
-    branchEntryInfoPtr_(bei)
+    branchEntryInfoPtr_(ei)
   { }
 
-  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<BranchEntryInfo> bei) :
+  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<EventEntryInfo> ei) :
     branchDescription_(p),
-    branchEntryInfoPtr_(bei)
+    branchEntryInfoPtr_(ei)
   { }
 
-  void
-  Provenance::setPresent() {
-    if (productstatus::present(productStatus())) return;
-    assert(productstatus::unknown(productStatus()));
-    branchEntryInfoPtr_->setStatus(productstatus::present());
+  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
+    branchDescription_(p),
+    branchEntryInfoPtr_() {
+    branchEntryInfoPtr_= boost::shared_ptr<EventEntryInfo>(
+	new EventEntryInfo(ei->branchID(), ei->productStatus(), ProductID()));
+  }
+
+  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
+    branchDescription_(p),
+    branchEntryInfoPtr_() { 
+    branchEntryInfoPtr_= boost::shared_ptr<EventEntryInfo>(
+	new EventEntryInfo(ei->branchID(), ei->productStatus(), ProductID()));
   }
 
   void
-  Provenance::setNotPresent() {
-    if (productstatus::neverCreated(productStatus())) return;
-    assert(productstatus::unknown(productStatus()));
-    branchEntryInfoPtr_->setStatus(productstatus::neverCreated());
-  }
-
-  void
-  Provenance::setBranchEntryInfo(boost::shared_ptr<BranchEntryInfo> bei) const {
+  Provenance::setEventEntryInfo(boost::shared_ptr<EventEntryInfo> bei) const {
     assert(branchEntryInfoPtr_.get() == 0);
     branchEntryInfoPtr_ = bei;
   }

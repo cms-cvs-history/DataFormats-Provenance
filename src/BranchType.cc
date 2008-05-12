@@ -35,9 +35,9 @@ namespace edm {
     std::string const lumiProductStatus = lumi + productStatus;
     std::string const eventProductStatus = event + productStatus;
 
-    std::string const runBranchEntryInfo = run + branchEntryInfo;
-    std::string const lumiBranchEntryInfo = lumi + branchEntryInfo;
-    std::string const eventBranchEntryInfo = event + branchEntryInfo;
+    std::string const runEventEntryInfo = run + branchEntryInfo;
+    std::string const lumiEventEntryInfo = lumi + branchEntryInfo;
+    std::string const eventEventEntryInfo = event + branchEntryInfo;
 
     std::string const majorIndex = ".id_.run_";
     std::string const runMajorIndex = runAuxiliary + majorIndex;
@@ -102,7 +102,7 @@ namespace edm {
   }
 
   std::string const& BranchTypeToBranchEntryInfoBranchName(BranchType const& branchType) {
-    return ((branchType == InEvent) ? eventBranchEntryInfo : ((branchType == InRun) ? runBranchEntryInfo : lumiBranchEntryInfo));
+    return ((branchType == InEvent) ? eventEventEntryInfo : ((branchType == InRun) ? runEventEntryInfo : lumiEventEntryInfo));
   }
 
   std::string const& BranchTypeToMajorIndexName(BranchType const& branchType) {

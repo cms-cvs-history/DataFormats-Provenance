@@ -1,6 +1,6 @@
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 #include "DataFormats/Provenance/interface/BranchEntryDescription.h"
-#include "DataFormats/Provenance/interface/BranchEntryInfo.h"
+#include "DataFormats/Provenance/interface/EventEntryInfo.h"
 #include "DataFormats/Provenance/interface/BranchID.h"
 #include "DataFormats/Provenance/interface/BranchKey.h"
 //#include "DataFormats/Provenance/interface/BranchMapper.h"
@@ -31,6 +31,7 @@
 #include "DataFormats/Provenance/interface/RunAux.h"
 #include "DataFormats/Provenance/interface/RunAuxiliary.h"
 #include "DataFormats/Provenance/interface/RunID.h"
+#include "DataFormats/Provenance/interface/RunLumiEntryInfo.h"
 #include "DataFormats/Provenance/interface/Timestamp.h"
 #include <map>
 #include <set>
@@ -57,6 +58,7 @@ namespace {
   std::vector<std::vector<edm::EventID> > dummyVectorVectorEventID;
   edm::Hash<4> dummyEntryDescriptionID;
 //  edm::Hash<5> dummyBranchMapperID;
-  std::vector<edm::BranchEntryInfo> dummyVectorBranchEntryInfo;
+  std::vector<edm::EventEntryInfo> dummyVectorEventEntryInfo;
+  std::vector<edm::RunLumiEntryInfo> dummyVectorRunLumiEntryInfo;
 };
 }

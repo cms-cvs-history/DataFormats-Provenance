@@ -34,10 +34,12 @@
  <class name="edm::BranchEntryDescription">
    <field name="moduleDescriptionPtr_" transient="true"/>
  </class>
- <class name="edm::BranchEntryInfo">
+ <class name="edm::EventEntryInfo">
    <field name="entryDescriptionPtr_" transient="true"/>
  </class>
- <class name="std::vector<edm::BranchEntryInfo>"/>
+ <class name="edm::RunLumiEntryInfo"/>
+ <class name="std::vector<edm::EventEntryInfo>"/>
+ <class name="std::vector<edm::RunLumiEntryInfo>"/>
  <class name="edm::EntryDescription">
    <field name="moduleDescriptionPtr_" transient="true"/>
  </class>

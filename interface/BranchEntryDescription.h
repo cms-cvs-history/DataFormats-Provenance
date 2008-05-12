@@ -12,7 +12,7 @@ and how it came into existence.
 #include "boost/shared_ptr.hpp"
 
 #include "DataFormats/Provenance/interface/ProductID.h"
-#include "DataFormats/Provenance/interface/BranchEntryInfo.h"
+#include "DataFormats/Provenance/interface/EventEntryInfo.h"
 #include "DataFormats/Provenance/interface/EntryDescription.h"
 #include "DataFormats/Provenance/interface/ModuleDescription.h"
 
