@@ -4,11 +4,11 @@
 
    \Original author Stefano ARGIRO
    \Current author Bill Tanenbaum
-   \version $Id: ProductRegistry.cc,v 1.8 2008/03/24 02:26:03 wmtan Exp $
+   \version $Id: ProductRegistry.cc,v 1.9 2008/04/01 23:12:38 wmtan Exp $
    \date 19 Jul 2005
 */
 
-static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.8 2008/03/24 02:26:03 wmtan Exp $";
+static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9 2008/04/01 23:12:38 wmtan Exp $";
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
@@ -30,10 +30,10 @@ namespace edm {
       elementLookup_(),
       fixedProductIDs_(),
       preExistingFixedProductIDs_() {
-        fixedProductIDs_.insert(std::make_pair(std::string("FEDRawDataCollection_rawDataCollector_"), 1U));
-        fixedProductIDs_.insert(std::make_pair(std::string("edmTriggerResults_TriggerResults_"), 2U));
-        fixedProductIDs_.insert(std::make_pair(std::string("triggerTriggerEvent_triggerSummaryAOD_"), 3U));
-        fixedProductIDs_.insert(std::make_pair(std::string("triggerTriggerEventWithRefs_triggerSummaryRAW_"), 4U));
+        fixedProductIDs_.insert(std::make_pair(std::string("FEDRawDataCollection_"), 1U));
+        fixedProductIDs_.insert(std::make_pair(std::string("edmTriggerResults_"), 2U));
+        fixedProductIDs_.insert(std::make_pair(std::string("triggerTriggerEvent_"), 3U));
+        fixedProductIDs_.insert(std::make_pair(std::string("triggerTriggerEventWithRefs_"), 4U));
 	nextID_ += fixedProductIDs_.size();
   }
 
@@ -48,8 +48,7 @@ namespace edm {
     // we must now check if this product must use a fixed product ID.
     if (preExistingFixedProductIDs_.size() < fixedProductIDs_.size()) {
       // NOTE: Not the full branch name.
-      std::string branchName = productDesc.friendlyClassName() + '_' +
-                               productDesc.moduleLabel() + '_';
+      std::string branchName = productDesc.friendlyClassName() + '_';
       std::map<std::string, unsigned int>::const_iterator it = fixedProductIDs_.find(branchName);
       if (it != fixedProductIDs_.end()) {
 	if (preExistingFixedProductIDs_.find(it->second) == preExistingFixedProductIDs_.end()) {
