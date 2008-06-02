@@ -4,11 +4,11 @@
 
    \Original author Stefano ARGIRO
    \Current author Bill Tanenbaum
-   \version $Id: ProductRegistry.cc,v 1.9.4.1 2008/05/15 04:52:42 wmtan Exp $
+   \version $Id: ProductRegistry.cc,v 1.9.4.2 2008/05/15 18:25:25 wmtan Exp $
    \date 19 Jul 2005
 */
 
-static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9.4.1 2008/05/15 04:52:42 wmtan Exp $";
+static const char CVSId[] = "$Id: ProductRegistry.cc,v 1.9.4.2 2008/05/15 18:25:25 wmtan Exp $";
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
@@ -167,8 +167,7 @@ namespace edm {
 	differences << "    but not in previous files.\n";
 	++i;
       } else if (i == e || j->first < i->first) {
-	differences << "Branch '" << j->second.branchName() << "' is in previous files\n";
-	differences << "    but not in file '" << fileName << "'.\n";
+	// Allow branch in previous files to be absent in this file.
 	++j;
       } else {
 	std::string difs = match(j->second, i->second, fileName, m);
