@@ -8,7 +8,7 @@
 
 /*----------------------------------------------------------------------
 
-$Id: BranchDescription.cc,v 1.9 2008/02/07 00:43:07 wmtan Exp $
+$Id: BranchDescription.cc,v 1.9.4.1 2008/06/02 16:23:50 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -276,15 +276,17 @@ namespace edm {
     (a.fullClassName() == b.fullClassName()) &&
     (a.friendlyClassName() == b.friendlyClassName()) &&
     (a.productInstanceName() == b.productInstanceName()) &&
-    (a.moduleLabel() == b.moduleLabel()) &&
-    (a.psetIDs() == b.psetIDs()) &&
-    (a.processConfigurationIDs() == b.processConfigurationIDs()) &&
-    (a.branchAliases() == b.branchAliases());
+    (a.moduleLabel() == b.moduleLabel());
   }
 
   bool
   operator==(BranchDescription const& a, BranchDescription const& b) {
-    return combinable(a, b) && (a.present() == b.present());
+    return combinable(a, b) &&
+       (a.present() == b.present()) &&
+       (a.psetIDs() == b.psetIDs()) &&
+       (a.processConfigurationIDs() == b.processConfigurationIDs()) &&
+       (a.branchAliases() == b.branchAliases());
+
   }
 
   std::string
