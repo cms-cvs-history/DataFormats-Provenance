@@ -176,6 +176,9 @@ void testFileIndex::eventSortAndSearchTest()
   iter = fileIndex.findLumiPosition( 3, 2, false);
   CPPUNIT_ASSERT((iter - fileIndex.begin()) == 8);
 
+  CPPUNIT_ASSERT(fileIndex.containsLumi(3, 3, true));
+  CPPUNIT_ASSERT(!fileIndex.containsLumi(2, 3, true));
+
   iter = fileIndex.findRunPosition( 3, true);
   CPPUNIT_ASSERT((iter - fileIndex.begin()) == 5);
 
@@ -184,6 +187,9 @@ void testFileIndex::eventSortAndSearchTest()
 
   iter = fileIndex.findRunPosition( 2, false);
   CPPUNIT_ASSERT((iter - fileIndex.begin()) == 5);
+
+  CPPUNIT_ASSERT(fileIndex.containsRun(3, true));
+  CPPUNIT_ASSERT(!fileIndex.containsRun(2, true));
 
   iter = fileIndex.findLumiOrRunPosition( 1, 2);
   CPPUNIT_ASSERT((iter - fileIndex.begin()) == 1);
