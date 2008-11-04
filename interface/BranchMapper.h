@@ -40,8 +40,6 @@ namespace edm {
 
     void mergeMappers(boost::shared_ptr<BranchMapper> other) {nextMapper_ = other;}
 
-    ProductID maxProductID() const;
-
   private:
     typedef std::set<EventEntryInfo> eiSet;
     typedef std::map<ProductID, eiSet::const_iterator> eiMap;

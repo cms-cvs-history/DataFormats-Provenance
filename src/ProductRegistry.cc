@@ -9,7 +9,6 @@
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
-#include "DataFormats/Provenance/interface/BranchType.h"
 #include "FWCore/Utilities/interface/ReflexTools.h"
 #include "FWCore/Utilities/interface/Exception.h"
 #include "FWCore/Utilities/interface/TypeID.h"
@@ -30,20 +29,23 @@ namespace edm {
 
   ProductRegistry::ProductRegistry() :
       productList_(),
-      nextID_(1),
+      branchIDListVector_(),
       transients_() {
   }
 
   ProductRegistry::Transients::Transients() :
       frozen_(false),
       constProductList_(),
+      currentIndex_(0),
+      productProduced_(),
       productLookup_(),
       elementLookup_() {
+	for (size_t i = 0; i < productProduced_.size(); ++i) productProduced_[i] = false;
   }
 
-  ProductRegistry::ProductRegistry(ProductList const& productList, unsigned int nextID) :
+  ProductRegistry::ProductRegistry(ProductList const& productList, BranchIDListVector const& branchIDListVector) :
       productList_(productList),
-      nextID_(nextID),
+      branchIDListVector_(branchIDListVector),
       transients_() {
     frozen() = true;
   }
@@ -75,19 +77,22 @@ namespace edm {
   }
   
   void
-  ProductRegistry::setProductIDs(unsigned int startingID) {
+  ProductRegistry::setProductIDs() {
     throwIfNotFrozen();
-    if (startingID < nextID_) {
-      startingID = nextID_;
-    }
-    --startingID;
+    transients_.get().currentIndex_ = branchIDListVector_.size();
+    branchIDListVector_.push_back(BranchIDList());
+    BranchIDList& branchIDList = branchIDListVector_.back();
+    ProductIndex startingID = 0;
     for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
         it != itEnd; ++it) {
-      if (it->second.produced() && it->second.branchType() == InEvent) {
-        it->second.setProductIDtoAssign(ProductID(++startingID));
+      if (it->second.produced()) {
+	if (it->second.branchType() == InEvent) {
+          it->second.setProductIndexToAssign(++startingID);
+	  branchIDList.push_back(it->second.branchID());
+	}
+	transients_.get().productProduced_[it->second.branchType()] = true;
       }
     }
-    setNextID(startingID + 1);
     initializeTransients();
   }
 
@@ -195,10 +200,6 @@ namespace edm {
 	++i;
 	++j;
       }
-    }
-    if (other.nextID() > nextID()) {
-      setNextID(other.nextID());
-      setProductIDs(other.nextID());
     }
     initializeTransients();
     return differences.str();

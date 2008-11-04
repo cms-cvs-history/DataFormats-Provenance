@@ -55,6 +55,7 @@
  <class name="std::map<edm::Hash<2>,edm::ProcessHistory>"/>
  <class name="std::pair<edm::Hash<2>,edm::ProcessHistory>"/>
  <class name="edm::Hash<1>"/>
+ <class name="std::vector<edm::Hash<1> >"/>
  <class name="std::set<edm::Hash<1> >"/>
  <class name="std::map<edm::Hash<1>,edm::ParameterSetBlob>"/>
  <class name="std::pair<edm::Hash<1>,edm::ParameterSetBlob>"/>

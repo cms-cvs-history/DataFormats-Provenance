@@ -15,7 +15,7 @@
 namespace edm {
   BranchDescription::Transients::Transients() :
     moduleDescriptionID_(),
-    productIDtoAssign_(),
+    productIndexToAssign_(),
     branchName_(),
     wrappedName_(),
     produced_(false),

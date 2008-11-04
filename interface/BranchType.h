@@ -23,13 +23,13 @@ namespace edm {
 
   std::string const& BranchTypeToMetaDataTreeName(BranchType const& branchType);
 
-  std::string const& BranchTypeToInfoTreeName(BranchType const& branchType);
+  std::string const& BranchTypeToInfoTreeName(BranchType const& branchType); // backward compatibility
 
   std::string const& BranchTypeToAuxiliaryBranchName(BranchType const& branchType);
 
-  std::string const& BranchTypeToAuxBranchName(BranchType const& branchType);
+  std::string const& BranchTypeToAuxBranchName(BranchType const& branchType); // backward compatibility
 
-  std::string const& BranchTypeToProductStatusBranchName(BranchType const& branchType);
+  std::string const& BranchTypeToProductStatusBranchName(BranchType const& branchType); // backward compatibility
 
   std::string const& BranchTypeToBranchEntryInfoBranchName(BranchType const& branchType);
 
