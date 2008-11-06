@@ -72,6 +72,8 @@ namespace edm {
 	std::string const& fileName,
 	BranchDescription::MatchMode m);
 
+    void updateFromInput(ProductRegistry const& other);
+
     ProductList const& productList() const {
       //throwIfNotFrozen();
       return productList_;
@@ -139,6 +141,8 @@ namespace edm {
     bool productProduced(BranchType branchType) const {return transients_.get().productProduced_[branchType];}
 
     BranchIDListVector const& branchIDListVector() const {return branchIDListVector_;}
+
+    BranchIDListVector & branchIDListVector() {return branchIDListVector_;}
 
   private:
     bool & frozen() const {return transients_.get().frozen_;}

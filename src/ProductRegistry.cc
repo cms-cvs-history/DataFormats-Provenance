@@ -57,7 +57,13 @@ namespace edm {
     throwIfFrozen();
     productDesc.init();
     checkDicts(productDesc);
-    productList_.insert(std::make_pair(BranchKey(productDesc), productDesc));
+    std::pair<ProductList::iterator, bool> ret =
+	 productList_.insert(std::make_pair(BranchKey(productDesc), productDesc));
+    if (!ret.second) {
+      throw edm::Exception(errors::Configuration, "Duplicate Process")
+	  << "The process name " << productDesc.processName() << " was previously used on these products.\n"
+	  << "Please modify the configuration file to use a distinct process name.\n";
+    }
     addCalled(productDesc,fromListener);
   }
  
@@ -163,6 +169,19 @@ namespace edm {
     return result;
   }
   
+  void
+  ProductRegistry::updateFromInput(ProductRegistry const& other) {
+    ProductRegistry::ProductList const& prodList = other.productList();
+    for (ProductRegistry::ProductList::const_iterator it = prodList.begin(), itEnd = prodList.end();
+	it != itEnd; ++it) {
+      copyProduct(it->second);
+    }
+    for (BranchIDListVector::const_iterator it = other.branchIDListVector().begin(), itEnd = other.branchIDListVector().end();
+	it != itEnd; ++it) {
+      branchIDListVector_.push_back(*it);
+    }
+  }
+
   std::string
   ProductRegistry::merge(ProductRegistry const& other,
 	std::string const& fileName,
