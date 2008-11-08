@@ -4,9 +4,9 @@
 /*----------------------------------------------------------------------
   
 BranchIDList: 
-BranchIDListVector: 
+BranchIDLists: 
         one table stored per File
-	table BranchIDListVector keyed by ProcessInfo::branchListIndex_;
+	table BranchIDLists keyed by ProcessInfo::branchListIndex_;
 	entry BranchIDList keyed by ProductID::productIndex_;
 
 ----------------------------------------------------------------------*/
@@ -15,7 +15,7 @@ BranchIDListVector:
 #include "DataFormats/Provenance/interface/BranchID.h"
 
 namespace edm {
-  typedef std::vector<BranchID> BranchIDList;
-  typedef std::vector<BranchIDList> BranchIDListVector;
+  typedef std::vector<BranchID::value_type> BranchIDList;
+  typedef std::vector<BranchIDList> BranchIDLists;
 }
 #endif

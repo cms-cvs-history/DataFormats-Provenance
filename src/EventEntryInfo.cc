@@ -61,7 +61,7 @@ namespace edm {
     transients_() {
        moduleDescriptionID() = edPtr->moduleDescriptionID();
        entryDescriptionPtr() = edPtr;
-       EntryDescriptionRegistry::instance()->insertMapped(*edPtr);
+       EntryDescriptionRegistry::instance()->registryPut(*edPtr);
   }
 
   EventEntryInfo::EventEntryInfo(BranchID const& bid,
@@ -79,7 +79,7 @@ namespace edm {
       entryDescriptionPtr()->parents() = parents;
       entryDescriptionPtr()->moduleDescriptionID() = mdid;
       entryDescriptionID_ = entryDescriptionPtr()->id();
-      EntryDescriptionRegistry::instance()->insertMapped(*entryDescriptionPtr());
+      EntryDescriptionRegistry::instance()->registryPut(*entryDescriptionPtr());
   }
 
   EventEntryInfo::EventEntryInfo(BranchID const& bid,
@@ -103,7 +103,7 @@ namespace edm {
   EventEntryInfo::entryDescription() const {
     if (!entryDescriptionPtr()) {
       entryDescriptionPtr().reset(new EventEntryDescription);
-      EntryDescriptionRegistry::instance()->getMapped(entryDescriptionID_, *entryDescriptionPtr());
+      EntryDescriptionRegistry::instance()->registryGet(entryDescriptionID_, *entryDescriptionPtr());
       moduleDescriptionID() = entryDescriptionPtr()->moduleDescriptionID();
     }
     return *entryDescriptionPtr();

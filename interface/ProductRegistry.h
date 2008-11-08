@@ -21,8 +21,6 @@
 #include "DataFormats/Provenance/interface/BranchKey.h"
 #include "DataFormats/Provenance/interface/BranchType.h"
 #include "DataFormats/Provenance/interface/BranchDescription.h"
-#include "DataFormats/Provenance/interface/BranchListIndex.h"
-#include "DataFormats/Provenance/interface/BranchIDList.h"
 #include "DataFormats/Provenance/interface/ConstBranchDescription.h"
 #include "DataFormats/Provenance/interface/Transient.h"
 
@@ -49,7 +47,7 @@ namespace edm {
     // A constructor from the persistent data memebers from another product registry.
     // saves time by not copying the transient components.
     // The constructed registry will be frozen.
-    ProductRegistry(ProductList const& productList, BranchIDListVector const& branchIDListVector);
+    explicit ProductRegistry(ProductList const& productList);
 
     virtual ~ProductRegistry() {}
 
@@ -121,7 +119,6 @@ namespace edm {
       Transients();
       bool frozen_;
       ConstProductList constProductList_; 
-      BranchListIndex currentIndex_;
       boost::array<bool, NumBranchTypes> productProduced_;
 
       // indices used to quickly find a group in the vector groups_
@@ -136,13 +133,7 @@ namespace edm {
 	transients_ = Transients();
     };
 
-    BranchListIndex currentIndex() const {return transients_.get().currentIndex_;}
-
     bool productProduced(BranchType branchType) const {return transients_.get().productProduced_[branchType];}
-
-    BranchIDListVector const& branchIDListVector() const {return branchIDListVector_;}
-
-    BranchIDListVector & branchIDListVector() {return branchIDListVector_;}
 
   private:
     bool & frozen() const {return transients_.get().frozen_;}
@@ -156,7 +147,6 @@ namespace edm {
                            const BranchKey& bk) const;
     
     ProductList productList_;
-    BranchIDListVector branchIDListVector_;
     mutable Transient<Transients> transients_;
     
   };

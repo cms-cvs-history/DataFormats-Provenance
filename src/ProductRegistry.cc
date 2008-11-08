@@ -9,6 +9,7 @@
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
+#include "DataFormats/Provenance/interface/BranchIDListHelper.h"
 #include "FWCore/Utilities/interface/ReflexTools.h"
 #include "FWCore/Utilities/interface/Exception.h"
 #include "FWCore/Utilities/interface/TypeID.h"
@@ -29,23 +30,20 @@ namespace edm {
 
   ProductRegistry::ProductRegistry() :
       productList_(),
-      branchIDListVector_(),
       transients_() {
   }
 
   ProductRegistry::Transients::Transients() :
       frozen_(false),
       constProductList_(),
-      currentIndex_(0),
       productProduced_(),
       productLookup_(),
       elementLookup_() {
 	for (size_t i = 0; i < productProduced_.size(); ++i) productProduced_[i] = false;
   }
 
-  ProductRegistry::ProductRegistry(ProductList const& productList, BranchIDListVector const& branchIDListVector) :
+  ProductRegistry::ProductRegistry(ProductList const& productList) :
       productList_(productList),
-      branchIDListVector_(branchIDListVector),
       transients_() {
     frozen() = true;
   }
@@ -85,21 +83,19 @@ namespace edm {
   void
   ProductRegistry::setProductIDs() {
     throwIfNotFrozen();
-    transients_.get().currentIndex_ = branchIDListVector_.size();
-    branchIDListVector_.push_back(BranchIDList());
-    BranchIDList& branchIDList = branchIDListVector_.back();
+  
     ProductIndex startingID = 0;
     for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
         it != itEnd; ++it) {
       if (it->second.produced()) {
 	if (it->second.branchType() == InEvent) {
           it->second.setProductIndexToAssign(++startingID);
-	  branchIDList.push_back(it->second.branchID());
 	}
 	transients_.get().productProduced_[it->second.branchType()] = true;
       }
     }
     initializeTransients();
+    BranchIDListHelper::initializeRegistry(*this);
   }
 
   bool
@@ -175,10 +171,6 @@ namespace edm {
     for (ProductRegistry::ProductList::const_iterator it = prodList.begin(), itEnd = prodList.end();
 	it != itEnd; ++it) {
       copyProduct(it->second);
-    }
-    for (BranchIDListVector::const_iterator it = other.branchIDListVector().begin(), itEnd = other.branchIDListVector().end();
-	it != itEnd; ++it) {
-      branchIDListVector_.push_back(*it);
     }
   }
 

@@ -15,6 +15,6 @@ ProcessInfoVector:
 
 namespace edm {
   typedef unsigned short BranchListIndex;
-  typedef std::vector<BranchListIndex> BranchListIndexVector;
+  typedef std::vector<BranchListIndex> BranchListIndexes;
 }
 #endif

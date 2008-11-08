@@ -60,10 +60,11 @@ namespace edm {
     // Branches on MetaData Tree
     std::string const& productDescriptionBranchName();
     std::string const& productDependenciesBranchName();
-    std::string const& parameterSetMapBranchName();
-    std::string const& moduleDescriptionMapBranchName();
-    std::string const& processHistoryMapBranchName();
-    std::string const& processConfigurationMapBranchName();
+    std::string const& parameterSetBranchName();
+    std::string const& moduleDescriptionBranchName();
+    std::string const& processHistoryBranchName();
+    std::string const& processConfigurationBranchName();
+    std::string const& branchIDListBranchName();
     std::string const& fileFormatVersionBranchName();
     std::string const& fileIdentifierBranchName();
     std::string const& fileIndexBranchName();

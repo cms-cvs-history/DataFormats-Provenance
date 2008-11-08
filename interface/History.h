@@ -49,7 +49,7 @@ namespace edm {
 
     ProcessHistoryID & processHistoryID();
 
-    BranchListIndexVector const& branchListIndexes() const {return branchListIndexes_;}
+    BranchListIndexes const& branchListIndexes() const {return branchListIndexes_;}
   private:
     
     // Note: We could, instead, define a struct that contains the
@@ -60,7 +60,7 @@ namespace edm {
     // for each type of item stored as data.
     EventSelectionIDVector eventSelections_;
 
-    BranchListIndexVector branchListIndexes_;
+    BranchListIndexes branchListIndexes_;
 
     ProcessHistoryID processHistoryID_; // backward compatibility
   };
