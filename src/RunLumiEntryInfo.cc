@@ -55,7 +55,7 @@ namespace edm {
     productStatus_(status),
     moduleDescriptionID_() {
      EventEntryDescription ed;
-     EntryDescriptionRegistry::instance()->registryGet(edid, ed);
+     EntryDescriptionRegistry::instance()->getMapped(edid, ed);
      moduleDescriptionID_ = ed.moduleDescriptionID();
   } 
 

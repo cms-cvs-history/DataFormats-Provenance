@@ -142,7 +142,7 @@ namespace edm {
     }
 
     // Branch on MetaData Tree
-    std::string const& parameterSetBranchName() {
+    std::string const& parameterSetMapBranchName() {
       return parameterSetMap;
     }
 
@@ -152,7 +152,7 @@ namespace edm {
     }
 
     // Branch on MetaData Tree
-    std::string const& processHistoryBranchName() {
+    std::string const& processHistoryMapBranchName() {
       return processHistoryMap;
     }
 

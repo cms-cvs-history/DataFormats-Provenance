@@ -18,7 +18,7 @@ namespace edm {
   EventEntryDescription::init() const {
     if (!moduleDescriptionPtr()) {
       moduleDescriptionPtr().reset(new ModuleDescription);
-      bool found = ModuleDescriptionRegistry::instance()->registryGet(moduleDescriptionID_, *moduleDescriptionPtr());
+      bool found = ModuleDescriptionRegistry::instance()->getMapped(moduleDescriptionID_, *moduleDescriptionPtr());
 
       assert(found);
     }
