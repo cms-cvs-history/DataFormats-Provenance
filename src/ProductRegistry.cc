@@ -79,19 +79,6 @@ namespace edm {
     }
   }
   
-  void
-  ProductRegistry::setProductIDs() {
-    throwIfNotFrozen();
-  
-    for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
-        it != itEnd; ++it) {
-      if (it->second.produced()) {
-	transients_.get().productProduced_[it->second.branchType()] = true;
-      }
-    }
-    initializeTransients();
-  }
-
   bool
   ProductRegistry::anyProducts(BranchType brType) const {
     throwIfNotFrozen();
@@ -215,6 +202,10 @@ namespace edm {
     productLookup().clear();
     elementLookup().clear();
     for (ProductList::const_iterator i = productList_.begin(), e = productList_.end(); i != e; ++i) {
+      if (i->second.produced()) {
+	setProductProduced(i->second.branchType());
+      }
+
       constProductList().insert(std::make_pair(i->first, ConstBranchDescription(i->second)));
 
       ProcessLookup& processLookup = productLookup()[i->first.friendlyClassName_];

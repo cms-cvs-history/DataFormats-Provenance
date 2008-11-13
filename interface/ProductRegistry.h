@@ -62,8 +62,6 @@ namespace edm {
 
     void copyProduct(BranchDescription const& productdesc);
 
-    void setProductIDs();
-
     void setFrozen() const;
 
     std::string merge(ProductRegistry const& other,
@@ -136,6 +134,8 @@ namespace edm {
     bool productProduced(BranchType branchType) const {return transients_.get().productProduced_[branchType];}
 
   private:
+    void setProductProduced(BranchType branchType) const {transients_.get().productProduced_[branchType] = true;}
+
     bool & frozen() const {return transients_.get().frozen_;}
     
     void initializeTransients() const;
