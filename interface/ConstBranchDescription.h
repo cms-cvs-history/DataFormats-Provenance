@@ -36,7 +36,6 @@ namespace edm {
     std::string const& moduleLabel() const {return ptr_->moduleLabel();}
     std::string const& processName() const {return ptr_->processName();}
     BranchID const& branchID() const {return ptr_->branchID();}
-    ProductIndex const& productIndexToAssign() const {return ptr_->productIndexToAssign();}
     std::string const& fullClassName() const {return ptr_->fullClassName();}
     std::string const& className() const {return ptr_->fullClassName();}
     std::string const& friendlyClassName() const {return ptr_->friendlyClassName();}

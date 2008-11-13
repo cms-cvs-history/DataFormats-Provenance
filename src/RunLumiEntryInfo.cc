@@ -1,4 +1,4 @@
-#include "DataFormats/Provenance/interface/EventEntryInfo.h"
+#include "DataFormats/Provenance/interface/ProductProvenance.h"
 #include "DataFormats/Provenance/interface/RunLumiEntryInfo.h"
 #include "DataFormats/Provenance/interface/EntryDescriptionID.h"
 #include "DataFormats/Provenance/interface/EventEntryDescription.h"
@@ -16,7 +16,7 @@ namespace edm {
     moduleDescriptionID_()
   {}
 
-  RunLumiEntryInfo::RunLumiEntryInfo(EventEntryInfo const& ei) :
+  RunLumiEntryInfo::RunLumiEntryInfo(ProductProvenance const& ei) :
     branchID_(ei.branchID()),
     productStatus_(ei.productStatus()),
     moduleDescriptionID_(ei.moduleDescriptionID())
@@ -40,7 +40,6 @@ namespace edm {
    RunLumiEntryInfo::RunLumiEntryInfo(BranchID const& bid,
 				    ProductStatus status,
 				    ModuleDescriptionID const& mid,
-		    		    ProductID const&,
 				    std::vector<BranchID> const&) :
     branchID_(bid),
     productStatus_(status),
@@ -49,7 +48,6 @@ namespace edm {
 
    RunLumiEntryInfo::RunLumiEntryInfo(BranchID const& bid,
 				    ProductStatus status,
-		    		    ProductID const&,
 				    EntryDescriptionID const& edid) :
     branchID_(bid),
     productStatus_(status),
@@ -59,9 +57,9 @@ namespace edm {
      moduleDescriptionID_ = ed.moduleDescriptionID();
   } 
 
-  EventEntryInfo
+  ProductProvenance
   RunLumiEntryInfo::makeEntryInfo() const {
-    return EventEntryInfo(branchID_, productStatus_, moduleDescriptionID_);
+    return ProductProvenance(branchID_, productStatus_, moduleDescriptionID_);
   }
 
   void

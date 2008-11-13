@@ -27,6 +27,7 @@
 #include "DataFormats/Provenance/interface/ProcessHistory.h"
 #include "DataFormats/Provenance/interface/ProcessHistoryID.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
+#include "DataFormats/Provenance/interface/ProductProvenance.h"
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
 #include "DataFormats/Provenance/interface/RunAux.h"
 #include "DataFormats/Provenance/interface/RunAuxiliary.h"
@@ -64,6 +65,7 @@ namespace {
   std::vector<std::vector<edm::EventID> > dummyVectorVectorEventID;
   edm::Hash<4> dummyEntryDescriptionID;
   std::vector<edm::EventEntryInfo> dummyVectorEventEntryInfo;
+  std::vector<edm::ProductProvenance> dummyVectorProductProvenance;
   std::vector<edm::RunLumiEntryInfo> dummyVectorRunLumiEntryInfo;
 };
 }

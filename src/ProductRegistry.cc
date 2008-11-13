@@ -9,7 +9,6 @@
 
 
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
-#include "DataFormats/Provenance/interface/BranchIDListHelper.h"
 #include "FWCore/Utilities/interface/ReflexTools.h"
 #include "FWCore/Utilities/interface/Exception.h"
 #include "FWCore/Utilities/interface/TypeID.h"
@@ -84,18 +83,13 @@ namespace edm {
   ProductRegistry::setProductIDs() {
     throwIfNotFrozen();
   
-    ProductIndex startingID = 0;
     for (ProductList::iterator it = productList_.begin(), itEnd = productList_.end();
         it != itEnd; ++it) {
       if (it->second.produced()) {
-	if (it->second.branchType() == InEvent) {
-          it->second.setProductIndexToAssign(++startingID);
-	}
 	transients_.get().productProduced_[it->second.branchType()] = true;
       }
     }
     initializeTransients();
-    BranchIDListHelper::initializeRegistry(*this);
   }
 
   bool

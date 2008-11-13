@@ -8,46 +8,46 @@ namespace edm {
 
   Provenance::Provenance(BranchDescription const& p) :
     branchDescription_(p),
-    branchEntryInfoPtr_() {
+    productProvenancePtr_() {
   }
 
   Provenance::Provenance(ConstBranchDescription const& p) :
     branchDescription_(p),
-    branchEntryInfoPtr_() {
+    productProvenancePtr_() {
   }
 
-  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<EventEntryInfo> ei) :
+  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<ProductProvenance> ei) :
     branchDescription_(p),
-    branchEntryInfoPtr_(ei)
+    productProvenancePtr_(ei)
   { }
 
-  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<EventEntryInfo> ei) :
+  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<ProductProvenance> ei) :
     branchDescription_(p),
-    branchEntryInfoPtr_(ei)
+    productProvenancePtr_(ei)
   { }
 
   Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
     branchDescription_(p),
-    branchEntryInfoPtr_(boost::shared_ptr<EventEntryInfo>(
-      new EventEntryInfo(ei->branchID(), ei->productStatus(), ei->moduleDescriptionID()))) {
+    productProvenancePtr_(boost::shared_ptr<ProductProvenance>(
+      new ProductProvenance(ei->branchID(), ei->productStatus(), ei->moduleDescriptionID()))) {
   }
 
   Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
     branchDescription_(p),
-    branchEntryInfoPtr_(boost::shared_ptr<EventEntryInfo>(
-      new EventEntryInfo(ei->branchID(), ei->productStatus(), ei->moduleDescriptionID()))) {
+    productProvenancePtr_(boost::shared_ptr<ProductProvenance>(
+      new ProductProvenance(ei->branchID(), ei->productStatus(), ei->moduleDescriptionID()))) {
   }
 
   void
-  Provenance::setEventEntryInfo(boost::shared_ptr<EventEntryInfo> bei) const {
-    assert(branchEntryInfoPtr_.get() == 0);
-    branchEntryInfoPtr_ = bei;
+  Provenance::setProductProvenance(boost::shared_ptr<ProductProvenance> bei) const {
+    assert(productProvenancePtr_.get() == 0);
+    productProvenancePtr_ = bei;
   }
 
-  boost::shared_ptr<EventEntryInfo>
+  boost::shared_ptr<ProductProvenance>
   Provenance::resolve () const {
-    boost::shared_ptr<EventEntryInfo> prov = store_->branchToEntryInfo(branchDescription_.branchID());
-    setEventEntryInfo(prov);
+    boost::shared_ptr<ProductProvenance> prov = store_->branchToEntryInfo(branchDescription_.branchID());
+    setProductProvenance(prov);
     return prov;
 }
 

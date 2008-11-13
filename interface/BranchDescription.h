@@ -71,7 +71,6 @@ namespace edm {
     std::string const& processName() const {return processName_;}
     BranchID const& branchID() const {return branchID_;}
     ProductID const& oldProductID() const {return productID_;}
-    ProductIndex & productIndexToAssign() const {return transients_.get().productIndexToAssign_;}
     std::string const& fullClassName() const {return fullClassName_;}
     std::string const& className() const {return fullClassName();}
     std::string const& friendlyClassName() const {return friendlyClassName_;}
@@ -95,7 +94,6 @@ namespace edm {
     std::string & wrappedName() const {return transients_.get().wrappedName_;}
 
     void setPresent(bool isPresent) const {present() = isPresent;}
-    void setProductIndexToAssign(ProductIndex index) const {productIndexToAssign() = index;}
     void updateFriendlyClassName();
 
     void setDefaultTransients() const {
@@ -110,10 +108,6 @@ namespace edm {
       // This is just used as a cache, and is not logically
       // part of the branch description.
       ModuleDescriptionID moduleDescriptionID_;
-
-      // An Index to be assigned to products on the branch,
-      // This is only valid if produced_ is true.
-      ProductIndex productIndexToAssign_;
 
       // The branch name, which is currently derivable fron the other attributes.
       std::string branchName_;

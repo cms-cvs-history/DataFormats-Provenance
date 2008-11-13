@@ -31,7 +31,9 @@
  <class name="edm::BranchEntryDescription"/>
  <class name="edm::BranchChildren"/>
  <class name="edm::EventEntryInfo"/>
+ <class name="edm::ProductProvenance"/>
  <class name="edm::RunLumiEntryInfo"/>
+ <class name="std::vector<edm::ProductProvenance>"/>
  <class name="std::vector<edm::EventEntryInfo>"/>
  <class name="std::vector<edm::RunLumiEntryInfo>"/>
  <class name="edm::EntryDescription"/>
