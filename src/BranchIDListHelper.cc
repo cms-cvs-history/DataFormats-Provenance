@@ -1,6 +1,7 @@
 #include "DataFormats/Provenance/interface/BranchIDListHelper.h"
 #include "DataFormats/Provenance/interface/BranchIDListRegistry.h"
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
+#include "FWCore/Utilities/interface/EDMException.h"
 
 namespace edm {
 
@@ -12,7 +13,9 @@ namespace edm {
     iter j = bidlists.begin(), jEnd = bidlists.end();
     for(iter i = bdata.begin(), iEnd = bdata.end(); j != jEnd && i != iEnd; ++j, ++i) {
       if (*i != *j) {
-	assert(("BranchIDListRegistry merge failure", 0));
+	throw edm::Exception(errors::UnimplementedFeature)
+	  << "Cannot merge file '" << fileName << "' due to a branch mismatch.\n"
+	  << "Contact the framework group.\n";
       }
     }
     for (; j != jEnd; ++j) {
