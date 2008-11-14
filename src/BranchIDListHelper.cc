@@ -3,6 +3,23 @@
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
 
 namespace edm {
+
+  void
+  BranchIDListHelper:: merge(BranchIDLists const& bidlists, std::string const& fileName) {
+    typedef BranchIDListRegistry::const_iterator iter;
+    BranchIDListRegistry& breg = *BranchIDListRegistry::instance();
+    BranchIDListRegistry::collection_type& bdata = breg.data();
+    iter j = bidlists.begin(), jEnd = bidlists.end();
+    for(iter i = bdata.begin(), iEnd = bdata.end(); j != jEnd && i != iEnd; ++j, ++i) {
+      if (*i != *j) {
+	assert(("BranchIDListRegistry merge failure", 0));
+      }
+    }
+    for (; j != jEnd; ++j) {
+      breg.insertMapped(*j);
+    }
+  }
+
   void
   BranchIDListHelper::updateRegistry(ProductRegistry const& preg) {
     BranchIDList bidlist;

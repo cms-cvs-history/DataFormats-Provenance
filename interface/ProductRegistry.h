@@ -68,7 +68,9 @@ namespace edm {
 	std::string const& fileName,
 	BranchDescription::MatchMode m);
 
-    void updateFromInput(ProductRegistry const& other);
+    void updateFromInput(ProductList const& other);
+
+    void updateFromInput(std::vector<BranchDescription> const& other);
 
     ProductList const& productList() const {
       //throwIfNotFrozen();

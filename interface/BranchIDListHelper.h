@@ -2,6 +2,7 @@
 #define FWCore_Framework_BranchIDListHelper_h
 
 #include "DataFormats/Provenance/interface/BranchListIndex.h"
+#include "DataFormats/Provenance/interface/BranchIDList.h"
 #include "DataFormats/Provenance/interface/ProvenanceFwd.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
 #include <map>
@@ -13,6 +14,7 @@ namespace edm {
     typedef std::pair<BranchListIndex, ProductIndex> IndexPair;
     typedef std::map<BranchID, IndexPair> BranchIDToIndexMap;
     BranchIDListHelper() : branchIDToIndexMap_(), currentIndex_(0) {}
+    static void merge(BranchIDLists const& bidlists, std::string const& fileName);
     static void updateRegistry(ProductRegistry const& reg);
     static void clearRegistry();  // Use only for tests
 

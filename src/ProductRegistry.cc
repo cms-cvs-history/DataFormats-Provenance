@@ -147,11 +147,18 @@ namespace edm {
   }
   
   void
-  ProductRegistry::updateFromInput(ProductRegistry const& other) {
-    ProductRegistry::ProductList const& prodList = other.productList();
-    for (ProductRegistry::ProductList::const_iterator it = prodList.begin(), itEnd = prodList.end();
+  ProductRegistry::updateFromInput(ProductList const& other) {
+    for (ProductList::const_iterator it = other.begin(), itEnd = other.end();
 	it != itEnd; ++it) {
       copyProduct(it->second);
+    }
+  }
+
+  void
+  ProductRegistry::updateFromInput(std::vector<BranchDescription> const& other) {
+    for (std::vector<BranchDescription>::const_iterator it = other.begin(), itEnd = other.end();
+	it != itEnd; ++it) {
+      copyProduct(*it);
     }
   }
 
