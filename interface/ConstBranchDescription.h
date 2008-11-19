@@ -47,7 +47,7 @@ namespace edm {
     int const& splitLevel() const {return ptr_->splitLevel();}
     int const& basketSize() const {return ptr_->basketSize();}
 
-    ModuleDescriptionID const& moduleDescriptionID() const {return ptr_->moduleDescriptionID();}
+    ParameterSetID const& parameterSetID() const {return ptr_->parameterSetID();}
     std::set<ParameterSetID> const& psetIDs() const {return ptr_->psetIDs();}
     ParameterSetID const& psetID() const {return ptr_->psetID();}
     bool isPsetIDUnique() const {return ptr_->psetIDs().size() == 1;}

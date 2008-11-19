@@ -29,13 +29,13 @@ namespace edm {
   Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
     branchDescription_(p),
     productProvenancePtr_(boost::shared_ptr<ProductProvenance>(
-      new ProductProvenance(ei->branchID(), ei->productStatus(), ei->moduleDescriptionID()))) {
+      new ProductProvenance(ei->branchID(), ei->productStatus()))) {
   }
 
   Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
     branchDescription_(p),
     productProvenancePtr_(boost::shared_ptr<ProductProvenance>(
-      new ProductProvenance(ei->branchID(), ei->productStatus(), ei->moduleDescriptionID()))) {
+      new ProductProvenance(ei->branchID(), ei->productStatus()))) {
   }
 
   void

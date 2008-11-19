@@ -39,11 +39,7 @@ namespace edm {
 
     ProductProvenance(BranchID const& bid,
 		   ProductStatus status,
-		   ModuleDescriptionID const& mdid,
 		   std::vector<BranchID> const& parents);
-    ProductProvenance(BranchID const& bid,
-                   ProductStatus status,
-                   ModuleDescriptionID const& mdid);
 
     ~ProductProvenance() {}
 
@@ -58,21 +54,13 @@ namespace edm {
     void setStatus(ProductStatus status) {productStatus_ = status;}
     void setPresent();
     void setNotPresent();
-    void setModuleDescriptionID(ModuleDescriptionID const& mdid) {moduleDescriptionID() = mdid;}
-
-    ModuleDescriptionID & moduleDescriptionID() const {return transients_.get().moduleDescriptionID_;}
 
     bool & noEntryDescription() const {return transients_.get().noEntryDescription_;}
 
     struct Transients {
       Transients();
-      ModuleDescriptionID moduleDescriptionID_;
       boost::shared_ptr<EventEntryDescription> entryDescriptionPtr_;
       bool noEntryDescription_;
-    };
-
-    void setDefaultTransients() const {
-	transients_ = Transients();
     };
 
   private:

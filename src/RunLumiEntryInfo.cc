@@ -19,7 +19,7 @@ namespace edm {
   RunLumiEntryInfo::RunLumiEntryInfo(ProductProvenance const& ei) :
     branchID_(ei.branchID()),
     productStatus_(ei.productStatus()),
-    moduleDescriptionID_(ei.moduleDescriptionID())
+    moduleDescriptionID_()
   {}
 
   RunLumiEntryInfo::RunLumiEntryInfo(BranchID const& bid) :
@@ -59,7 +59,7 @@ namespace edm {
 
   ProductProvenance
   RunLumiEntryInfo::makeEntryInfo() const {
-    return ProductProvenance(branchID_, productStatus_, moduleDescriptionID_);
+    return ProductProvenance(branchID_, productStatus_);
   }
 
   void

@@ -5,7 +5,7 @@
 
 FileIndex.h 
 
-$Id: FileIndex.h,v 1.9 2008/10/02 18:47:09 wdd Exp $
+$Id: FileIndex.h,v 1.10 2008/10/15 22:37:36 wdd Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -107,10 +107,6 @@ namespace edm {
 	bool allInEntryOrder_;
 	bool resultCached_;
 	SortState sortState_;
-      };
-
-      void setDefaultTransients() const {
-	transients_ = Transients();
       };
 
     private:

@@ -14,7 +14,7 @@
 
 namespace edm {
   BranchDescription::Transients::Transients() :
-    moduleDescriptionID_(),
+    parameterSetID_(),
     branchName_(),
     wrappedName_(),
     produced_(false),
@@ -66,41 +66,9 @@ namespace edm {
   {
     present() = true;
     produced() = true;
-    moduleDescriptionID() = modDesc.id();
+    transients_.get().parameterSetID_ = modDesc.parameterSetID();
     psetIDs_.insert(modDesc.parameterSetID());
     processConfigurationIDs_.insert(modDesc.processConfigurationID());
-    init();
-  }
-
-
-
-  BranchDescription::BranchDescription(
-			BranchType const& branchType,
-			std::string const& mdLabel, 
-			std::string const& procName, 
-			std::string const& name, 
-			std::string const& fName, 
-			std::string const& pin, 
-			ModuleDescriptionID const& mdID,
-			std::set<ParameterSetID> const& psIDs,
-			std::set<ProcessConfigurationID> const& procConfigIDs,
-			std::set<std::string> const& aliases) :
-    branchType_(branchType),
-    moduleLabel_(mdLabel),
-    processName_(procName),
-    branchID_(),
-    productID_(),
-    fullClassName_(name),
-    friendlyClassName_(fName),
-    productInstanceName_(pin),
-    psetIDs_(psIDs),
-    processConfigurationIDs_(procConfigIDs),
-    branchAliases_(aliases),
-    transients_()
-  {
-    present() = true;
-    produced() = true;
-    moduleDescriptionID() = mdID;
     init();
   }
 
@@ -239,8 +207,8 @@ namespace edm {
     if (friendlyClassName_.empty())
       throwExceptionWithText("Friendly class name is not allowed to be empty");
 
-    if (produced() && !moduleDescriptionID().isValid())
-      throwExceptionWithText("Invalid ModuleDescriptionID detected");    
+    if (produced() && !parameterSetID().isValid())
+      throwExceptionWithText("Invalid ParameterSetID detected");    
   }
 
   void

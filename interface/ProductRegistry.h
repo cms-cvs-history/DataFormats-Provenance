@@ -129,10 +129,6 @@ namespace edm {
       TypeLookup elementLookup_;
     };
 
-    void setDefaultTransients() const {
-	transients_ = Transients();
-    };
-
     bool productProduced(BranchType branchType) const {return transients_.get().productProduced_[branchType];}
 
   private:

@@ -79,10 +79,6 @@ namespace edm {
       bool noEntryDescription_;
     };
 
-    void setDefaultTransients() const {
-	transients_ = Transients();
-    };
-
   private:
 
     boost::shared_ptr<EventEntryDescription> & entryDescriptionPtr() const {return transients_.get().entryDescriptionPtr_;}

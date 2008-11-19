@@ -16,7 +16,6 @@ This description also applies to every product instance on the branch.
 #include "DataFormats/Provenance/interface/BranchID.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
 #include "DataFormats/Provenance/interface/ParameterSetID.h"
-#include "DataFormats/Provenance/interface/ModuleDescriptionID.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
 #include "DataFormats/Provenance/interface/Transient.h"
 
@@ -47,18 +46,6 @@ namespace edm {
 		      ModuleDescription const& modDesc,
 		      std::set<std::string> const& aliases = std::set<std::string>());
 
-
-    BranchDescription(BranchType const& branchType,
-		      std::string const& mdLabel, 
-		      std::string const& procName, 
-		      std::string const& name, 
-		      std::string const& fName, 
-		      std::string const& pin, 
-		      ModuleDescriptionID const& mdID, // = ModuleDescriptionID(),
-		      std::set<ParameterSetID> const& psIDs, // = std::set<ParameterSetID>(),
-		      std::set<ProcessConfigurationID> const& procConfigIDs, // = std::set<ProcessConfigurationID>(),
-		      std::set<std::string> const& aliases = std::set<std::string>());
-
     ~BranchDescription() {}
 
     void init() const;
@@ -82,7 +69,7 @@ namespace edm {
     int & splitLevel() const {return transients_.get().splitLevel_;}
     int & basketSize() const {return transients_.get().basketSize_;}
 
-    ModuleDescriptionID & moduleDescriptionID() const {return transients_.get().moduleDescriptionID_;}
+    ParameterSetID const& parameterSetID() const {return transients_.get().parameterSetID_;}
     std::set<ParameterSetID> const& psetIDs() const {return psetIDs_;}
     ParameterSetID const& psetID() const;
     bool isPsetIDUnique() const {return psetIDs().size() == 1;}
@@ -96,18 +83,14 @@ namespace edm {
     void setPresent(bool isPresent) const {present() = isPresent;}
     void updateFriendlyClassName();
 
-    void setDefaultTransients() const {
-	transients_ = Transients();
-    };
-
     struct Transients {
       Transients();
 
-      // The module description id of the producer.
+      // The parameter set id of the producer.
       // This is only valid if produced_ is true.
       // This is just used as a cache, and is not logically
       // part of the branch description.
-      ModuleDescriptionID moduleDescriptionID_;
+      ParameterSetID parameterSetID_;
 
       // The branch name, which is currently derivable fron the other attributes.
       std::string branchName_;

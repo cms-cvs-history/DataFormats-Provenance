@@ -55,10 +55,6 @@ namespace edm {
       boost::shared_ptr<ModuleDescription> moduleDescriptionPtr_;
     };
 
-    void setDefaultTransients() const {
-	transients_ = Transients();
-    };
-
   private:
     void init() const;
 

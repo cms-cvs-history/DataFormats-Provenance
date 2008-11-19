@@ -22,6 +22,7 @@
 #include "DataFormats/Provenance/interface/ModuleDescription.h"
 #include "DataFormats/Provenance/interface/ModuleDescriptionID.h"
 #include "DataFormats/Provenance/interface/ParameterSetBlob.h"
+#include "DataFormats/Provenance/interface/ParameterSetID.h"
 #include "DataFormats/Provenance/interface/ProcessConfiguration.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
 #include "DataFormats/Provenance/interface/ProcessHistory.h"
@@ -67,5 +68,6 @@ namespace {
   std::vector<edm::EventEntryInfo> dummyVectorEventEntryInfo;
   std::vector<edm::ProductProvenance> dummyVectorProductProvenance;
   std::vector<edm::RunLumiEntryInfo> dummyVectorRunLumiEntryInfo;
+  std::vector<std::vector<edm::ParameterSetID> > dummyVectorVectorParameterSetID;
 };
 }

@@ -65,6 +65,7 @@ namespace edm {
     std::string const& processHistoryMapBranchName();
     std::string const& processConfigurationBranchName();
     std::string const& branchIDListBranchName();
+    std::string const& parameterSetIDListBranchName();
     std::string const& fileFormatVersionBranchName();
     std::string const& fileIdentifierBranchName();
     std::string const& fileIndexBranchName();

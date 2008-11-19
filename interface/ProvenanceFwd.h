@@ -31,6 +31,7 @@ namespace edm {
 #include "DataFormats/Provenance/interface/PassID.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"
 #include "DataFormats/Provenance/interface/ReleaseVersion.h"
+#include "DataFormats/Provenance/interface/ParameterSetIDList.h"
 #include "DataFormats/Provenance/interface/ProcessHistoryID.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationRegistry.h"
