@@ -56,6 +56,10 @@ namespace edm {
     std::string const entryDescriptionIDBranch = "Hash";
     std::string const entryDescriptionBranch   = "Description";
 
+    std::string const parentageTree     = "Parentage";
+    std::string const parentageIDBranch = "Hash";
+    std::string const parentageBranch   = "Description";
+
     std::string const metaDataTree = "MetaData";
     std::string const productRegistry = "ProductRegistry";
     std::string const productDependencies = "ProductDependencies";
@@ -127,6 +131,19 @@ namespace edm {
       return entryDescriptionBranch;
     }
 
+    // EntryDescription tree (1 entry per recorded distinct value of EntryDescription)
+    std::string const& parentageTreeName() {
+      return parentageTree;
+    }
+
+    std::string const& parentageIDBranchName() {
+      return parentageIDBranch;
+    }
+
+    std::string const& parentageBranchName() {
+      return parentageBranch;
+    }
+
     // MetaData Tree (1 entry per file)
     std::string const& metaDataTreeName() {
       return metaDataTree;
@@ -148,7 +165,7 @@ namespace edm {
     }
 
     // Branch on MetaData Tree
-    std::string const& moduleDescriptionBranchName() {
+    std::string const& moduleDescriptionMapBranchName() {
       return moduleDescriptionMap;
     }
 

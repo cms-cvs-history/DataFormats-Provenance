@@ -13,7 +13,7 @@ and how it came into existence, plus the status.
 #include "boost/shared_ptr.hpp"
 
 #include "DataFormats/Provenance/interface/BranchID.h"
-#include "DataFormats/Provenance/interface/EntryDescriptionID.h"
+#include "DataFormats/Provenance/interface/ParentageID.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"
 #include "DataFormats/Provenance/interface/ProvenanceFwd.h"
 #include "DataFormats/Provenance/interface/Transient.h"
@@ -32,10 +32,10 @@ namespace edm {
 		    ProductStatus status);
     ProductProvenance(BranchID const& bid,
 		    ProductStatus status,
-		    boost::shared_ptr<EventEntryDescription> edPtr);
+		    boost::shared_ptr<Parentage> parentagePtr);
     ProductProvenance(BranchID const& bid,
 		    ProductStatus status,
-		    EntryDescriptionID const& edid);
+		    ParentageID const& id);
 
     ProductProvenance(BranchID const& bid,
 		   ProductStatus status,
@@ -43,33 +43,33 @@ namespace edm {
 
     ~ProductProvenance() {}
 
-    ProductProvenance makeEntryInfo() const;
+    ProductProvenance makeProductProvenance() const;
 
     void write(std::ostream& os) const;
 
     BranchID const& branchID() const {return branchID_;}
     ProductStatus const& productStatus() const {return productStatus_;}
-    EntryDescriptionID const& entryDescriptionID() const {return entryDescriptionID_;}
-    EventEntryDescription const& entryDescription() const;
+    ParentageID const& parentageID() const {return parentageID_;}
+    Parentage const& parentage() const;
     void setStatus(ProductStatus status) {productStatus_ = status;}
     void setPresent();
     void setNotPresent();
 
-    bool & noEntryDescription() const {return transients_.get().noEntryDescription_;}
+    bool & noParentage() const {return transients_.get().noParentage_;}
 
     struct Transients {
       Transients();
-      boost::shared_ptr<EventEntryDescription> entryDescriptionPtr_;
-      bool noEntryDescription_;
+      boost::shared_ptr<Parentage> parentagePtr_;
+      bool noParentage_;
     };
 
   private:
 
-    boost::shared_ptr<EventEntryDescription> & entryDescriptionPtr() const {return transients_.get().entryDescriptionPtr_;}
+    boost::shared_ptr<Parentage> & parentagePtr() const {return transients_.get().parentagePtr_;}
 
     BranchID branchID_;
     ProductStatus productStatus_;
-    EntryDescriptionID entryDescriptionID_;
+    ParentageID parentageID_;
     mutable Transient<Transients> transients_;
   };
 

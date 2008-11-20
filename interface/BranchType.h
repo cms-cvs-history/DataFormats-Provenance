@@ -46,13 +46,22 @@ namespace edm {
 
   namespace poolNames {
     //------------------------------------------------------------------
-    // EntryDescription Tree
+    // EntryDescription Tree // Obsolete
     std::string const& entryDescriptionTreeName();
 
-    // Branches on EntryDescription Tree
+    // Branches on EntryDescription Tree // Obsolete
     std::string const& entryDescriptionIDBranchName();
     std::string const& entryDescriptionBranchName();
 
+    //------------------------------------------------------------------
+    // Parentage Tree
+    std::string const& parentageTreeName();
+
+    // Branches on parentage tree
+    std::string const& parentageIDBranchName();
+    std::string const& parentageBranchName();
+
+    //------------------------------------------------------------------
     //------------------------------------------------------------------
     // MetaData Tree (1 entry per file)
     std::string const& metaDataTreeName();
@@ -61,7 +70,7 @@ namespace edm {
     std::string const& productDescriptionBranchName();
     std::string const& productDependenciesBranchName();
     std::string const& parameterSetMapBranchName();
-    std::string const& moduleDescriptionBranchName();
+    std::string const& moduleDescriptionMapBranchName(); // Obsolete
     std::string const& processHistoryMapBranchName();
     std::string const& processConfigurationBranchName();
     std::string const& branchIDListBranchName();

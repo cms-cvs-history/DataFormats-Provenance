@@ -95,8 +95,9 @@ namespace edm {
     }
 
   ProductProvenance
-  EventEntryInfo::makeEntryInfo() const {
-    return ProductProvenance(branchID_, productStatus_, entryDescriptionID_);
+  EventEntryInfo::makeProductProvenance() const {
+    //QQQ return ProductProvenance(branchID_, productStatus_, entryDescriptionID_);
+    return ProductProvenance(branchID_, productStatus_);
   }
 
   EventEntryDescription const &

@@ -1,5 +1,5 @@
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
-#include "DataFormats/Provenance/interface/EntryDescriptionRegistry.h"
+#include "DataFormats/Provenance/interface/ParentageRegistry.h"
 #include <ostream>
 
 /*----------------------------------------------------------------------
@@ -8,21 +8,21 @@
 
 namespace edm {
   ProductProvenance::Transients::Transients() :
-    entryDescriptionPtr_(),
-    noEntryDescription_(false)
+    parentagePtr_(),
+    noParentage_(false)
   {}
 
   ProductProvenance::ProductProvenance() :
     branchID_(),
     productStatus_(productstatus::uninitialized()),
-    entryDescriptionID_(),
+    parentageID_(),
     transients_()
   {}
 
   ProductProvenance::ProductProvenance(BranchID const& bid) :
     branchID_(bid),
     productStatus_(productstatus::uninitialized()),
-    entryDescriptionID_(),
+    parentageID_(),
     transients_()
   {}
 
@@ -30,28 +30,28 @@ namespace edm {
 				    ProductStatus status) :
     branchID_(bid),
     productStatus_(status),
-    entryDescriptionID_(),
+    parentageID_(),
     transients_()
   {}
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
 				    ProductStatus status,
-				    EntryDescriptionID const& edid) :
+				    ParentageID const& edid) :
     branchID_(bid),
     productStatus_(status),
-    entryDescriptionID_(edid),
+    parentageID_(edid),
     transients_()
   {}
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
 				    ProductStatus status,
-				    boost::shared_ptr<EventEntryDescription> edPtr) :
+				    boost::shared_ptr<Parentage> pPtr) :
     branchID_(bid),
     productStatus_(status),
-    entryDescriptionID_(edPtr->id()),
+    parentageID_(pPtr->id()),
     transients_() {
-       entryDescriptionPtr() = edPtr;
-       EntryDescriptionRegistry::instance()->insertMapped(*edPtr);
+       parentagePtr() = pPtr;
+       ParentageRegistry::instance()->insertMapped(*pPtr);
   }
 
   ProductProvenance::ProductProvenance(BranchID const& bid,
@@ -59,26 +59,26 @@ namespace edm {
 		   std::vector<BranchID> const& parents) :
     branchID_(bid),
     productStatus_(status),
-    entryDescriptionID_(),
+    parentageID_(),
     transients_() {
-      entryDescriptionPtr() = boost::shared_ptr<EventEntryDescription>(new EventEntryDescription);
-      entryDescriptionPtr()->parents() = parents;
-      entryDescriptionID_ = entryDescriptionPtr()->id();
-      EntryDescriptionRegistry::instance()->insertMapped(*entryDescriptionPtr());
+      parentagePtr() = boost::shared_ptr<Parentage>(new Parentage);
+      parentagePtr()->parents() = parents;
+      parentageID_ = parentagePtr()->id();
+      ParentageRegistry::instance()->insertMapped(*parentagePtr());
   }
 
   ProductProvenance
-  ProductProvenance::makeEntryInfo() const {
+  ProductProvenance::makeProductProvenance() const {
     return *this;
   }
 
-  EventEntryDescription const &
-  ProductProvenance::entryDescription() const {
-    if (!entryDescriptionPtr()) {
-      entryDescriptionPtr().reset(new EventEntryDescription);
-      EntryDescriptionRegistry::instance()->getMapped(entryDescriptionID_, *entryDescriptionPtr());
+  Parentage const &
+  ProductProvenance::parentage() const {
+    if (!parentagePtr()) {
+      parentagePtr().reset(new Parentage);
+      ParentageRegistry::instance()->getMapped(parentageID_, *parentagePtr());
     }
-    return *entryDescriptionPtr();
+    return *parentagePtr();
   }
 
   void
@@ -100,15 +100,15 @@ namespace edm {
   ProductProvenance::write(std::ostream& os) const {
     os << "branch ID = " << branchID() << '\n';
     os << "product status = " << static_cast<int>(productStatus()) << '\n';
-    if (!noEntryDescription()) {
-      os << "entry description ID = " << entryDescriptionID() << '\n';
+    if (!noParentage()) {
+      os << "entry description ID = " << parentageID() << '\n';
     }
   }
     
   bool
   operator==(ProductProvenance const& a, ProductProvenance const& b) {
-    if (a.noEntryDescription() != b.noEntryDescription()) return false;
-    if (a.noEntryDescription()) {
+    if (a.noParentage() != b.noParentage()) return false;
+    if (a.noParentage()) {
       return
         a.branchID() == b.branchID()
         && a.productStatus() == b.productStatus();
@@ -116,6 +116,6 @@ namespace edm {
     return
       a.branchID() == b.branchID()
       && a.productStatus() == b.productStatus()
-      && a.entryDescriptionID() == b.entryDescriptionID();
+      && a.parentageID() == b.parentageID();
   }
 }

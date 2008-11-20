@@ -26,18 +26,6 @@ namespace edm {
     productProvenancePtr_(ei)
   { }
 
-  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
-    branchDescription_(p),
-    productProvenancePtr_(boost::shared_ptr<ProductProvenance>(
-      new ProductProvenance(ei->branchID(), ei->productStatus()))) {
-  }
-
-  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<RunLumiEntryInfo> ei) :
-    branchDescription_(p),
-    productProvenancePtr_(boost::shared_ptr<ProductProvenance>(
-      new ProductProvenance(ei->branchID(), ei->productStatus()))) {
-  }
-
   void
   Provenance::setProductProvenance(boost::shared_ptr<ProductProvenance> bei) const {
     assert(productProvenancePtr_.get() == 0);
@@ -57,14 +45,14 @@ namespace edm {
     // This is grossly inadequate, but it is not critical for the
     // first pass.
     product().write(os);
-    branchEntryInfo().write(os);
+    productProvenance().write(os);
   }
 
     
   bool operator==(Provenance const& a, Provenance const& b) {
     return
       a.product() == b.product()
-      && a.entryDescription() == b.entryDescription();
+      && a.productProvenance() == b.productProvenance();
   }
 
 }

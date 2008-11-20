@@ -58,7 +58,7 @@ namespace edm {
   } 
 
   ProductProvenance
-  RunLumiEntryInfo::makeEntryInfo() const {
+  RunLumiEntryInfo::makeProductProvenance() const {
     return ProductProvenance(branchID_, productStatus_);
   }
 

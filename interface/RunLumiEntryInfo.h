@@ -13,6 +13,7 @@ and how it came into existence, plus the product identifier and the status.
 #include "boost/shared_ptr.hpp"
 
 #include "DataFormats/Provenance/interface/BranchID.h"
+#include "DataFormats/Provenance/interface/EntryDescriptionID.h"
 #include "DataFormats/Provenance/interface/ModuleDescriptionID.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
@@ -41,7 +42,7 @@ namespace edm {
 
     ~RunLumiEntryInfo() {}
 
-    ProductProvenance makeEntryInfo() const;
+    ProductProvenance makeProductProvenance() const;
 
     void write(std::ostream& os) const;
 
