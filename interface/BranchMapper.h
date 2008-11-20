@@ -37,6 +37,8 @@ namespace edm {
 
     void mergeMappers(boost::shared_ptr<BranchMapper> other) {nextMapper_ = other;}
 
+    void setDelayedRead(bool value) {delayedRead_ = value;}
+
   private:
     typedef std::set<ProductProvenance> eiSet;
 
