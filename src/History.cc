@@ -8,19 +8,19 @@ namespace edm
     return eventSelections_.size();
   }
 
-  ProcessIndex
-  History::currentProcessIndex() const {
-    return branchListIndexes_.size() - 1;
-  }
-
   void 
-  History::addEntry(EventSelectionID const& eventSelection) {
+  History::addEventSelectionEntry(EventSelectionID const& eventSelection) {
     eventSelections_.push_back(eventSelection);
   }
 
   void 
-  History::addEntry(BranchListIndex const& branchListIndex) {
+  History::addBranchListIndexEntry(BranchListIndex const& branchListIndex) {
     branchListIndexes_.push_back(branchListIndex);
+  }
+
+  void 
+  History::addParameterSetListIndexEntry(ParameterSetListIndex const& parameterSetListIndex) {
+    parameterSetListIndexes_.push_back(parameterSetListIndex);
   }
 
   EventSelectionID const&

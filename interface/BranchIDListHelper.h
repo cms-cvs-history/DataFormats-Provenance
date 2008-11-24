@@ -13,19 +13,16 @@ namespace edm {
   public:
     typedef std::pair<BranchListIndex, ProductIndex> IndexPair;
     typedef std::map<BranchID, IndexPair> BranchIDToIndexMap;
-    BranchIDListHelper() : branchIDToIndexMap_(), currentIndex_(0) {}
+    BranchIDListHelper() : branchIDToIndexMap_() {}
     static void updateFromInput(BranchIDLists const& bidlists, std::string const& fileName);
     static void updateFromInput(ParameterSetIDLists const& psetidlists, std::string const& fileName);
     static void updateRegistries(ProductRegistry const& reg);
     static void clearRegistries();  // Use only for tests
 
-    BranchListIndex currentIndex() const {return currentIndex_;}
-
     BranchIDToIndexMap const& branchIDToIndexMap() const {return branchIDToIndexMap_;}
 
   private:
     BranchIDToIndexMap branchIDToIndexMap_;
-    BranchListIndex currentIndex_;
   };
 }
 

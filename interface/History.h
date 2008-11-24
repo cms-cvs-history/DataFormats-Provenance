@@ -14,6 +14,7 @@
 #include <vector>
 #include "DataFormats/Provenance/interface/EventSelectionID.h"
 #include "DataFormats/Provenance/interface/BranchListIndex.h"
+#include "DataFormats/Provenance/interface/ParameterSetListIndex.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
 
 // backward compatibility
@@ -31,15 +32,14 @@ namespace edm {
     // History.
     size_type size() const;
     
-    // Return the position of the latest index recorded in this History.
-    ProcessIndex currentProcessIndex() const;
-    
     // Add the given entry to this History. When a new data member is
     // added to the History class, this function should be modified to
     // take an instance of the type of the new data member.
-    void addEntry(EventSelectionID const& eventSelection);
+    void addEventSelectionEntry(EventSelectionID const& eventSelection);
 
-    void addEntry(BranchListIndex const& branchListIndex);
+    void addBranchListIndexEntry(BranchListIndex const& branchListIndex);
+
+    void addParameterSetListIndexEntry(ParameterSetListIndex const& parameterSetListIndex);
     
     EventSelectionID const& getEventSelectionID(size_type i) const;
 
@@ -50,6 +50,8 @@ namespace edm {
     ProcessHistoryID & processHistoryID();
 
     BranchListIndexes const& branchListIndexes() const {return branchListIndexes_;}
+
+    ParameterSetListIndexes const& parameterSetListIndexes() const {return parameterSetListIndexes_;}
   private:
     
     // Note: We could, instead, define a struct that contains the
@@ -61,6 +63,8 @@ namespace edm {
     EventSelectionIDVector eventSelections_;
 
     BranchListIndexes branchListIndexes_;
+
+    ParameterSetListIndexes parameterSetListIndexes_;
 
     ProcessHistoryID processHistoryID_; // backward compatibility
   };

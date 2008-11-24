@@ -57,7 +57,6 @@ namespace edm {
       }
     }
     BranchIDListRegistry& breg = *BranchIDListRegistry::instance();
-    breg.extra().currentIndex_ = breg.data().size();
     breg.insertMapped(bidlist);
     ParameterSetIDListRegistry& psetreg = *ParameterSetIDListRegistry::instance();
     psetreg.insertMapped(psetidlist);
@@ -77,7 +76,6 @@ namespace edm {
   BranchIDListHelper::clearRegistries() {
     BranchIDListRegistry& breg = *BranchIDListRegistry::instance();
     breg.data().clear();
-    breg.extra().currentIndex_ = 0;
     breg.extra().branchIDToIndexMap_.clear();
     ParameterSetIDListRegistry& preg = *ParameterSetIDListRegistry::instance();
     preg.data().clear();
