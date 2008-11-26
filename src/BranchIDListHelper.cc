@@ -1,6 +1,5 @@
 #include "DataFormats/Provenance/interface/BranchIDListHelper.h"
 #include "DataFormats/Provenance/interface/BranchIDListRegistry.h"
-#include "DataFormats/Provenance/interface/ParameterSetIDListRegistry.h"
 #include "DataFormats/Provenance/interface/ProductRegistry.h"
 #include "FWCore/Utilities/interface/EDMException.h"
 
@@ -25,41 +24,19 @@ namespace edm {
   }
 
   void
-  BranchIDListHelper:: updateFromInput(ParameterSetIDLists const& psetidlists, std::string const& fileName) {
-    typedef ParameterSetIDListRegistry::const_iterator iter;
-    ParameterSetIDListRegistry& preg = *ParameterSetIDListRegistry::instance();
-    ParameterSetIDListRegistry::collection_type& pdata = preg.data();
-    iter j = psetidlists.begin(), jEnd = psetidlists.end();
-    for(iter i = pdata.begin(), iEnd = pdata.end(); j != jEnd && i != iEnd; ++j, ++i) {
-      if (*i != *j) {
-	throw edm::Exception(errors::UnimplementedFeature)
-	  << "Cannot merge file '" << fileName << "' due to a branch mismatch.\n"
-	  << "Contact the framework group.\n";
-      }
-    }
-    for (; j != jEnd; ++j) {
-      preg.insertMapped(*j);
-    }
-  }
-
-  void
   BranchIDListHelper::updateRegistries(ProductRegistry const& preg) {
     BranchIDList bidlist;
-    ParameterSetIDList psetidlist;
     // Add entries for current process for ProductID to BranchID mapping.
     for (ProductRegistry::ProductList::const_iterator it = preg.productList().begin(), itEnd = preg.productList().end();
         it != itEnd; ++it) {
       if (it->second.produced()) {
         if (it->second.branchType() == InEvent) {
           bidlist.push_back(it->second.branchID().id());
-          psetidlist.push_back(it->second.parameterSetID());
         }
       }
     }
     BranchIDListRegistry& breg = *BranchIDListRegistry::instance();
     breg.insertMapped(bidlist);
-    ParameterSetIDListRegistry& psetreg = *ParameterSetIDListRegistry::instance();
-    psetreg.insertMapped(psetidlist);
 
     // Add entries to aid BranchID to ProductID mapping
     BranchIDToIndexMap& branchIDToIndexMap = breg.extra().branchIDToIndexMap_;
@@ -77,7 +54,5 @@ namespace edm {
     BranchIDListRegistry& breg = *BranchIDListRegistry::instance();
     breg.data().clear();
     breg.extra().branchIDToIndexMap_.clear();
-    ParameterSetIDListRegistry& preg = *ParameterSetIDListRegistry::instance();
-    preg.data().clear();
   }
 }

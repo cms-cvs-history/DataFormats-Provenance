@@ -18,11 +18,6 @@ namespace edm
     branchListIndexes_.push_back(branchListIndex);
   }
 
-  void 
-  History::addParameterSetListIndexEntry(ParameterSetListIndex const& parameterSetListIndex) {
-    parameterSetListIndexes_.push_back(parameterSetListIndex);
-  }
-
   EventSelectionID const&
   History::getEventSelectionID(History::size_type i) const {
     return eventSelections_[i];

@@ -6,7 +6,7 @@
 
 /*----------------------------------------------------------------------
 
-$Id: ProcessConfiguration.cc,v 1.2 2007/06/28 23:30:50 wmtan Exp $
+$Id: ProcessConfiguration.cc,v 1.4 2007/12/29 00:38:37 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
@@ -23,6 +23,17 @@ namespace edm {
     std::string stringrep = oss.str();
     cms::Digest md5alg(stringrep);
     return ProcessConfigurationID(md5alg.digest().toString());
+  }
+
+  bool operator<(ProcessConfiguration const& a, ProcessConfiguration const& b) {
+    if (a.processName_ < b.processName_) return true;
+    if (b.processName_ < a.processName_) return false;
+    if (a.parameterSetID_ < b.parameterSetID_) return true;
+    if (b.parameterSetID_ < a.parameterSetID_) return false;
+    if (a.releaseVersion_ < b.releaseVersion_) return true;
+    if (b.releaseVersion_ < a.releaseVersion_) return false;
+    if (a.passID_ < b.passID_) return true;
+    return false;
   }
 
   std::ostream&

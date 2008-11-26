@@ -15,7 +15,6 @@ namespace edm {
     typedef std::map<BranchID, IndexPair> BranchIDToIndexMap;
     BranchIDListHelper() : branchIDToIndexMap_() {}
     static void updateFromInput(BranchIDLists const& bidlists, std::string const& fileName);
-    static void updateFromInput(ParameterSetIDLists const& psetidlists, std::string const& fileName);
     static void updateRegistries(ProductRegistry const& reg);
     static void clearRegistries();  // Use only for tests
 

@@ -14,7 +14,6 @@
 #include <vector>
 #include "DataFormats/Provenance/interface/EventSelectionID.h"
 #include "DataFormats/Provenance/interface/BranchListIndex.h"
-#include "DataFormats/Provenance/interface/ParameterSetListIndex.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
 
 // backward compatibility
@@ -39,8 +38,6 @@ namespace edm {
 
     void addBranchListIndexEntry(BranchListIndex const& branchListIndex);
 
-    void addParameterSetListIndexEntry(ParameterSetListIndex const& parameterSetListIndex);
-    
     EventSelectionID const& getEventSelectionID(size_type i) const;
 
     EventSelectionIDVector const& eventSelectionIDs() const;
@@ -50,8 +47,6 @@ namespace edm {
     ProcessHistoryID & processHistoryID();
 
     BranchListIndexes const& branchListIndexes() const {return branchListIndexes_;}
-
-    ParameterSetListIndexes const& parameterSetListIndexes() const {return parameterSetListIndexes_;}
   private:
     
     // Note: We could, instead, define a struct that contains the
@@ -63,8 +58,6 @@ namespace edm {
     EventSelectionIDVector eventSelections_;
 
     BranchListIndexes branchListIndexes_;
-
-    ParameterSetListIndexes parameterSetListIndexes_;
 
     ProcessHistoryID processHistoryID_; // backward compatibility
   };

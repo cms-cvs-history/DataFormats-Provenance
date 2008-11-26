@@ -33,6 +33,9 @@ namespace edm {
     PassID passID_;
   };
 
+  bool
+  operator<(ProcessConfiguration const& a, ProcessConfiguration const& b);
+
   inline
   bool
   operator==(ProcessConfiguration const& a, ProcessConfiguration const& b) {
