@@ -140,7 +140,7 @@ namespace edm {
     virtual void addCalled(BranchDescription const&, bool iFromListener);
     void throwIfNotFrozen() const;
     void throwIfFrozen() const;
-    void fillElementLookup(const ROOT::Reflex::Type & type,
+    void fillElementLookup(const Reflex::Type & type,
                            const BranchID& slotNumber,
                            const BranchKey& bk) const;
     
