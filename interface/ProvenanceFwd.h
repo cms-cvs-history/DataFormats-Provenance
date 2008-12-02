@@ -27,6 +27,7 @@ namespace edm {
   class BranchMapper;
 }
 #include "DataFormats/Provenance/interface/BranchIDList.h"
+#include "DataFormats/Provenance/interface/BranchListIndex.h"
 #include "DataFormats/Provenance/interface/ParentageID.h"
 #include "DataFormats/Provenance/interface/PassID.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"

@@ -28,14 +28,4 @@ namespace edm
     return eventSelections_;
   }
 
-  ProcessHistoryID const&
-  History::processHistoryID() const {
-    return processHistoryID_;
-  }
-
-  ProcessHistoryID &
-  History::processHistoryID() {
-    return processHistoryID_;
-  }
-
 }

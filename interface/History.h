@@ -15,8 +15,6 @@
 #include "DataFormats/Provenance/interface/EventSelectionID.h"
 #include "DataFormats/Provenance/interface/BranchListIndex.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
-
-// backward compatibility
 #include "DataFormats/Provenance/interface/ProcessHistoryID.h" 
 
 namespace edm {
@@ -42,11 +40,13 @@ namespace edm {
 
     EventSelectionIDVector const& eventSelectionIDs() const;
     
-    ProcessHistoryID const& processHistoryID() const;
+    ProcessHistoryID const& processHistoryID() const {return processHistoryID_;}
 
-    ProcessHistoryID & processHistoryID();
+    void setProcessHistoryID(ProcessHistoryID const& phid) const {processHistoryID_ = phid;}
 
     BranchListIndexes const& branchListIndexes() const {return branchListIndexes_;}
+
+    BranchListIndexes& branchListIndexes() {return branchListIndexes_;}
   private:
     
     // Note: We could, instead, define a struct that contains the
@@ -59,7 +59,7 @@ namespace edm {
 
     BranchListIndexes branchListIndexes_;
 
-    ProcessHistoryID processHistoryID_; // backward compatibility
+    mutable ProcessHistoryID processHistoryID_;
   };
 
 }
