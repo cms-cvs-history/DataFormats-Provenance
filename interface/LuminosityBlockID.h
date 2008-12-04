@@ -98,6 +98,7 @@ class LuminosityBlockID
       bool operator>=(LuminosityBlockID const& iRHS) const {
          return doOp<std::greater_equal>(iRHS);
       }
+
       // ---------- static functions ---------------------------
 
       static LuminosityBlockNumber_t maxLuminosityBlockNumber() {

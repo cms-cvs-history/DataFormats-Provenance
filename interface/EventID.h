@@ -16,7 +16,6 @@
 //
 // Original Author:  Chris Jones
 //         Created:  Mon Aug  8 15:13:14 EDT 2005
-// $Id: EventID.h,v 1.3 2007/03/27 22:57:57 wmtan Exp $
 //
 
 // system include files
