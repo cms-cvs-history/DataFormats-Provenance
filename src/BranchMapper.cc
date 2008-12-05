@@ -46,4 +46,9 @@ namespace edm {
     }
     return boost::shared_ptr<ProductProvenance>(new ProductProvenance(*it));
   }
+
+  BranchID
+  BranchMapper::oldProductIDToBranchID_(ProductID const& ) const {
+    throw 0; // QQQ
+  }
 }

@@ -1,5 +1,7 @@
 <lcgdict>
- <class name="edm::ProductID"/>
+ <class name="edm::ProductID">
+   <field name="oldID_" transient="true"/>
+ </class>
  <class name="edm::BranchID"/>
  <class name="edm::EventID"/>
  <class name="edm::LuminosityBlockID"/>

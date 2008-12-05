@@ -21,6 +21,7 @@ BranchMapper: Manages the per event/lumi/run per product provenance.
 */
 
 namespace edm {
+  class ProductID;
   class BranchMapper {
   public:
     BranchMapper();
@@ -39,11 +40,17 @@ namespace edm {
 
     void setDelayedRead(bool value) {delayedRead_ = value;}
 
+    BranchID oldProductIDToBranchID(ProductID const& oldProductID) const {
+      return oldProductIDToBranchID_(oldProductID);
+    }
+
   private:
     typedef std::set<ProductProvenance> eiSet;
 
     void readProvenance() const;
     virtual void readProvenance_() const {}
+
+    virtual BranchID oldProductIDToBranchID_(ProductID const& oldProductID) const;
 
     eiSet entryInfoSet_;
 

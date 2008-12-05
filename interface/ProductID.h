@@ -27,16 +27,22 @@ namespace edm {
   class ProductID {
   public:
     ProductID() : processIndex_(0),
-		  productIndex_(0) {}
+		  productIndex_(0),
+		  oldID_(0) {}
     ProductID(ProcessIndex processIndex, ProductIndex productIndex) :
       processIndex_(processIndex), productIndex_(productIndex) {}
-    bool isValid() const { return productIndex_ != 0;}
+    bool isValid() const {return productIndex_ != 0;}
     ProcessIndex processIndex() const {return processIndex_;}
     ProcessIndex productIndex() const {return productIndex_;}
+
+    unsigned int oldID() const {return oldID_;}
+
   private:
     ProcessIndex processIndex_;
     ProductIndex productIndex_;
+    unsigned int oldID_;
   };
+
   inline
   bool operator==(ProductID const& lh, ProductID const& rh) {
     return lh.processIndex() == rh.processIndex() && lh.productIndex() == rh.productIndex();
