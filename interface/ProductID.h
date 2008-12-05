@@ -30,12 +30,13 @@ namespace edm {
 		  productIndex_(0),
 		  oldID_(0) {}
     ProductID(ProcessIndex processIndex, ProductIndex productIndex) :
-      processIndex_(processIndex), productIndex_(productIndex) {}
+      processIndex_(processIndex), productIndex_(productIndex), oldID_(0) {}
     bool isValid() const {return productIndex_ != 0;}
     ProcessIndex processIndex() const {return processIndex_;}
     ProcessIndex productIndex() const {return productIndex_;}
 
     unsigned int oldID() const {return oldID_;}
+    unsigned int & oldID() {return oldID_;}
 
   private:
     ProcessIndex processIndex_;
