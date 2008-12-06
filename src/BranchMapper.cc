@@ -49,6 +49,8 @@ namespace edm {
 
   BranchID
   BranchMapper::oldProductIDToBranchID_(ProductID const& ) const {
-    throw 0; // QQQ
+    throw edm::Exception(errors::LogicError)
+        << "Internal error:  Illegal call of oldProductIDToBranchID_.\n"
+        << "Please report this error to the Framework group\n";
   }
 }
