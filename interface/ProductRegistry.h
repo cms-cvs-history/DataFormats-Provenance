@@ -119,6 +119,7 @@ namespace edm {
       Transients();
       bool frozen_;
       ConstProductList constProductList_; 
+      // Is at least one (run), (lumi), (event) product produced this process?
       boost::array<bool, NumBranchTypes> productProduced_;
 
       // indices used to quickly find a group in the vector groups_
