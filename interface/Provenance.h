@@ -15,6 +15,7 @@ existence.
 #include "DataFormats/Provenance/interface/Parentage.h"
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
 #include "DataFormats/Provenance/interface/ConstBranchDescription.h"
+#include "DataFormats/Provenance/interface/ProductID.h"
 #include "boost/shared_ptr.hpp"
 
 /*
@@ -31,10 +32,10 @@ existence.
 namespace edm {
   class Provenance {
   public:
-    explicit Provenance(ConstBranchDescription const& p);
-    explicit Provenance(BranchDescription const& p);
-    Provenance(ConstBranchDescription const& p, boost::shared_ptr<ProductProvenance> entryDesc);
-    Provenance(BranchDescription const& p, boost::shared_ptr<ProductProvenance> entryDesc);
+    explicit Provenance(ConstBranchDescription const& p, ProductID const& pid);
+    explicit Provenance(BranchDescription const& p, ProductID const& pid);
+    Provenance(ConstBranchDescription const& p, ProductID const& pid, boost::shared_ptr<ProductProvenance> entryDesc);
+    Provenance(BranchDescription const& p, ProductID const& pid, boost::shared_ptr<ProductProvenance> entryDesc);
 
     ~Provenance() {}
 
@@ -71,8 +72,11 @@ namespace edm {
 
     void setStore(boost::shared_ptr<BranchMapper> store) const {store_ = store;}
 
+    ProductID const& productID() const {return productID_;}
+
   private:
     ConstBranchDescription const branchDescription_;
+    ProductID productID_;
     mutable boost::shared_ptr<ProductProvenance> productProvenancePtr_;
     mutable boost::shared_ptr<BranchMapper> store_;
   };

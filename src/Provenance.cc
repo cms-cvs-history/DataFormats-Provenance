@@ -6,23 +6,27 @@
 
 namespace edm {
 
-  Provenance::Provenance(BranchDescription const& p) :
+  Provenance::Provenance(BranchDescription const& p, ProductID const& pid) :
     branchDescription_(p),
+    productID_(pid),
     productProvenancePtr_() {
   }
 
-  Provenance::Provenance(ConstBranchDescription const& p) :
+  Provenance::Provenance(ConstBranchDescription const& p, ProductID const& pid) :
     branchDescription_(p),
+    productID_(pid),
     productProvenancePtr_() {
   }
 
-  Provenance::Provenance(BranchDescription const& p, boost::shared_ptr<ProductProvenance> ei) :
+  Provenance::Provenance(BranchDescription const& p, ProductID const& pid, boost::shared_ptr<ProductProvenance> ei) :
     branchDescription_(p),
+    productID_(pid),
     productProvenancePtr_(ei)
   { }
 
-  Provenance::Provenance(ConstBranchDescription const& p, boost::shared_ptr<ProductProvenance> ei) :
+  Provenance::Provenance(ConstBranchDescription const& p, ProductID const& pid, boost::shared_ptr<ProductProvenance> ei) :
     branchDescription_(p),
+    productID_(pid),
     productProvenancePtr_(ei)
   { }
 
