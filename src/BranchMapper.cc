@@ -18,6 +18,8 @@ namespace edm {
     delayedRead_(delayedRead)
   { }
 
+  BranchMapper::~BranchMapper() {}
+
   void
   BranchMapper::readProvenance() const {
     if (delayedRead_) {

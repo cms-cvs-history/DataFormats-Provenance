@@ -28,7 +28,7 @@ namespace edm {
 
     explicit BranchMapper(bool delayedRead);
 
-    virtual ~BranchMapper() {}
+    virtual ~BranchMapper();
 
     void write(std::ostream& os) const;
 
