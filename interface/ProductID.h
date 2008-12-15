@@ -34,6 +34,7 @@ namespace edm {
     bool isValid() const {return productIndex_ != 0;}
     ProcessIndex processIndex() const {return processIndex_;}
     ProcessIndex productIndex() const {return productIndex_;}
+    ProductID id() const {return *this;}
 
     unsigned int oldID() const {return oldID_;}
     unsigned int & oldID() {return oldID_;}
