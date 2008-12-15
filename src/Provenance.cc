@@ -38,7 +38,7 @@ namespace edm {
 
   boost::shared_ptr<ProductProvenance>
   Provenance::resolve () const {
-    boost::shared_ptr<ProductProvenance> prov = store_->branchToEntryInfo(branchDescription_.branchID());
+    boost::shared_ptr<ProductProvenance> prov = store_->branchIDToProvenance(branchDescription_.branchID());
     setProductProvenance(prov);
     return prov;
 }

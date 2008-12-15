@@ -35,13 +35,13 @@ namespace edm {
   }
     
   boost::shared_ptr<ProductProvenance>
-  BranchMapper::branchToEntryInfo(BranchID const& bid) const {
+  BranchMapper::branchIDToProvenance(BranchID const& bid) const {
     readProvenance();
     ProductProvenance ei(bid);
     eiSet::const_iterator it = entryInfoSet_.find(ei);
     if (it == entryInfoSet_.end()) {
       if (nextMapper_) {
-	return nextMapper_->branchToEntryInfo(bid);
+	return nextMapper_->branchIDToProvenance(bid);
       } else {
 	return boost::shared_ptr<ProductProvenance>();
       }
