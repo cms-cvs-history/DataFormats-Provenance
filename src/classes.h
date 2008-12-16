@@ -52,12 +52,12 @@ namespace {
   std::map<edm::ParameterSetID, edm::ParameterSetBlob> dummyMapParam;
   std::map<edm::ProcessHistoryID, edm::ProcessHistory> dummyMapProcH;
   std::map<edm::ProcessConfigurationID, edm::ProcessConfiguration> dummyMapProcC;
-  std::set<edm::ParameterSetID > dummySetParam;
-  std::set<edm::ProcessHistoryID > dummySetProcH;
-  std::set<edm::ProcessConfigurationID > dummySetProcessDesc;
+  std::set<edm::ProcessHistoryID> dummySetProcH;
+  std::map<edm::ProcessConfigurationID, edm::ParameterSetID> dummyMapParamSetID;
   std::pair<edm::ParameterSetID, edm::ParameterSetBlob> dummyPairParam;
   std::pair<edm::ProcessHistoryID, edm::ProcessHistory> dummyPairProcH;
   std::pair<edm::ProcessConfigurationID, edm::ProcessConfiguration> dummyPairProcC;
+  std::pair<edm::ProcessConfigurationID, edm::ParameterSetID> dummyPairParamSetID;
   edm::ParentageID dummyParentageID;
   std::vector<edm::ProductID> dummyVectorProductID;
   std::vector<edm::BranchID> dummyVectorBranchID;

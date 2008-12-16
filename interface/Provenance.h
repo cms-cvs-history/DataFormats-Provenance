@@ -60,7 +60,7 @@ namespace edm {
     ProductStatus const& productStatus() const {return productProvenance().productStatus();}
     std::string const& productInstanceName() const {return product().productInstanceName();}
     std::string const& friendlyClassName() const {return product().friendlyClassName();}
-    std::set<ParameterSetID> const& psetIDs() const {return product().psetIDs();}
+    std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {return product().parameterSetIDs();}
     std::set<std::string> const& branchAliases() const {return product().branchAliases();}
     bool isPresent() const {return productstatus::present(productStatus());}
 

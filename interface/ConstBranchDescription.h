@@ -10,6 +10,7 @@ This class is not persistable.
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <string>
+#include <map>
 #include <set>
 
 #include "boost/shared_ptr.hpp"
@@ -48,10 +49,9 @@ namespace edm {
     int const& basketSize() const {return ptr_->basketSize();}
 
     ParameterSetID const& parameterSetID() const {return ptr_->parameterSetID();}
-    std::set<ParameterSetID> const& psetIDs() const {return ptr_->psetIDs();}
+    std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {return ptr_->parameterSetIDs();}
     ParameterSetID const& psetID() const {return ptr_->psetID();}
-    bool isPsetIDUnique() const {return ptr_->psetIDs().size() == 1;}
-    std::set<ProcessConfigurationID> const& processConfigurationIDs() const {return ptr_->processConfigurationIDs();}
+    bool isPsetIDUnique() const {return ptr_->parameterSetIDs().size() == 1;}
     std::set<std::string> const& branchAliases() const {return ptr_->branchAliases();}
     std::string const& branchName() const {return ptr_->branchName();}
     BranchType const& branchType() const {return ptr_->branchType();}

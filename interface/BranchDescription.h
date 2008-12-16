@@ -9,6 +9,7 @@ This description also applies to every product instance on the branch.
 ----------------------------------------------------------------------*/
 #include <iosfwd>
 #include <string>
+#include <map>
 #include <set>
 
 #include "DataFormats/Provenance/interface/ProvenanceFwd.h"
@@ -71,10 +72,11 @@ namespace edm {
     int & basketSize() const {return transients_.get().basketSize_;}
 
     ParameterSetID const& parameterSetID() const {return transients_.get().parameterSetID_;}
-    std::set<ParameterSetID> const& psetIDs() const {return psetIDs_;}
+    // std::set<ParameterSetID> const& psetIDs() const {return psetIDs_;}
+    std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {return parameterSetIDs_;}
     ParameterSetID const& psetID() const;
-    bool isPsetIDUnique() const {return psetIDs().size() == 1;}
-    std::set<ProcessConfigurationID> const& processConfigurationIDs() const {return processConfigurationIDs_;}
+    bool isPsetIDUnique() const {return parameterSetIDs().size() == 1;}
+    // std::set<ProcessConfigurationID> const& processConfigurationIDs() const {return processConfigurationIDs_;}
     std::set<std::string> const& branchAliases() const {return branchAliases_;}
     std::set<std::string> & branchAliases() {return branchAliases_;}
     std::string & branchName() const {return transients_.get().branchName_;}
@@ -147,7 +149,6 @@ namespace edm {
     // the full name of the type of product this is
     std::string fullClassName_;
 
-  public:
     // a readable name of the type of product this is
     std::string friendlyClassName_;
 
@@ -155,14 +156,17 @@ namespace edm {
     // that are produced by the same producer
     std::string productInstanceName_;
 
-  private:
     // ID's of parameter set of the creators of products
     // on this branch
-    std::set<ParameterSetID> psetIDs_;
+    // std::set<ParameterSetID> psetIDs_;
 
     // ID's of process configurations for products
     // on this branch
-    std::set<ProcessConfigurationID> processConfigurationIDs_;
+    // std::set<ProcessConfigurationID> processConfigurationIDs_;
+
+    // ID's of process configurations for products on this branch
+    //  with corresponding parameter set IDs'
+    std::map<ProcessConfigurationID, ParameterSetID> parameterSetIDs_;
 
     // The branch ROOT alias(es), which are settable by the user.
     std::set<std::string> branchAliases_;
