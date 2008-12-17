@@ -13,6 +13,7 @@ BranchMapper: Manages the per event/lumi/run per product provenance.
 
 #include "DataFormats/Provenance/interface/BranchID.h"
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
+#include "DataFormats/Provenance/interface/ProcessHistoryID.h"
 #include "FWCore/Utilities/interface/Algorithms.h"
 
 /*
@@ -44,6 +45,10 @@ namespace edm {
       return oldProductIDToBranchID_(oldProductID);
     }
 
+    ProcessHistoryID const& processHistoryID() const {return processHistoryID_;}
+
+    ProcessHistoryID& processHistoryID() {return processHistoryID_;}
+
   private:
     typedef std::set<ProductProvenance> eiSet;
 
@@ -58,6 +63,7 @@ namespace edm {
 
     mutable bool delayedRead_;
 
+    ProcessHistoryID processHistoryID_;
   };
   
   inline

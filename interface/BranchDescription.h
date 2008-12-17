@@ -72,11 +72,10 @@ namespace edm {
     int & basketSize() const {return transients_.get().basketSize_;}
 
     ParameterSetID const& parameterSetID() const {return transients_.get().parameterSetID_;}
-    // std::set<ParameterSetID> const& psetIDs() const {return psetIDs_;}
     std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {return parameterSetIDs_;}
+    std::map<ProcessConfigurationID, std::string> const& moduleNames() const {return moduleNames_;}
     ParameterSetID const& psetID() const;
     bool isPsetIDUnique() const {return parameterSetIDs().size() == 1;}
-    // std::set<ProcessConfigurationID> const& processConfigurationIDs() const {return processConfigurationIDs_;}
     std::set<std::string> const& branchAliases() const {return branchAliases_;}
     std::set<std::string> & branchAliases() {return branchAliases_;}
     std::string & branchName() const {return transients_.get().branchName_;}
@@ -165,8 +164,12 @@ namespace edm {
     // std::set<ProcessConfigurationID> processConfigurationIDs_;
 
     // ID's of process configurations for products on this branch
-    //  with corresponding parameter set IDs'
+    //  with corresponding parameter set IDs,
     std::map<ProcessConfigurationID, ParameterSetID> parameterSetIDs_;
+
+    // ID's of process configurations for products on this branch
+    //  with corresponding module names
+    std::map<ProcessConfigurationID, std::string> moduleNames_;
 
     // The branch ROOT alias(es), which are settable by the user.
     std::set<std::string> branchAliases_;

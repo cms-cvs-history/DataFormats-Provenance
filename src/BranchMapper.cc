@@ -9,13 +9,15 @@ namespace edm {
   BranchMapper::BranchMapper() :
     entryInfoSet_(),
     nextMapper_(),
-    delayedRead_(false)
+    delayedRead_(false),
+    processHistoryID_()
   { }
 
   BranchMapper::BranchMapper(bool delayedRead) :
     entryInfoSet_(),
     nextMapper_(),
-    delayedRead_(delayedRead)
+    delayedRead_(delayedRead),
+    processHistoryID_()
   { }
 
   BranchMapper::~BranchMapper() {}

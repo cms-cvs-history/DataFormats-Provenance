@@ -48,6 +48,8 @@
  <class name="std::map<edm::ParameterSetID,edm::ParameterSetBlob>"/>
  <class name="std::pair<edm::ParameterSetID,edm::ParameterSetBlob>"/>
  <class name="edm::ProcessConfigurationID"/>
+ <class name="std::map<edm::ProcessConfigurationID,std::string>"/>
+ <class name="std::pair<edm::ProcessConfigurationID,std::string>"/>
  <class name="std::map<edm::ProcessConfigurationID,edm::ParameterSetID>"/>
  <class name="std::pair<edm::ProcessConfigurationID,edm::ParameterSetID>"/>
  <class name="std::map<edm::ProcessConfigurationID,edm::ProcessConfiguration>"/>

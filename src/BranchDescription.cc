@@ -35,6 +35,7 @@ namespace edm {
     friendlyClassName_(),
     productInstanceName_(),
     parameterSetIDs_(),
+    moduleNames_(),
     branchAliases_(),
     transients_()
   {
@@ -59,6 +60,7 @@ namespace edm {
     friendlyClassName_(fName),
     productInstanceName_(pin),
     parameterSetIDs_(),
+    moduleNames_(),
     branchAliases_(aliases),
     transients_()
   {
@@ -66,6 +68,7 @@ namespace edm {
     produced() = true;
     transients_.get().parameterSetID_ = modDesc.parameterSetID();
     parameterSetIDs_.insert(std::make_pair(modDesc.processConfigurationID(),modDesc.parameterSetID()));
+    moduleNames_.insert(std::make_pair(modDesc.processConfigurationID(),modDesc.moduleName()));
     init();
   }
 
@@ -159,6 +162,7 @@ namespace edm {
   void
   BranchDescription::merge(BranchDescription const& other) {
     parameterSetIDs_.insert(other.parameterSetIDs().begin(), other.parameterSetIDs().end());
+    moduleNames_.insert(other.moduleNames().begin(), other.moduleNames().end());
     branchAliases_.insert(other.branchAliases().begin(), other.branchAliases().end());
     present() = present() || other.present();
     if (splitLevel() == invalidSplitLevel) splitLevel() = other.splitLevel();
@@ -230,6 +234,8 @@ namespace edm {
     if (b.branchID() < a.branchID()) return false;
     if (a.parameterSetIDs() < b.parameterSetIDs()) return true;
     if (b.parameterSetIDs() < a.parameterSetIDs()) return false;
+    if (a.moduleNames() < b.moduleNames()) return true;
+    if (b.moduleNames() < a.moduleNames()) return false;
     if (a.branchAliases() < b.branchAliases()) return true;
     if (b.branchAliases() < a.branchAliases()) return false;
     if (a.present() < b.present()) return true;
@@ -253,6 +259,7 @@ namespace edm {
   operator==(BranchDescription const& a, BranchDescription const& b) {
     return combinable(a, b) &&
        (a.present() == b.present()) &&
+       (a.moduleNames() == b.moduleNames()) &&
        (a.parameterSetIDs() == b.parameterSetIDs()) &&
        (a.branchAliases() == b.branchAliases());
   }

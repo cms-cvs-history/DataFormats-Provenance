@@ -11,6 +11,9 @@ existence.
 
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 #include "DataFormats/Provenance/interface/BranchMapper.h"
+#include "DataFormats/Provenance/interface/ParameterSetID.h"
+#include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
+#include "DataFormats/Provenance/interface/ProcessHistoryID.h"
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
 #include "DataFormats/Provenance/interface/Parentage.h"
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
@@ -32,10 +35,12 @@ existence.
 namespace edm {
   class Provenance {
   public:
-    explicit Provenance(ConstBranchDescription const& p, ProductID const& pid);
-    explicit Provenance(BranchDescription const& p, ProductID const& pid);
-    Provenance(ConstBranchDescription const& p, ProductID const& pid, boost::shared_ptr<ProductProvenance> entryDesc);
-    Provenance(BranchDescription const& p, ProductID const& pid, boost::shared_ptr<ProductProvenance> entryDesc);
+    Provenance(ConstBranchDescription const& p, ProductID const& pid);
+    Provenance(BranchDescription const& p, ProductID const& pid);
+    Provenance(ConstBranchDescription const& p, ProductID const& pid,
+	boost::shared_ptr<ProductProvenance> productProvenance);
+    Provenance(BranchDescription const& p, ProductID const& pid,
+	boost::shared_ptr<ProductProvenance> productProvenance);
 
     ~Provenance() {}
 
@@ -60,15 +65,25 @@ namespace edm {
     ProductStatus const& productStatus() const {return productProvenance().productStatus();}
     std::string const& productInstanceName() const {return product().productInstanceName();}
     std::string const& friendlyClassName() const {return product().friendlyClassName();}
-    std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {return product().parameterSetIDs();}
+    ProcessHistoryID processHistoryID() const {return store_->processHistoryID();}
+    ProcessConfigurationID processConfigurationID() const;
+    ParameterSetID psetID() const;
+    std::string moduleName() const;
+    std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {
+      return product().parameterSetIDs();
+    }
+    std::map<ProcessConfigurationID, std::string> const& moduleNames() const {
+      return product().moduleNames();
+    }
     std::set<std::string> const& branchAliases() const {return product().branchAliases();}
+
     bool isPresent() const {return productstatus::present(productStatus());}
 
     std::vector<BranchID> const& parents() const {return parentage().parents();}
 
-    void write(std::ostream& os) const;
+    void setProductProvenance(boost::shared_ptr<ProductProvenance> ppr) const;
 
-    void setProductProvenance(boost::shared_ptr<ProductProvenance> bei) const;
+    void write(std::ostream& os) const;
 
     void setStore(boost::shared_ptr<BranchMapper> store) const {store_ = store;}
 
@@ -89,5 +104,6 @@ namespace edm {
   }
 
   bool operator==(Provenance const& a, Provenance const& b);
+
 }
 #endif
