@@ -74,6 +74,8 @@ namespace edm {
     ParameterSetID const& parameterSetID() const {return transients_.get().parameterSetID_;}
     std::map<ProcessConfigurationID, ParameterSetID> const& parameterSetIDs() const {return parameterSetIDs_;}
     std::map<ProcessConfigurationID, std::string> const& moduleNames() const {return moduleNames_;}
+    std::map<ProcessConfigurationID, ParameterSetID>& parameterSetIDs() {return parameterSetIDs_;}
+    std::map<ProcessConfigurationID, std::string>& moduleNames() {return moduleNames_;}
     ParameterSetID const& psetID() const;
     bool isPsetIDUnique() const {return parameterSetIDs().size() == 1;}
     std::set<std::string> const& branchAliases() const {return branchAliases_;}

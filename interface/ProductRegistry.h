@@ -77,6 +77,11 @@ namespace edm {
       return productList_;
     }
 
+    ProductList& productListUpdator() {
+      throwIfFrozen();
+      return productList_;
+    }
+
     // Return all the branch names currently known to *this.  This
     // does a return-by-value of the vector so that it may be used in
     // a colon-initialization list.

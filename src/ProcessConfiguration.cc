@@ -6,12 +6,24 @@
 
 /*----------------------------------------------------------------------
 
-$Id: ProcessConfiguration.cc,v 1.4 2007/12/29 00:38:37 wmtan Exp $
+$Id: ProcessConfiguration.cc,v 1.4.8.1 2008/11/26 19:45:48 wmtan Exp $
 
 ----------------------------------------------------------------------*/
 
 namespace edm {
 
+
+  ProcessConfiguration::ProcessConfiguration() : processName_(), parameterSetID_(), releaseVersion_(), passID_() {}
+
+  ProcessConfiguration::ProcessConfiguration(
+                        std::string const& procName,
+                        ParameterSetID const& pSetID,
+                        ReleaseVersion const& relVersion,
+                        PassID const& pass) :
+      processName_(procName),
+      parameterSetID_(pSetID),
+      releaseVersion_(relVersion),
+      passID_(pass) { }
 
 
   ProcessConfigurationID
@@ -26,22 +38,22 @@ namespace edm {
   }
 
   bool operator<(ProcessConfiguration const& a, ProcessConfiguration const& b) {
-    if (a.processName_ < b.processName_) return true;
-    if (b.processName_ < a.processName_) return false;
-    if (a.parameterSetID_ < b.parameterSetID_) return true;
-    if (b.parameterSetID_ < a.parameterSetID_) return false;
-    if (a.releaseVersion_ < b.releaseVersion_) return true;
-    if (b.releaseVersion_ < a.releaseVersion_) return false;
-    if (a.passID_ < b.passID_) return true;
+    if (a.processName() < b.processName()) return true;
+    if (b.processName() < a.processName()) return false;
+    if (a.parameterSetID() < b.parameterSetID()) return true;
+    if (b.parameterSetID() < a.parameterSetID()) return false;
+    if (a.releaseVersion() < b.releaseVersion()) return true;
+    if (b.releaseVersion() < a.releaseVersion()) return false;
+    if (a.passID() < b.passID()) return true;
     return false;
   }
 
   std::ostream&
   operator<< (std::ostream& os, ProcessConfiguration const& pc) {
-    os << pc.processName_ << ' ' 
-       << pc.parameterSetID_ << ' '
-       << pc.releaseVersion_ << ' '
-       << pc.passID_;
+    os << pc.processName() << ' ' 
+       << pc.parameterSetID() << ' '
+       << pc.releaseVersion() << ' '
+       << pc.passID();
     return os;
   }
 }
