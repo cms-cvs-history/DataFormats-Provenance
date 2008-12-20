@@ -5,11 +5,10 @@ int main()
 {
   edm::ModuleDescription md1;
   assert(md1 == md1);
-  edm::ModuleDescription md2;
-  assert(md1 == md2);
-  md2.moduleName_ = "class2";
-  edm::ModuleDescription md3;
-  md3.moduleName_ = "class3";
+  edm::ModuleDescription md0;
+  assert(md1 == md0);
+  edm::ModuleDescription md2("class2", "");
+  edm::ModuleDescription md3("class3", "");
 
   edm::ModuleDescriptionID id1 = md1.id();
   edm::ModuleDescriptionID id2 = md2.id();
@@ -19,8 +18,7 @@ int main()
   assert(id2 != id3);
   assert(id3 != id1);
 
-  edm::ModuleDescription md4;
-  md4.moduleName_ = "class2";
+  edm::ModuleDescription md4("class2", "");
   edm::ModuleDescriptionID id4 = md4.id();
   assert(md4 == md2);
   assert (id4 == id2);
