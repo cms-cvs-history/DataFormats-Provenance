@@ -12,7 +12,6 @@ class testFileIndex: public CppUnit::TestFixture
   CPPUNIT_TEST(constructAndInsertTest);
   CPPUNIT_TEST(eventSortAndSearchTest);
   CPPUNIT_TEST(eventEntrySortAndSearchTest);
-  CPPUNIT_TEST(eventsUniqueAndOrderedTest);
   CPPUNIT_TEST_SUITE_END();
 
  public:
@@ -22,7 +21,6 @@ class testFileIndex: public CppUnit::TestFixture
   void constructAndInsertTest();
   void eventSortAndSearchTest();
   void eventEntrySortAndSearchTest();
-  void eventsUniqueAndOrderedTest();
 
   bool areEntryVectorsTheSame(edm::FileIndex &i1, edm::FileIndex &i2);
 };
@@ -291,101 +289,6 @@ void testFileIndex::eventEntrySortAndSearchTest()
   iter = fileIndex.findLumiOrRunPosition( 2, 1);
   CPPUNIT_ASSERT((iter - fileIndex.begin()) == 5);
 }
-
-void testFileIndex::eventsUniqueAndOrderedTest() {
-
-  // Test the different cases
-
-  // Nothing in the FileIndex
-  edm::FileIndex fileIndex;
-  CPPUNIT_ASSERT(fileIndex.eventsUniqueAndOrdered());
-
-  // No events
-  edm::FileIndex fileIndex1;
-  fileIndex1.addEntry(1, 0, 0, 1);
-  fileIndex1.addEntry(1, 1, 0, 1);
-  CPPUNIT_ASSERT(fileIndex1.eventsUniqueAndOrdered());
-
-  // One event and nothing after it
-  edm::FileIndex fileIndex2;
-  fileIndex2.addEntry(1, 0, 0, 1);
-  fileIndex2.addEntry(1, 2, 0, 1);
-  fileIndex2.addEntry(1, 2, 1, 1);
-  CPPUNIT_ASSERT(fileIndex2.eventsUniqueAndOrdered());
-
-  // One event with a run after it
-  edm::FileIndex fileIndex3;
-  fileIndex3.addEntry(1, 0, 0, 1);
-  fileIndex3.addEntry(1, 2, 0, 1);
-  fileIndex3.addEntry(1, 2, 1, 1);
-  fileIndex3.addEntry(2, 0, 0, 2);
-  CPPUNIT_ASSERT(fileIndex3.eventsUniqueAndOrdered());
-
-  // Two events
-  edm::FileIndex fileIndex4;
-  fileIndex4.addEntry(1, 0, 0, 1);
-  fileIndex4.addEntry(1, 1, 0, 1);
-  fileIndex4.addEntry(1, 1, 1, 1);
-  fileIndex4.addEntry(2, 0, 0, 2);
-  fileIndex4.addEntry(2, 1, 0, 2);
-  fileIndex4.addEntry(2, 1, 1, 2);
-  CPPUNIT_ASSERT(fileIndex4.eventsUniqueAndOrdered());
-
-  // Two events, same run and event number
-  edm::FileIndex fileIndex5;
-  fileIndex5.addEntry(1, 0, 0, 1);
-  fileIndex5.addEntry(1, 1, 0, 1);
-  fileIndex5.addEntry(1, 1, 1, 1);
-  fileIndex5.addEntry(1, 0, 0, 2);
-  fileIndex5.addEntry(1, 2, 0, 2);
-  fileIndex5.addEntry(1, 2, 1, 2);
-  CPPUNIT_ASSERT(!fileIndex5.eventsUniqueAndOrdered());
-
-  // Not ordered by run
-  edm::FileIndex fileIndex6;
-  fileIndex6.addEntry(1, 0, 0, 1);
-  fileIndex6.addEntry(1, 2, 0, 1);
-  fileIndex6.addEntry(1, 2, 1, 1);
-  fileIndex6.addEntry(2, 0, 0, 2);
-  fileIndex6.addEntry(2, 1, 0, 2);
-  fileIndex6.addEntry(2, 1, 1, 2);
-  fileIndex6.addEntry(1, 0, 0, 3);
-  fileIndex6.addEntry(1, 3, 0, 3);
-  fileIndex6.addEntry(1, 3, 1, 3);
-  CPPUNIT_ASSERT(!fileIndex6.eventsUniqueAndOrdered());
-
-  // Not ordered by event
-  edm::FileIndex fileIndex7;
-  fileIndex7.addEntry(1, 0, 0, 1);
-  fileIndex7.addEntry(1, 2, 0, 1);
-  fileIndex7.addEntry(1, 2, 1, 1);
-  fileIndex7.addEntry(2, 0, 0, 2);
-  fileIndex7.addEntry(2, 1, 0, 2);
-  fileIndex7.addEntry(2, 1, 2, 2);
-  fileIndex7.addEntry(2, 3, 0, 3);
-  fileIndex7.addEntry(2, 3, 1, 3);
-  CPPUNIT_ASSERT(!fileIndex7.eventsUniqueAndOrdered());
-
-  // OK, ordered by event and unique
-  edm::FileIndex fileIndex8;
-  fileIndex8.addEntry(1, 0, 0, 1);
-  fileIndex8.addEntry(1, 1, 0, 1);
-  fileIndex8.addEntry(1, 1, 1, 1);
-  fileIndex8.addEntry(1, 1, 2, 1);
-  fileIndex8.addEntry(1, 1, 3, 1);
-  fileIndex8.addEntry(1, 1, 4, 1);
-  fileIndex8.addEntry(2, 0, 0, 2);
-  fileIndex8.addEntry(2, 1, 0, 2);
-  fileIndex8.addEntry(2, 1, 1, 2);
-  fileIndex8.addEntry(2, 3, 0, 3);
-  fileIndex8.addEntry(2, 3, 2, 3);
-  fileIndex8.addEntry(2, 3, 3, 3);
-  fileIndex8.addEntry(2, 3, 4, 3);
-  fileIndex8.addEntry(2, 3, 5, 3);
-  fileIndex8.addEntry(2, 3, 6, 3);
-  CPPUNIT_ASSERT(fileIndex8.eventsUniqueAndOrdered());
-}
-
 
 bool testFileIndex::areEntryVectorsTheSame(edm::FileIndex &i1, edm::FileIndex &i2) {
   if (i1.size() != i2.size()) return false;
