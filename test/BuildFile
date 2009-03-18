@@ -6,7 +6,6 @@
 parametersetid_t.cppunit.cc,fileIndex_t.cppunit.cc,lumirange_t.cppunit.cc,eventrange_t.cppunit.cc>
 </bin>
 
-<bin file=ModuleDescription_t.cpp></bin>
 <bin file=EntryDescription_t.cpp></bin>
 <bin file=ProcessHistory_t.cpp>
   <use name=FWCore/Version>
