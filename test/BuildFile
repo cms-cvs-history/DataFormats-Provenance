@@ -7,7 +7,3 @@ parametersetid_t.cppunit.cc,fileIndex_t.cppunit.cc,lumirange_t.cppunit.cc,eventr
 </bin>
 
 <bin file=EntryDescription_t.cpp></bin>
-<bin file=ProcessHistory_t.cpp>
-  <use name=FWCore/Version>
-</bin>
-<bin file=ProcessConfiguration_t.cpp></bin>
