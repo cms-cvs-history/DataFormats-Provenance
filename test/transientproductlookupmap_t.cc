@@ -8,7 +8,6 @@
 //
 // Original Author:  Chris Jones
 //         Created:  Wed May  6 08:52:17 CDT 2009
-// $Id$
 //
 
 // system include files
@@ -22,8 +21,7 @@
 #include "DataFormats/Provenance/interface/ModuleDescription.h"
 #include "DataFormats/Provenance/interface/ProcessHistory.h"
 
-class testTransientProductLookupMap: public CppUnit::TestFixture
-{
+class testTransientProductLookupMap: public CppUnit::TestFixture {
    CPPUNIT_TEST_SUITE(testTransientProductLookupMap);
    
    CPPUNIT_TEST(constructTest);
@@ -43,8 +41,7 @@ public:
 CPPUNIT_TEST_SUITE_REGISTRATION(testTransientProductLookupMap);
 
 void
-testTransientProductLookupMap::constructTest()
-{
+testTransientProductLookupMap::constructTest() {
    using namespace edm;
    TransientProductLookupMap::FillFromMap fillFromMap;
    
@@ -52,7 +49,7 @@ testTransientProductLookupMap::constructTest()
    std::list<ConstBranchDescription> cbdlist;
    
    {
-      ModuleDescription dummyDescription(ParameterSetID("thisisadummyitem"),"FooProd","foo");
+      ModuleDescription dummyDescription(ParameterSetID("thisisadummyitem"), "FooProd", "foo");
       ProductTransientIndex index(0);
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -61,7 +58,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -70,7 +67,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -79,7 +76,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
@@ -89,7 +86,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -98,7 +95,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -107,7 +104,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
@@ -117,7 +114,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -126,7 +123,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -135,7 +132,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       //NOTE: need to put stuff in Run and Lumi since that went wrong elsewhere
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
@@ -145,7 +142,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
                                                                  "foo",
@@ -154,7 +151,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
                                                                  "foo",
@@ -163,7 +160,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
@@ -173,7 +170,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
                                                                  "foo",
@@ -182,7 +179,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
                                                                  "foo",
@@ -191,7 +188,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
@@ -201,7 +198,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
                                                                  "foo",
@@ -210,7 +207,7 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
                                                                  "foo",
@@ -219,42 +216,49 @@ testTransientProductLookupMap::constructTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
    }
    
    TransientProductLookupMap tplm;
    tplm.fillFrom(fillFromMap);
    
-   std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)),InEvent));
-   CPPUNIT_ASSERT(6 == range.second-range.first);
+   std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent));
+   CPPUNIT_ASSERT(6 == range.second - range.first);
 
-   char const * const order[]={"A","a","B","a","C","a","A","b","B","b","C","b"};
-   char const * const * itOrder = order;
-   const unsigned int indexOrder[]={0,1,2,0,1,2};
-   const unsigned int* itIndexOrder = indexOrder;
+   char const* const order[] = {"A", "a", "B", "a", "C", "a", "A", "b", "B", "b", "C", "b"};
+   char const* const* itOrder = order;
+   unsigned int const indexOrder[] = {0, 1, 2, 0, 1, 2};
+   unsigned int const* itIndexOrder = indexOrder;
    int index = 0;
-   for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it,++itOrder,++index) {
-      //std::cout<<"ordering "<<it->branchDescription()->processName()<<" expect "<<*itOrder<<std::endl;
-      CPPUNIT_ASSERT(it->branchDescription()->processName()==*(itOrder++));
-      //std::cout<<"         "<<it->branchDescription()->productInstanceName()<<" expect "<<*itOrder<<std::endl;
-      CPPUNIT_ASSERT(it->branchDescription()->productInstanceName()==*itOrder);
-      CPPUNIT_ASSERT(it->branchDescription()->className()=="edm::ProductID");
-      //std::cout<<"         "<<it->isFirst()<<" expect "<<not static_cast<bool>(index % 3)<<std::endl;
-      CPPUNIT_ASSERT(it->isFirst() == not static_cast<bool>(index % 3));
+   for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it, ++itOrder, ++index) {
+      //std::cout << "ordering " << it->branchDescription()->processName() << " expect " << *itOrder << std::endl;
+      CPPUNIT_ASSERT(it->branchDescription()->processName() == *(itOrder++));
+      //std::cout << "         " << it->branchDescription()->productInstanceName() << " expect " << *itOrder << std::endl;
+      CPPUNIT_ASSERT(it->branchDescription()->productInstanceName() == *itOrder);
+      CPPUNIT_ASSERT(it->branchDescription()->className() == "edm::ProductID");
+      //std::cout << "         " << it->isFirst() << " expect " << not static_cast<bool>(index % 3) << std::endl;
+      CPPUNIT_ASSERT(it->isFirst() == !static_cast<bool>(index % 3));
       CPPUNIT_ASSERT(it->processIndex() == *(itIndexOrder++));
    }
    
-   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InEvent));
-   CPPUNIT_ASSERT(3==range.second-range.first);
+   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InEvent));
+   CPPUNIT_ASSERT(3 == range.second - range.first);
 
-   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InLumi));
-   CPPUNIT_ASSERT(0==range.second-range.first);
+   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InLumi));
+   CPPUNIT_ASSERT(0 == range.second - range.first);
    
-   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)),InEvent));
-   CPPUNIT_ASSERT(0==range.second-range.first);
+   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)), InEvent));
+   CPPUNIT_ASSERT(0 == range.second - range.first);
 
-   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)),InRun));
-   CPPUNIT_ASSERT(6 == range.second-range.first);
+   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InRun));
+   CPPUNIT_ASSERT(6 == range.second - range.first);
+
+   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("Q"));
+   CPPUNIT_ASSERT(0 == range.second - range.first);
+
+   range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("b"));
+   CPPUNIT_ASSERT(range.first->branchDescription()->moduleLabel() == std::string("foo"));
+   CPPUNIT_ASSERT(range.first->branchDescription()->productInstanceName() == std::string("b"));
 
 }
 
@@ -268,7 +272,7 @@ testTransientProductLookupMap::reorderTest()
    std::list<ConstBranchDescription> cbdlist;
    
    {
-      ModuleDescription dummyDescription(ParameterSetID("thisisadummyitem"),"FooProd","foo");
+      ModuleDescription dummyDescription(ParameterSetID("thisisadummyitem"), "FooProd", "foo");
       ProductTransientIndex index(0);
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -277,7 +281,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -286,7 +290,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -295,7 +299,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
@@ -305,7 +309,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -314,7 +318,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -323,7 +327,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
@@ -333,7 +337,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmProductID",
                                                                  "a",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -342,7 +346,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmProductID",
                                                                  "b",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -351,7 +355,7 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edmBranchID",
                                                                  "",
                                                                  dummyDescription)));
-      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)),cbdlist.back().branchType()),&(cbdlist.back()))]=index++;
+      fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
       
    }
    
@@ -361,134 +365,160 @@ testTransientProductLookupMap::reorderTest()
    //NOTE: order is oldest to newest
    std::vector<ProcessConfiguration> vPC;
    {
-      vPC.push_back(ProcessConfiguration("C",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("A",ReleaseVersion(""),PassID("")));
-      //vPC.push_back(ProcessConfiguration("B",ReleaseVersion(""),PassID("")));
+      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("A", ReleaseVersion(""), PassID("")));
+      //vPC.push_back(ProcessConfiguration("B", ReleaseVersion(""), PassID("")));
       ProcessHistory ph(vPC);
       
-      tplm.reorderIfNecessary(InEvent,ph,"B");
+      tplm.reorderIfNecessary(InEvent, ph, "B");
       
-      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)),InEvent));
-      CPPUNIT_ASSERT(6 == range.second-range.first);
+      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent));
+      CPPUNIT_ASSERT(6 == range.second - range.first);
       
-      char const * const order[]={"B","a","A","a","C","a","B","b","A","b","C","b"};
-      char const * const * itOrder = order;
-      const unsigned int indexOrder[]={0,1,2,0,1,2};
-      const unsigned int* itIndexOrder = indexOrder;
+      char const* const order[] = {"B", "a", "A", "a", "C", "a", "B", "b", "A", "b", "C", "b"};
+      char const* const* itOrder = order;
+      unsigned int const indexOrder[] = {0, 1, 2, 0, 1, 2};
+      unsigned int const* itIndexOrder = indexOrder;
       int index = 0;
-      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it,++itOrder,++index) {
-         //std::cout<<"ordering "<<it->branchDescription()->processName()<<" expect "<<*itOrder<<std::endl;
-         CPPUNIT_ASSERT(it->branchDescription()->processName()==*(itOrder++));
-         //std::cout<<"         "<<it->branchDescription()->productInstanceName()<<" expect "<<*itOrder<<std::endl;
-         CPPUNIT_ASSERT(it->branchDescription()->productInstanceName()==*itOrder);
-         CPPUNIT_ASSERT(it->branchDescription()->className()=="edm::ProductID");
-         CPPUNIT_ASSERT(it->isFirst() == not static_cast<bool>(index % 3));
+      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it, ++itOrder, ++index) {
+         //std::cout << "ordering " << it->branchDescription()->processName() << " expect " << *itOrder << std::endl;
+         CPPUNIT_ASSERT(it->branchDescription()->processName() == *(itOrder++));
+         //std::cout << "         " << it->branchDescription()->productInstanceName() << " expect " << *itOrder << std::endl;
+         CPPUNIT_ASSERT(it->branchDescription()->productInstanceName() == *itOrder);
+         CPPUNIT_ASSERT(it->branchDescription()->className() == "edm::ProductID");
+         CPPUNIT_ASSERT(it->isFirst() == !static_cast<bool>(index % 3));
          CPPUNIT_ASSERT(it->processIndex() == *(itIndexOrder++));
       }
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InEvent));
-      CPPUNIT_ASSERT(3==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InEvent));
+      CPPUNIT_ASSERT(3 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InRun));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InRun));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)),InEvent));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)), InEvent));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
+
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("Q"));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
+
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("b"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->moduleLabel() == std::string("foo"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->productInstanceName() == std::string("b"));
    }
    {
       //No A this time
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("C",ReleaseVersion(""),PassID("")));
+      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
 
       ProcessHistory ph(vPC);
       
-      tplm.reorderIfNecessary(InEvent,ph,"B");
+      tplm.reorderIfNecessary(InEvent, ph, "B");
       
-      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)),InEvent));
-      CPPUNIT_ASSERT(6 == range.second-range.first);
+      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent));
+      CPPUNIT_ASSERT(6 == range.second - range.first);
       
-      char const * const order[]={"B","C","A","B","C","A"};
-      char const * const * itOrder = order;
-      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it,++itOrder) {
-         //std::cout<<"ordering "<<it->branchDescription()->processName()<<" expect "<<*itOrder<<std::endl;
-         CPPUNIT_ASSERT(it->branchDescription()->processName()==*itOrder);
+      char const* const order[] = {"B", "C", "A", "B", "C", "A"};
+      char const* const* itOrder = order;
+      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it, ++itOrder) {
+         //std::cout << "ordering " << it->branchDescription()->processName() << " expect " << *itOrder << std::endl;
+         CPPUNIT_ASSERT(it->branchDescription()->processName() == *itOrder);
       }
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InEvent));
-      CPPUNIT_ASSERT(3==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InEvent));
+      CPPUNIT_ASSERT(3 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InRun));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InRun));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)),InEvent));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)), InEvent));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("Q"));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
+
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("b"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->moduleLabel() == std::string("foo"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->productInstanceName() == std::string("b"));
    }
 
    {
       //Add several steps which have no data saved in final file
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("Z",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("C",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("Y",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("A",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("X",ReleaseVersion(""),PassID("")));
+      vPC.push_back(ProcessConfiguration("Z", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("Y", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("A", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("X", ReleaseVersion(""), PassID("")));
       
       ProcessHistory ph(vPC);
       
-      tplm.reorderIfNecessary(InEvent,ph,"B");
+      tplm.reorderIfNecessary(InEvent, ph, "B");
       
-      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)),InEvent));
-      CPPUNIT_ASSERT(6 == range.second-range.first);
+      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent));
+      CPPUNIT_ASSERT(6 == range.second - range.first);
       
-      char const * const order[]={"B","A","C","B","A","C"};
-      char const * const * itOrder = order;
-      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it,++itOrder) {
-         //std::cout<<"ordering "<<it->branchDescription()->processName()<<" expect "<<*itOrder<<std::endl;
-         CPPUNIT_ASSERT(it->branchDescription()->processName()==*itOrder);
+      char const* const order[] = {"B", "A", "C", "B", "A", "C"};
+      char const* const* itOrder = order;
+      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it, ++itOrder) {
+         //std::cout << "ordering " << it->branchDescription()->processName() << " expect " << *itOrder << std::endl;
+         CPPUNIT_ASSERT(it->branchDescription()->processName() == *itOrder);
       }
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InEvent));
-      CPPUNIT_ASSERT(3==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InEvent));
+      CPPUNIT_ASSERT(3 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InRun));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InRun));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)),InEvent));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)), InEvent));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("Q"));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
+
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("b"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->moduleLabel() == std::string("foo"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->productInstanceName() == std::string("b"));
+
    }
 
    {
       //There is no data in the present configuration
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("C",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("B",ReleaseVersion(""),PassID("")));
-      vPC.push_back(ProcessConfiguration("A",ReleaseVersion(""),PassID("")));
+      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("B", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("A", ReleaseVersion(""), PassID("")));
       
       ProcessHistory ph(vPC);
       
-      tplm.reorderIfNecessary(InEvent,ph,"E");
+      tplm.reorderIfNecessary(InEvent, ph, "E");
       
-      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)),InEvent));
-      CPPUNIT_ASSERT(6 == range.second-range.first);
+      std::pair<TransientProductLookupMap::const_iterator, TransientProductLookupMap::const_iterator> range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent));
+      CPPUNIT_ASSERT(6 == range.second - range.first);
       
-      char const * const order[]={"A","B","C","A","B","C"};
-      char const * const * itOrder = order;
-      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it,++itOrder) {
-         //std::cout<<"ordering "<<it->branchDescription()->processName()<<" expect "<<*itOrder<<std::endl;
-         CPPUNIT_ASSERT(it->branchDescription()->processName()==*itOrder);
+      char const* const order[] = {"A", "B", "C", "A", "B", "C"};
+      char const* const* itOrder = order;
+      for(TransientProductLookupMap::const_iterator it = range.first; it != range.second; ++it, ++itOrder) {
+         //std::cout << "ordering " << it->branchDescription()->processName() << " expect " << *itOrder << std::endl;
+         CPPUNIT_ASSERT(it->branchDescription()->processName() == *itOrder);
       }
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InEvent));
-      CPPUNIT_ASSERT(3==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InEvent));
+      CPPUNIT_ASSERT(3 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)),InRun));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::BranchID)), InRun));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
-      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)),InEvent));
-      CPPUNIT_ASSERT(0==range.second-range.first);
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(double)), InEvent));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
       
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("Q"));
+      CPPUNIT_ASSERT(0 == range.second - range.first);
+
+      range = tplm.equal_range(TypeInBranchType(TypeID(typeid(edm::ProductID)), InEvent), std::string("foo"), std::string("b"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->moduleLabel() == std::string("foo"));
+      CPPUNIT_ASSERT(range.first->branchDescription()->productInstanceName() == std::string("b"));
    }
    
 }
