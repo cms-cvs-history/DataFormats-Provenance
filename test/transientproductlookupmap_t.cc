@@ -361,13 +361,15 @@ testTransientProductLookupMap::reorderTest()
    
    TransientProductLookupMap tplm;
    tplm.fillFrom(fillFromMap);
+
+   ParameterSetID dummyParameterSetID;
    
    //NOTE: order is oldest to newest
    std::vector<ProcessConfiguration> vPC;
    {
-      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("A", ReleaseVersion(""), PassID("")));
-      //vPC.push_back(ProcessConfiguration("B", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("A", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      //vPC.push_back(ProcessConfiguration("B", dummyParameterSetID, ReleaseVersion(""), PassID("")));
       ProcessHistory ph(vPC);
       
       tplm.reorderIfNecessary(InEvent, ph, "B");
@@ -409,7 +411,7 @@ testTransientProductLookupMap::reorderTest()
    {
       //No A this time
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
 
       ProcessHistory ph(vPC);
       
@@ -445,11 +447,11 @@ testTransientProductLookupMap::reorderTest()
    {
       //Add several steps which have no data saved in final file
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("Z", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("Y", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("A", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("X", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("Z", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("Y", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("A", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("X", dummyParameterSetID, ReleaseVersion(""), PassID("")));
       
       ProcessHistory ph(vPC);
       
@@ -486,9 +488,9 @@ testTransientProductLookupMap::reorderTest()
    {
       //There is no data in the present configuration
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("C", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("B", ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("A", ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("B", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.push_back(ProcessConfiguration("A", dummyParameterSetID, ReleaseVersion(""), PassID("")));
       
       ProcessHistory ph(vPC);
       
