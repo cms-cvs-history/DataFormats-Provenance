@@ -38,7 +38,7 @@ namespace edm {
     }
     BranchListIndex producedBranchListIndex = breg.extra().producedBranchListIndex_;
     if (producedBranchListIndex != std::numeric_limits<BranchListIndex>::max()) {
-      branchListIndexMapper.insert(std::make_pair(bidlists.size(), producedBranchListIndex));
+      branchListIndexMapper.insert(std::make_pair(producedBranchListIndex, producedBranchListIndex));
     }
   }
 
@@ -74,7 +74,7 @@ namespace edm {
     BranchIDListRegistry& breg = *BranchIDListRegistry::instance();
     BranchListIndexMapper& branchListIndexMapper = breg.extra().branchListIndexMapper_;
     for (BranchListIndexes::iterator i = indexes.begin(), e = indexes.end(); i != e; ++i) {
-      *i = branchListIndexMapper[i - indexes.begin()];
+      *i = branchListIndexMapper[*i];
     }
   }
 
