@@ -12,7 +12,6 @@ FileIndex.h
 #include "DataFormats/Provenance/interface/RunID.h"
 #include "DataFormats/Provenance/interface/LuminosityBlockID.h"
 #include "DataFormats/Provenance/interface/EventID.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 
 #include "boost/shared_ptr.hpp"
 
@@ -118,8 +117,11 @@ namespace edm {
 
       enum SortState {kNotSorted, kSorted_Run_Lumi_Event, kSorted_Run_Lumi_EventEntry};
 
+      void initializeTransients() const {transients_.reset();}
+
       struct Transients {
 	Transients();
+	void reset();
 	bool allInEntryOrder_;
 	bool resultCached_;
 	SortState sortState_;
@@ -127,12 +129,13 @@ namespace edm {
 
     private:
 
-      bool& allInEntryOrder() const {return transients_.get().allInEntryOrder_;}
-      bool& resultCached() const {return transients_.get().resultCached_;}
-      SortState& sortState() const {return transients_.get().sortState_;}
+      bool& allInEntryOrder() const {return transients_.allInEntryOrder_;}
+      bool& resultCached() const {return transients_.resultCached_;}
+      SortState& sortState() const {return transients_.sortState_;}
 
       std::vector<Element> entries_;
-      mutable Transient<Transients> transients_;
+      mutable Transients transients_;
+      mutable bool dummy_;
   };
 
   bool operator<(FileIndex::Element const& lh, FileIndex::Element const& rh);

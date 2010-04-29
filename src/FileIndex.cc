@@ -7,7 +7,7 @@
 
 namespace edm {
 
-  FileIndex::FileIndex() : entries_(), transients_() {}
+  FileIndex::FileIndex() : entries_(), transients_(), dummy_(false) {}
 
   // The default value for sortState_ reflects the fact that
   // the index is always sorted using Run, Lumi, and Event
@@ -17,6 +17,13 @@ namespace edm {
   // sorted.
 
   FileIndex::Transients::Transients() : allInEntryOrder_(false), resultCached_(false), sortState_(kSorted_Run_Lumi_Event) {}
+
+  void
+  FileIndex::Transients::reset() {
+    allInEntryOrder_ = false;
+    resultCached_ = false;
+    sortState_ = kSorted_Run_Lumi_Event;
+  }
 
   void
   FileIndex::addEntry(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event, EntryNumber_t entry) {

@@ -19,7 +19,6 @@ and how it came into existence, plus the product identifier and the status.
 #include "DataFormats/Provenance/interface/ProductProvenance.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"
 #include "DataFormats/Provenance/interface/ProvenanceFwd.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 
 /*
   EventEntryInfo

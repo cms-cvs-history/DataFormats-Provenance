@@ -7,7 +7,6 @@
 
 #include "DataFormats/Provenance/interface/ProcessConfiguration.h"
 #include "DataFormats/Provenance/interface/ProcessHistoryID.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 
 namespace edm {
   class ProcessHistory {
@@ -26,7 +25,7 @@ namespace edm {
 
     typedef collection_type::size_type size_type;
 
-    ProcessHistory() : data_(), transients_() {}
+    ProcessHistory() : data_(), transients_(), dummy_(false) {}
     explicit ProcessHistory(size_type n) : data_(n), transients_() {}
     explicit ProcessHistory(collection_type const& vec) : data_(vec), transients_() {}
 
@@ -65,6 +64,8 @@ namespace edm {
     // is not found.
     bool getConfigurationForProcess(std::string const& name, ProcessConfiguration& config) const;
 
+    void initializeTransients() const {transients_.reset();}
+
     // Used only for backward compatibility
     // merges the other process history into this one.
     // Returns true if successful.  Returns false if the merge cannot be done,
@@ -73,13 +74,15 @@ namespace edm {
 
     struct Transients {
       Transients() : phid_() {}
+      void reset() {phid_.reset();}
       ProcessHistoryID phid_;
     };
 
   private:
-    ProcessHistoryID & phid() const {return transients_.get().phid_;}
+    ProcessHistoryID& phid() const {return transients_.phid_;}
     collection_type data_;
-    mutable Transient<Transients> transients_;
+    mutable Transients transients_;
+    mutable bool dummy_;
   };
 
   // Free swap function

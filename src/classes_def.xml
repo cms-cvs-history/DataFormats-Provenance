@@ -14,7 +14,10 @@
  <class name="edm::History"/>
  <class name="edm::LuminosityBlockAuxiliary"/>
  <class name="edm::RunAuxiliary"/>
- <class name="edm::ProductRegistry"/>
+ <class name="edm::ProductRegistry">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
+ </class>
  <class name="std::map<edm::BranchKey,edm::BranchDescription>"/>
  <class name="std::pair<edm::BranchKey,edm::BranchDescription>"/>
  <class name="edm::BranchKey"/>
@@ -29,17 +32,32 @@
  <class name="std::vector<std::vector<edm::EventID> >"/>
  <class name="std::vector<std::vector<std::vector<edm::EventID> > > "/>
  <class name="edm::BranchChildren"/>
- <class name="edm::ProductProvenance"/>
+ <class name="edm::ProductProvenance">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
+ </class>
  <class name="std::vector<edm::ProductProvenance>"/>
- <class name="edm::BranchDescription"/>
+ <class name="edm::BranchDescription">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
+ </class>
  <class name="edm::ParameterSetBlob"/>
- <class name="edm::ProcessConfiguration"/>
+ <class name="edm::ProcessConfiguration">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
+ </class>
  <class name="std::vector<edm::ProcessConfiguration>"/>
- <class name="edm::ProcessHistory"/>
+ <class name="edm::ProcessHistory">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
+ </class>
  <class name="edm::FileFormatVersion"/>
  <class name="edm::FileIndex::Element"/>
  <class name="std::vector<edm::FileIndex::Element>"/>
- <class name="edm::FileIndex"/>
+ <class name="edm::FileIndex">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
+ </class>
  <class name="edm::ProcessHistoryID"/>
  <class name="std::set<edm::ProcessHistoryID >"/>
  <class name="std::vector<edm::ProcessHistory>"/>
@@ -51,9 +69,9 @@
  <class name="edm::ProcessConfigurationID"/>
  <class name="std::vector<edm::ProcessConfigurationID>"/>
  <class name="edm::ParentageID"/>
- <class name="edm::Parentage"/>
- <class pattern="edm::Transient<*>">
-   <field name="value_" transient="true"/>
+ <class name="edm::Parentage">
+   <field name="transients_" transient="true"/>
+   <field name="dummy_" transient="true"/>
  </class>
 
  <class name="std::map<edm::ProcessHistoryID,edm::ProcessHistory>"/>
@@ -88,5 +106,48 @@
  <class name="ROOT::TSchemaHelper"/>
  <class name="std::vector<ROOT::TSchemaHelper>"/>
  <class name="std::vector<TFormula*>"/>
+
+ <ioread sourceClass="edm::ProductProvenance" targetClass="edm::ProductProvenance" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::ProductRegistry" targetClass="edm::ProductRegistry" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::BranchDescription" targetClass="edm::BranchDescription" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::ProcessConfiguration" targetClass="edm::ProcessConfiguration" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::ProcessHistory" targetClass="edm::ProcessHistory" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::FileIndex" targetClass="edm::FileIndex" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::Parentage" targetClass="edm::Parentage" version="[*]" source="" target="dummy_">
+ <![CDATA[
+	newObj->initializeTransients();
+	dummy_ = true;
+ ]]>
+ </ioread>
  
 </lcgdict>

@@ -18,7 +18,6 @@ This description also applies to every product instance on the branch.
 #include "DataFormats/Provenance/interface/ProductID.h"
 #include "DataFormats/Provenance/interface/ParameterSetID.h"
 #include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 
 #include "Reflex/Type.h"
 #include "FWCore/Utilities/interface/UseReflex.h"
@@ -65,38 +64,42 @@ namespace edm {
     std::string const& className() const {return fullClassName();}
     std::string const& friendlyClassName() const {return friendlyClassName_;}
     std::string const& productInstanceName() const {return productInstanceName_;}
-    bool& produced() const {return transients_.get().produced_;}
-    bool present() const {return !transients_.get().dropped_;}
-    bool& dropped() const {return transients_.get().dropped_;}
-    bool& onDemand() const {return transients_.get().onDemand_;}
-    bool& transient() const {return transients_.get().transient_;}
-    Reflex::Type& type() const {return transients_.get().type_;}
-    int& splitLevel() const {return transients_.get().splitLevel_;}
-    int& basketSize() const {return transients_.get().basketSize_;}
+    bool& produced() const {return transients_.produced_;}
+    bool present() const {return !transients_.dropped_;}
+    bool& dropped() const {return transients_.dropped_;}
+    bool& onDemand() const {return transients_.onDemand_;}
+    bool& transient() const {return transients_.transient_;}
+    Reflex::Type& type() const {return transients_.type_;}
+    int& splitLevel() const {return transients_.splitLevel_;}
+    int& basketSize() const {return transients_.basketSize_;}
 
-    ParameterSetID const& parameterSetID() const {return transients_.get().parameterSetID_;}
-    std::string const& moduleName() const {return transients_.get().moduleName_;}
+    ParameterSetID const& parameterSetID() const {return transients_.parameterSetID_;}
+    std::string const& moduleName() const {return transients_.moduleName_;}
 
     std::map<ProcessConfigurationID, ParameterSetID>& parameterSetIDs() const {
-      return transients_.get().parameterSetIDs_;
+      return transients_.parameterSetIDs_;
     }
     std::map<ProcessConfigurationID, std::string>& moduleNames() const {
-      return transients_.get().moduleNames_;
+      return transients_.moduleNames_;
     }
     ParameterSetID const& psetID() const;
     bool isPsetIDUnique() const {return parameterSetIDs().size() == 1;}
     std::set<std::string> const& branchAliases() const {return branchAliases_;}
     std::set<std::string>& branchAliases() {return branchAliases_;}
-    std::string& branchName() const {return transients_.get().branchName_;}
+    std::string& branchName() const {return transients_.branchName_;}
     BranchType const& branchType() const {return branchType_;}
-    std::string& wrappedName() const {return transients_.get().wrappedName_;}
+    std::string& wrappedName() const {return transients_.wrappedName_;}
 
     void setDropped() const {dropped() = true;}
     void setOnDemand() const {onDemand() = true;}
     void updateFriendlyClassName();
 
+    void initializeTransients() const {transients_.reset();}
+
     struct Transients {
       Transients();
+
+      void reset();
 
       // The parameter set id of the producer.
       // This is set if and only if produced_ is true.
@@ -184,7 +187,8 @@ namespace edm {
     // The branch ROOT alias(es), which are settable by the user.
     std::set<std::string> branchAliases_;
 
-    mutable Transient<Transients> transients_;
+    mutable Transients transients_;
+    mutable bool dummy_;
   };
 
   inline

@@ -9,22 +9,30 @@
 
 namespace edm {
   ProductProvenance::Transients::Transients() :
-    parentagePtr_(),
-    noParentage_(false)
+    noParentage_(false),
+    parentagePtr_()
   {}
+
+  void
+  ProductProvenance::Transients::reset() {
+    noParentage_ = false;
+    parentagePtr_.reset();
+  }
 
   ProductProvenance::ProductProvenance() :
     branchID_(),
     productStatus_(productstatus::uninitialized()),
     parentageID_(),
-    transients_()
+    transients_(),
+    dummy_(false)
   {}
 
   ProductProvenance::ProductProvenance(BranchID const& bid) :
     branchID_(bid),
     productStatus_(productstatus::uninitialized()),
     parentageID_(),
-    transients_()
+    transients_(),
+    dummy_(false)
   {}
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
@@ -32,7 +40,8 @@ namespace edm {
     branchID_(bid),
     productStatus_(status),
     parentageID_(),
-    transients_()
+    transients_(),
+    dummy_(false)
   {}
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
@@ -41,7 +50,8 @@ namespace edm {
     branchID_(bid),
     productStatus_(status),
     parentageID_(edid),
-    transients_()
+    transients_(),
+    dummy_(false)
   {}
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
@@ -50,7 +60,8 @@ namespace edm {
     branchID_(bid),
     productStatus_(status),
     parentageID_(pPtr->id()),
-    transients_() {
+    transients_(),
+    dummy_(false) {
        parentagePtr() = pPtr;
        ParentageRegistry::instance()->insertMapped(*pPtr);
   }
@@ -61,7 +72,8 @@ namespace edm {
     branchID_(bid),
     productStatus_(status),
     parentageID_(),
-    transients_() {
+    transients_(),
+    dummy_(false) {
       parentagePtr() = boost::shared_ptr<Parentage>(new Parentage);
       parentagePtr()->parents() = parents;
       parentageID_ = parentagePtr()->id();

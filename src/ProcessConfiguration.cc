@@ -13,7 +13,7 @@
 namespace edm {
 
 
-  ProcessConfiguration::ProcessConfiguration() : processName_(), parameterSetID_(), releaseVersion_(), passID_() {}
+  ProcessConfiguration::ProcessConfiguration() : processName_(), parameterSetID_(), releaseVersion_(), passID_(), transients_(), dummy_(false) {}
 
   ProcessConfiguration::ProcessConfiguration(
                         std::string const& procName,
@@ -23,7 +23,9 @@ namespace edm {
       processName_(procName),
       parameterSetID_(pSetID),
       releaseVersion_(relVersion),
-      passID_(pass) { }
+      passID_(pass),
+      transients_(false),
+      dummy_(false) {}
 
   ProcessConfiguration::ProcessConfiguration(
                         std::string const& procName,
@@ -32,7 +34,9 @@ namespace edm {
       processName_(procName),
       parameterSetID_(),
       releaseVersion_(relVersion),
-      passID_(pass) { isCurrentProcess() = true; }
+      passID_(pass),
+      transients_(true),
+      dummy_(false) {}
 
   ParameterSetID const&
   ProcessConfiguration::parameterSetID() const {

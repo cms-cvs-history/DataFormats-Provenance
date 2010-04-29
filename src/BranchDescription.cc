@@ -17,6 +17,7 @@
 namespace edm {
   BranchDescription::Transients::Transients() :
     parameterSetID_(),
+    moduleName_(),
     branchName_(),
     wrappedName_(),
     produced_(false),
@@ -24,11 +25,28 @@ namespace edm {
     dropped_(false),
     transient_(false),
     type_(),
-    splitLevel_(),
-    basketSize_(),
+    splitLevel_(0),
+    basketSize_(0),
     parameterSetIDs_(),
     moduleNames_() {
    }
+
+  void
+  BranchDescription::Transients::reset() {
+    parameterSetID_.reset();
+    moduleName_.clear();
+    branchName_.clear();
+    wrappedName_.clear();
+    produced_ = false;
+    onDemand_ = false;
+    dropped_ = false;
+    transient_ = false;
+    type_ = Reflex::Type();
+    splitLevel_ = 0;
+    basketSize_ = 0;
+    parameterSetIDs_.clear();
+    moduleNames_.clear();
+  }
 
   BranchDescription::BranchDescription() :
     branchType_(InEvent),
@@ -40,7 +58,8 @@ namespace edm {
     friendlyClassName_(),
     productInstanceName_(),
     branchAliases_(),
-    transients_()
+    transients_(),
+    dummy_(false)
   {
     // do not call init here! It will result in an exception throw.
   }
@@ -63,13 +82,14 @@ namespace edm {
     friendlyClassName_(fName),
     productInstanceName_(pin),
     branchAliases_(aliases),
-    transients_()
+    transients_(),
+    dummy_(false)
   {
     dropped() = false;
     produced() = true;
     onDemand() = false;
-    transients_.get().parameterSetID_ = modDesc.parameterSetID();
-    transients_.get().moduleName_ = modDesc.moduleName();
+    transients_.parameterSetID_ = modDesc.parameterSetID();
+    transients_.moduleName_ = modDesc.moduleName();
     init();
   }
 

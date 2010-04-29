@@ -16,7 +16,6 @@ and how it came into existence, plus the status.
 #include "DataFormats/Provenance/interface/ParentageID.h"
 #include "DataFormats/Provenance/interface/ProductStatus.h"
 #include "DataFormats/Provenance/interface/ProvenanceFwd.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 
 /*
   ProductProvenance
@@ -53,27 +52,31 @@ namespace edm {
     Parentage const& parentage() const;
     void setStatus(ProductStatus const& status);
 
-    bool & noParentage() const {return transients_.get().noParentage_;}
+    bool& noParentage() const {return transients_.noParentage_;}
+
+    void initializeTransients() const {transients_.reset();}
 
     struct Transients {
       Transients();
-      boost::shared_ptr<Parentage> parentagePtr_;
+      void reset();
       bool noParentage_;
+      boost::shared_ptr<Parentage> parentagePtr_;
     };
 
   private:
 
-    boost::shared_ptr<Parentage> & parentagePtr() const {return transients_.get().parentagePtr_;}
+    boost::shared_ptr<Parentage>& parentagePtr() const {return transients_.parentagePtr_;}
 
     BranchID branchID_;
     ProductStatus productStatus_;
     ParentageID parentageID_;
-    mutable Transient<Transients> transients_;
+    mutable Transients transients_;
+    mutable bool dummy_;
   };
 
   inline
   bool
-  operator < (ProductProvenance const& a, ProductProvenance const& b) {
+  operator< (ProductProvenance const& a, ProductProvenance const& b) {
     return a.branchID() < b.branchID();
   }
   

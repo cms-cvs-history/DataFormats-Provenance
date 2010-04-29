@@ -23,7 +23,6 @@
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 #include "DataFormats/Provenance/interface/ConstBranchDescription.h"
 #include "DataFormats/Provenance/interface/ProductTransientIndex.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 #include "FWCore/Utilities/interface/TypeID.h"
 
 #include "DataFormats/Provenance/interface/TransientProductLookupMap.h"
@@ -114,18 +113,23 @@ namespace edm {
 
     ConstProductList& constProductList() const {
 	 //throwIfNotFrozen();
-       return transients_.get().constProductList_;
+       return transients_.constProductList_;
     }
 
-    TransientProductLookupMap & productLookup() const {return transients_.get().productLookup_;}
+    TransientProductLookupMap & productLookup() const {return transients_.productLookup_;}
 
-    TransientProductLookupMap & elementLookup() const {return transients_.get().elementLookup_;}
+    TransientProductLookupMap & elementLookup() const {return transients_.elementLookup_;}
 
     //returns the appropriate PriductTransientIndex else 0xFFFFFFFF if no BranchID is available
     static ProductTransientIndex const kInvalidIndex=0xFFFFFFFF;
     ProductTransientIndex indexFrom(BranchID const& iID) const;
+
+    void initializeTransients() const {transients_.reset();}
+
     struct Transients {
       Transients();
+      void reset();
+
       bool frozen_;
       ConstProductList constProductList_; 
       // Is at least one (run), (lumi), (event) product produced this process?
@@ -142,16 +146,16 @@ namespace edm {
       std::map<BranchID, ProductTransientIndex> branchIDToIndex_;
     };
 
-    bool productProduced(BranchType branchType) const {return transients_.get().productProduced_[branchType];}
-    bool anyProductProduced() const {return transients_.get().anyProductProduced_;}
+    bool productProduced(BranchType branchType) const {return transients_.productProduced_[branchType];}
+    bool anyProductProduced() const {return transients_.anyProductProduced_;}
 
   private:
     void setProductProduced(BranchType branchType) const {
-      transients_.get().productProduced_[branchType] = true;
-      transients_.get().anyProductProduced_ = true;
+      transients_.productProduced_[branchType] = true;
+      transients_.anyProductProduced_ = true;
     }
 
-    bool & frozen() const {return transients_.get().frozen_;}
+    bool & frozen() const {return transients_.frozen_;}
     
     void initializeLookupTables() const;
     virtual void addCalled(BranchDescription const&, bool iFromListener);
@@ -159,7 +163,8 @@ namespace edm {
     void throwIfFrozen() const;
 
     ProductList productList_;
-    mutable Transient<Transients> transients_;
+    mutable Transients transients_;
+    mutable bool dummy_;
     
   };
 

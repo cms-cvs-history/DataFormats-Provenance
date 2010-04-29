@@ -12,7 +12,6 @@ Parentage: The products that were read in producing this product.
 
 #include "DataFormats/Provenance/interface/BranchID.h"
 #include "DataFormats/Provenance/interface/ParentageID.h"
-#include "DataFormats/Provenance/interface/Transient.h"
 
 /*
   Parentage
@@ -41,16 +40,20 @@ namespace edm {
     std::vector<BranchID> & parents() {return parents_;}
     void swap(Parentage& other) {parents_.swap(other.parents_); parentageID().swap(other.parentageID());}
 
+    void initializeTransients() const {transients_.reset();}
+
     struct Transients {
       Transients() : parentageID_() {}
+      void reset() {parentageID_.reset();}
       ParentageID parentageID_;
     };
 
   private:
-    ParentageID& parentageID() const {return transients_.get().parentageID_;}
+    ParentageID& parentageID() const {return transients_.parentageID_;}
     // The Branch IDs of the parents
     std::vector<BranchID> parents_;
-    mutable Transient<Transients> transients_;
+    mutable Transients transients_;
+    mutable bool dummy_;
 
   };
 
