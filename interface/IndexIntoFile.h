@@ -1,9 +1,9 @@
-#ifndef DataFormats_Provenance_NewFileIndex_h
-#define DataFormats_Provenance_NewFileIndex_h
+#ifndef DataFormats_Provenance_IndexIntoFile_h
+#define DataFormats_Provenance_IndexIntoFile_h
 
 /*----------------------------------------------------------------------
 
-NewFileIndex.h 
+IndexIntoFile.h 
 
 ----------------------------------------------------------------------*/
 
@@ -19,15 +19,15 @@ NewFileIndex.h
 
 namespace edm {
 
-  class NewFileIndex {
+  class IndexIntoFile {
 
     public:
       typedef long long EntryNumber_t;
 
-      NewFileIndex();
-      ~NewFileIndex() {}
+      IndexIntoFile();
+      ~IndexIntoFile() {}
 
-      void addEntry(ProcessHistoryID processHistoryID,
+      void addEntry(ProcessHistoryID const& processHistoryID,
                     RunNumber_t run,
                     LuminosityBlockNumber_t lumi,
                     EventNumber_t event,
@@ -142,6 +142,7 @@ namespace edm {
 
       bool allEventsInEntryOrder() const;
 
+      ProcessHistoryID const& processHistoryID(int i) const { return processHistoryIDs_.at(i); }
       std::vector<ProcessHistoryID> const& processHistoryIDs() const { return processHistoryIDs_; }
 
       void fixIndexes(std::vector<ProcessHistoryID> & processHistoryIDs);
@@ -168,45 +169,45 @@ namespace edm {
       std::vector<ProcessHistoryID> processHistoryIDs_;
   };
 
-  bool operator<(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh);
+  bool operator<(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
 
   inline
-  bool operator>(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {return rh < lh;}
+  bool operator>(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return rh < lh;}
 
   inline
-  bool operator>=(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {return !(lh < rh);}
+  bool operator>=(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return !(lh < rh);}
 
   inline
-  bool operator<=(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {return !(rh < lh);}
+  bool operator<=(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return !(rh < lh);}
 
   inline
-  bool operator==(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {return !(lh < rh || rh < lh);}
+  bool operator==(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return !(lh < rh || rh < lh);}
 
   inline
-  bool operator!=(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {return lh < rh || rh < lh;}
+  bool operator!=(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return lh < rh || rh < lh;}
 
   class Compare_Index_Run_Lumi_Entry {
   public:
-    bool operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh);
+    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
   };
 
   class Compare_Index_Run_Lumi {
   public:
-    bool operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh);
+    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
   };
 
   class Compare_Index_Run {
   public:
-    bool operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh);
+    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
   };
 
   class Compare_Index {
   public:
-    bool operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh);
+    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
   };
 
   std::ostream&
-  operator<<(std::ostream& os, NewFileIndex const& fileIndex);
+  operator<<(std::ostream& os, IndexIntoFile const& fileIndex);
 }
 
 #endif

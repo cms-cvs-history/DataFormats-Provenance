@@ -1,4 +1,4 @@
-#include "DataFormats/Provenance/interface/NewFileIndex.h"
+#include "DataFormats/Provenance/interface/IndexIntoFile.h"
 #include "FWCore/Utilities/interface/Algorithms.h"
 
 #include <algorithm>
@@ -8,7 +8,7 @@
 
 namespace edm {
 
-  NewFileIndex::NewFileIndex() : entries_(),
+  IndexIntoFile::IndexIntoFile() : entries_(),
                            transients_(),
                            processHistoryIDs_() {
   }
@@ -16,18 +16,18 @@ namespace edm {
   // The default value for sortState_ reflects the fact that
   // the index is always sorted using Index, Run, Lumi, and Event
   // number by the PoolOutputModule before being written out.
-  // In the other case when we create a new NewFileIndex, the
+  // In the other case when we create a new IndexIntoFile, the
   // vector is empty, which is consistent with it having been
   // sorted.
 
-  NewFileIndex::Transients::Transients() : allInEntryOrder_(false),
+  IndexIntoFile::Transients::Transients() : allInEntryOrder_(false),
                                         resultCached_(false),
                                         sortState_(kSorted_Index_Run_Lumi_Event),
                                         previousAddedIndex_(Element::invalidIndex) {
   }
 
   void
-  NewFileIndex::addEntry(ProcessHistoryID processHistoryID,
+  IndexIntoFile::addEntry(ProcessHistoryID const& processHistoryID,
                       RunNumber_t run,
                       LuminosityBlockNumber_t lumi,
                       EventNumber_t event,
@@ -53,29 +53,29 @@ namespace edm {
         processHistoryIDs_.push_back(processHistoryID);
       }
     }
-    entries_.push_back(NewFileIndex::Element(index, run, lumi, event, entry));
+    entries_.push_back(IndexIntoFile::Element(index, run, lumi, event, entry));
     resultCached() = false;
     sortState() = kNotSorted;
     previousAddedIndex() = index;
   }
 
-  void NewFileIndex::sortBy_Index_Run_Lumi_Event() {
+  void IndexIntoFile::sortBy_Index_Run_Lumi_Event() {
     stable_sort_all(entries_);
     resultCached() = false;
     sortState() = kSorted_Index_Run_Lumi_Event;
   }
 
-  void NewFileIndex::sortBy_Index_Run_Lumi_Entry() {
+  void IndexIntoFile::sortBy_Index_Run_Lumi_Entry() {
     stable_sort_all(entries_, Compare_Index_Run_Lumi_Entry());
     resultCached() = false;
     sortState() = kSorted_Index_Run_Lumi_Entry;
   }
 
-  bool NewFileIndex::allEventsInEntryOrder() const {
+  bool IndexIntoFile::allEventsInEntryOrder() const {
     if(!resultCached()) {
       resultCached() = true;
       EntryNumber_t maxEntry = Element::invalidEntry;
-      for(std::vector<NewFileIndex::Element>::const_iterator it = entries_.begin(), itEnd = entries_.end(); it != itEnd; ++it) {
+      for(std::vector<IndexIntoFile::Element>::const_iterator it = entries_.begin(), itEnd = entries_.end(); it != itEnd; ++it) {
         if(it->getEntryType() == kEvent) {
 	  if(it->entry() < maxEntry) {
 	    allInEntryOrder() = false;
@@ -90,8 +90,8 @@ namespace edm {
     return allInEntryOrder();
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const {
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const {
 
     assert(sortState() != kNotSorted);
 
@@ -123,6 +123,7 @@ namespace edm {
 	  if (lumiRange.first == phEnd) continue;
 	  it = std::find(lumiRange.first, lumiRange.second, el);
           if (it  == lumiRange.second) continue;
+          return it;
         }
       }
       else { // if (lumiMissing)
@@ -153,23 +154,23 @@ namespace edm {
     return iEnd;
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findEventPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const {
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findEventPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const {
     return findPosition(run, lumi, event);
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findLumiPosition(RunNumber_t run, LuminosityBlockNumber_t lumi) const {
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findLumiPosition(RunNumber_t run, LuminosityBlockNumber_t lumi) const {
     return findPosition(run, lumi, 0U);
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findRunPosition(RunNumber_t run) const {
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findRunPosition(RunNumber_t run) const {
     return findPosition(run, 0U, 0U);
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findEventEntryPosition(RunNumber_t run,
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findEventEntryPosition(RunNumber_t run,
                                     LuminosityBlockNumber_t lumi,
                                     EventNumber_t event,
                                     EntryNumber_t entry) const {
@@ -245,18 +246,18 @@ namespace edm {
     return iEnd; // Did not find it
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findNextRun(NewFileIndex::const_iterator const& iter) const {
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findNextRun(IndexIntoFile::const_iterator const& iter) const {
     return std::upper_bound(iter, entries_.end(), *iter, Compare_Index_Run());
   }
 
-  NewFileIndex::const_iterator
-  NewFileIndex::findNextLumiOrRun(NewFileIndex::const_iterator const& iter) const {
+  IndexIntoFile::const_iterator
+  IndexIntoFile::findNextLumiOrRun(IndexIntoFile::const_iterator const& iter) const {
     return std::upper_bound(iter, entries_.end(), *iter, Compare_Index_Run_Lumi());
   }
 
   void
-  NewFileIndex::fixIndexes(std::vector<ProcessHistoryID> & processHistoryIDs) {
+  IndexIntoFile::fixIndexes(std::vector<ProcessHistoryID> & processHistoryIDs) {
 
     std::map<int, int> oldToNewIndex;
     for (std::vector<ProcessHistoryID>::const_iterator iter = processHistoryIDs_.begin(),
@@ -283,7 +284,7 @@ namespace edm {
     }
   }
 
-  bool operator<(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {
+  bool operator<(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {
     if (lh.processHistoryIDIndex() == rh.processHistoryIDIndex()) {
       if(lh.run() == rh.run()) {
         if(lh.lumi() == rh.lumi()) {
@@ -296,7 +297,7 @@ namespace edm {
     return lh.processHistoryIDIndex() < rh.processHistoryIDIndex();
   }
 
-  bool Compare_Index_Run_Lumi_Entry::operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {
+  bool Compare_Index_Run_Lumi_Entry::operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {
     if (lh.processHistoryIDIndex() == rh.processHistoryIDIndex()) {
       if(lh.run() == rh.run()) {
         if(lh.lumi() == rh.lumi()) {
@@ -323,7 +324,7 @@ namespace edm {
     return lh.processHistoryIDIndex() < rh.processHistoryIDIndex();
   }
 
-  bool Compare_Index_Run_Lumi::operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {
+  bool Compare_Index_Run_Lumi::operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {
     if (lh.processHistoryIDIndex() == rh.processHistoryIDIndex()) {
       if(lh.run() == rh.run()) {
         return lh.lumi() < rh.lumi();
@@ -333,21 +334,21 @@ namespace edm {
     return lh.processHistoryIDIndex() < rh.processHistoryIDIndex();
   }
 
-  bool Compare_Index_Run::operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {
+  bool Compare_Index_Run::operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {
     if (lh.processHistoryIDIndex() == rh.processHistoryIDIndex()) {
       return lh.run() < rh.run();
     }
     return lh.processHistoryIDIndex() < rh.processHistoryIDIndex();
   }
 
-  bool Compare_Index::operator()(NewFileIndex::Element const& lh, NewFileIndex::Element const& rh) {
+  bool Compare_Index::operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {
     return lh.processHistoryIDIndex() < rh.processHistoryIDIndex();
   }
 
   std::ostream&
-  operator<<(std::ostream& os, NewFileIndex const& fileIndex) {
+  operator<<(std::ostream& os, IndexIntoFile const& fileIndex) {
 
-    os << "\nPrinting NewFileIndex contents.  This includes a list of all Runs, LuminosityBlocks\n"
+    os << "\nPrinting IndexIntoFile contents.  This includes a list of all Runs, LuminosityBlocks\n"
        << "and Events stored in the root file.\n\n";
     os << std::setw(15) << "Process History"
        << std::setw(15) << "Run"
@@ -355,8 +356,8 @@ namespace edm {
        << std::setw(15) << "Event"
        << std::setw(19) << "TTree Entry"
        << "\n";
-    for(std::vector<NewFileIndex::Element>::const_iterator it = fileIndex.begin(), itEnd = fileIndex.end(); it != itEnd; ++it) {
-      if(it->getEntryType() == NewFileIndex::kEvent) {
+    for(std::vector<IndexIntoFile::Element>::const_iterator it = fileIndex.begin(), itEnd = fileIndex.end(); it != itEnd; ++it) {
+      if(it->getEntryType() == IndexIntoFile::kEvent) {
         os << std::setw(15) << it->processHistoryIDIndex()
            << std::setw(15) << it->run()
            << std::setw(15) << it ->lumi()
@@ -364,7 +365,7 @@ namespace edm {
            << std::setw(19) << it->entry()
            << "\n";
       }
-      else if(it->getEntryType() == NewFileIndex::kLumi) {
+      else if(it->getEntryType() == IndexIntoFile::kLumi) {
         os << std::setw(15) << it->processHistoryIDIndex()
            << std::setw(15) << it->run()
            << std::setw(15) << it ->lumi()
@@ -372,7 +373,7 @@ namespace edm {
            << std::setw(19) << it->entry() << "  (LuminosityBlock)"
            << "\n";
       }
-      else if(it->getEntryType() == NewFileIndex::kRun) {
+      else if(it->getEntryType() == IndexIntoFile::kRun) {
         os << std::setw(15) << it->processHistoryIDIndex()
            << std::setw(15) << it->run()
            << std::setw(15) << " "
