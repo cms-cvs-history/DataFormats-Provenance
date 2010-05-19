@@ -35,8 +35,8 @@ namespace edm {
 	endTime_(theEndTime) {}
     ~RunAuxiliary() {}
     void write(std::ostream& os) const;
-    ProcessHistoryID& processHistoryID() const {return processHistoryID_;}
-    void setProcessHistoryID(ProcessHistoryID const& phid) const {processHistoryID_ = phid;}
+    ProcessHistoryID const& processHistoryID() const {return processHistoryID_;}
+    void setProcessHistoryID(ProcessHistoryID const& phid) {processHistoryID_ = phid;}
     RunID const& id() const {return id_;}
     RunID& id() {return id_;}
     Timestamp const& beginTime() const {return beginTime_;}
@@ -53,7 +53,7 @@ namespace edm {
   private:
     // most recent process that put a RunProduct into this run
     // is the last on the list, this defines what "latest" is
-    mutable ProcessHistoryID processHistoryID_;
+    ProcessHistoryID processHistoryID_;
 
     // allEventsProcessHistories_ contains all the ProcessHistoryIDs for all
     // events in this run seen so far.
