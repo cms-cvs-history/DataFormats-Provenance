@@ -32,7 +32,7 @@ namespace edm {
                       LuminosityBlockNumber_t lumi,
                       EventNumber_t event,
                       EntryNumber_t entry) {
-    int index;
+    int index = 0;
     // First see if the ProcessHistoryID is the same as the previous one.
     // This is just a performance optimization.  We expect to usually get
     // many in a row that are the same.
