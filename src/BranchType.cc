@@ -211,7 +211,7 @@ namespace edm {
     }
 
     // Branch on MetaData Tree
-    std::string const& IndexIntoFileBranchName() {
+    std::string const& indexIntoFileBranchName() {
       return indexIntoFile;
     }
 
