@@ -56,11 +56,11 @@ namespace edm {
             return lumi_ == 0U ? kRun : (event_ == 0U ? kLumi : kEvent); 
           }
 
-          int processHistoryIDIndex() const { return processHistoryIDIndex_; }
-          RunNumber_t run() const { return run_; }
-          LuminosityBlockNumber_t lumi() const { return lumi_; }
-          EventNumber_t event() const { return event_; }
-          EntryNumber_t entry() const { return entry_; }
+          int const& processHistoryIDIndex() const { return processHistoryIDIndex_; }
+          RunNumber_t const& run() const { return run_; }
+          LuminosityBlockNumber_t const& lumi() const { return lumi_; }
+          EventNumber_t const& event() const { return event_; }
+          EntryNumber_t const& entry() const { return entry_; }
 
           void setProcessHistoryIDIndex(int v) { processHistoryIDIndex_ = v; }
           void setRun(RunNumber_t v) { run_ = v; }
