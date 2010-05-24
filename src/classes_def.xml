@@ -46,6 +46,7 @@
  <class name="edm::ProcessHistoryID"/>
  <class name="std::set<edm::ProcessHistoryID >"/>
  <class name="std::vector<edm::ProcessHistory>"/>
+ <class name="std::vector<edm::ProcessHistoryID>"/>
  <class name="edm::ParameterSetID"/>
  <class name="std::vector<edm::ParameterSetID >"/>
  <class name="std::vector<std::vector<edm::ParameterSetID > >"/>
