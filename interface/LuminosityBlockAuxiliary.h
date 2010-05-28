@@ -51,7 +51,7 @@ namespace edm {
     void setEndTime(Timestamp const& time) {
       if (endTime_ == Timestamp::invalidTimestamp()) endTime_ = time;
     }
-    bool mergeAuxiliary(LuminosityBlockAuxiliary const& newAux);
+    void mergeAuxiliary(LuminosityBlockAuxiliary const& newAux);
 
   private:
     // most recent process that processed this lumi block

@@ -17,19 +17,16 @@ namespace edm {
     friend void conversion(RunAux const&, RunAuxiliary&);
     RunAuxiliary() :
 	processHistoryID_(),
-	allEventsProcessHistories_(),
 	id_(),
 	beginTime_(),
 	endTime_() {}
     RunAuxiliary(RunID const& theId, Timestamp const& theTime, Timestamp const& theEndTime) :
 	processHistoryID_(),
-	allEventsProcessHistories_(),
 	id_(theId),
 	beginTime_(theTime),
 	endTime_(theEndTime) {}
     RunAuxiliary(RunNumber_t const& run, Timestamp const& theTime, Timestamp const& theEndTime) :
 	processHistoryID_(),
-	allEventsProcessHistories_(),
 	id_(run),
 	beginTime_(theTime),
 	endTime_(theEndTime) {}
@@ -48,16 +45,12 @@ namespace edm {
     void setEndTime(Timestamp const& time) {
       if (endTime_ == Timestamp::invalidTimestamp()) endTime_ = time;
     }
-    bool mergeAuxiliary(RunAuxiliary const& aux);
+    void mergeAuxiliary(RunAuxiliary const& aux);
 
   private:
     // most recent process that put a RunProduct into this run
     // is the last on the list, this defines what "latest" is
     ProcessHistoryID processHistoryID_;
-
-    // allEventsProcessHistories_ contains all the ProcessHistoryIDs for all
-    // events in this run seen so far.
-    std::set<ProcessHistoryID> allEventsProcessHistories_;
 
     // Run ID
     RunID id_;
@@ -67,7 +60,6 @@ namespace edm {
 
   private:
     void mergeNewTimestampsIntoThis_(RunAuxiliary const& newAux);    
-    void mergeNewProcessHistoryIntoThis_(RunAuxiliary const& newAux);    
   };
 
   inline
