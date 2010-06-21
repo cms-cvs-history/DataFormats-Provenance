@@ -40,8 +40,8 @@
  <class name="edm::FileIndex::Element"/>
  <class name="std::vector<edm::FileIndex::Element>"/>
  <class name="edm::FileIndex"/>
- <class name="edm::IndexIntoFile::Element"/>
- <class name="std::vector<edm::IndexIntoFile::Element>"/>
+ <class name="edm::IndexIntoFile::RunOrLumiEntry"/>
+ <class name="std::vector<edm::IndexIntoFile::RunOrLumiEntry>"/>
  <class name="edm::IndexIntoFile"/>
  <class name="edm::ProcessHistoryID"/>
  <class name="std::set<edm::ProcessHistoryID >"/>

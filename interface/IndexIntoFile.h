@@ -12,20 +12,38 @@ IndexIntoFile.h
 #include "DataFormats/Provenance/interface/LuminosityBlockID.h"
 #include "DataFormats/Provenance/interface/EventID.h"
 #include "DataFormats/Provenance/interface/Transient.h"
+#include "FWCore/Utilities/interface/value_ptr.h"
 
+#include <map>
 #include <vector>
 #include <cassert>
 #include <iosfwd>
 
 namespace edm {
 
+  class RootFile;
+
   class IndexIntoFile {
 
     public:
+
+      class IndexIntoFileItr;
+      class SortedRunOrLumiItr;
+
       typedef long long EntryNumber_t;
+      static int const invalidIndex = -1;
+      static RunNumber_t const invalidRun = 0U;
+      static LuminosityBlockNumber_t const invalidLumi = 0U;
+      static EventNumber_t const invalidEvent = 0U;
+      static EntryNumber_t const invalidEntry = -1LL;
+
+      enum EntryType {kRun, kLumi, kEvent, kEnd};
 
       IndexIntoFile();
-      ~IndexIntoFile() {}
+      ~IndexIntoFile();
+
+      ProcessHistoryID const& processHistoryID(int i) const;
+      std::vector<ProcessHistoryID> const& processHistoryIDs() const;
 
       void addEntry(ProcessHistoryID const& processHistoryID,
                     RunNumber_t run,
@@ -33,177 +51,532 @@ namespace edm {
                     EventNumber_t event,
                     EntryNumber_t entry);
 
-      enum EntryType {kRun, kLumi, kEvent, kEnd};
+      void fillRunOrLumiIndexes();
+      void fixIndexes(std::vector<ProcessHistoryID> & processHistoryIDs);
 
-      class Element {
-        public:
-          static int const invalidIndex = -1;
-	  static EntryNumber_t const invalidEntry = -1LL;
+      void sortVector_Run_Or_Lumi_Entries();
+      void sortEvents();
+      void sortEventEntries();
 
-          Element() : processHistoryIDIndex_(invalidIndex), run_(0U),
-                      lumi_(0U), event_(0U), entry_(invalidEntry) {
+      bool allEventsInEntryOrder(bool sortMode) const;
+
+      IndexIntoFileItr begin(bool sortMode) const;
+      IndexIntoFileItr end(bool sortMode) const;
+      bool empty() const;
+
+      IndexIntoFileItr
+      findPosition(RunNumber_t run, LuminosityBlockNumber_t lumi = 0U, EventNumber_t event = 0U) const;
+
+      IndexIntoFileItr
+      findEventPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const;
+
+      IndexIntoFileItr
+      findLumiPosition(RunNumber_t run, LuminosityBlockNumber_t lumi) const;
+
+      IndexIntoFileItr
+      findRunPosition(RunNumber_t run) const;
+
+      bool containsItem(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const;
+      bool containsEvent(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const;
+      bool containsLumi(RunNumber_t run, LuminosityBlockNumber_t lumi) const;
+      bool containsRun(RunNumber_t run) const;
+
+      SortedRunOrLumiItr beginRunOrLumi();
+      SortedRunOrLumiItr endRunOrLumi();
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class RunOrLumiEntry {
+      public:
+
+        RunOrLumiEntry();
+
+        RunOrLumiEntry(EntryNumber_t orderPHIDRun,
+                       EntryNumber_t orderPHIDRunLumi,
+                       EntryNumber_t entry,
+                       int processHistoryIDIndex,
+                       RunNumber_t run,
+                       LuminosityBlockNumber_t lumi,
+                       EntryNumber_t beginEvents,
+                       EntryNumber_t Event);
+
+        EntryNumber_t orderPHIDRun() const { return orderPHIDRun_; }
+        EntryNumber_t orderPHIDRunLumi() const { return orderPHIDRunLumi_; }
+        EntryNumber_t entry() const { return entry_; }
+        int processHistoryIDIndex() const { return processHistoryIDIndex_; }
+        RunNumber_t run() const { return run_; }
+        LuminosityBlockNumber_t lumi() const { return lumi_; }
+        EntryNumber_t beginEvents() const { return beginEvents_; }
+        EntryNumber_t endEvents() const { return endEvents_; }
+
+        bool isRun() const { return lumi() == invalidLumi; }
+
+        void setOrderPHIDRun(EntryNumber_t v) { orderPHIDRun_ = v; }
+        void setProcessHistoryIDIndex(int v) { processHistoryIDIndex_ = v; }
+
+        bool operator<(RunOrLumiEntry const& right) const {
+          if (orderPHIDRun_ == right.orderPHIDRun()) {
+            if (orderPHIDRunLumi_ == right.orderPHIDRunLumi()) {
+              return entry_ < right.entry();
+            }
+            return orderPHIDRunLumi_ < right.orderPHIDRunLumi();
           }
-          Element(int index, RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event, long long entry) :
-            processHistoryIDIndex_(index),
-            run_(run), lumi_(lumi), 
-            event_(event), entry_(entry) {
-            assert(lumi_ != 0U || event_ == 0U);
-	  }
-          Element(int index, RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) :
-            processHistoryIDIndex_(index),
-            run_(run), lumi_(lumi), event_(event), entry_(invalidEntry) {}
-          EntryType getEntryType() const {
-            return lumi_ == 0U ? kRun : (event_ == 0U ? kLumi : kEvent); 
+          return orderPHIDRun_ < right.orderPHIDRun();
+        }
+
+      private:
+        // All Runs, Lumis, and Events associated with the same
+        // ProcessHistory and Run in the same input file are processed
+        // contiguously.  This parameter establishes the default order
+        // of processing of these contiguous subsets of data.
+        EntryNumber_t orderPHIDRun_;
+
+        // All Lumis and Events associated with the same
+        // ProcessHistory, Run, and Lumi in the same input file are
+        // processed contiguously.  This parameter establishes the
+        // default order of processing of these contiguous subsets
+        // of data which have the same ProcessHistory and Run.
+        EntryNumber_t orderPHIDRunLumi_; // -1 if a run
+
+        // TTree entry number of Run or Lumi
+        EntryNumber_t entry_;
+
+        int processHistoryIDIndex_;
+        RunNumber_t run_;
+        LuminosityBlockNumber_t lumi_;  // 0 indicates this is a run entry
+
+        EntryNumber_t beginEvents_;      // -1 if a run
+        EntryNumber_t endEvents_;       // -1 if a run
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class RunOrLumiIndexes {
+      public:
+        RunOrLumiIndexes(int processHistoryIDIndex, RunNumber_t run, LuminosityBlockNumber_t lumi, int indexToGetEntry);
+
+        int processHistoryIDIndex() const { return processHistoryIDIndex_; }
+      	RunNumber_t run() const { return run_; }
+        LuminosityBlockNumber_t lumi() const { return lumi_; }
+        int indexToGetEntry() const { return indexToGetEntry_; }
+        long long beginEventNumbers() const { return beginEventNumbers_; }
+        long long endEventNumbers() const { return endEventNumbers_; }
+
+        bool isRun() const { return lumi() == invalidLumi; }
+
+        void setBeginEventNumbers(long long v) { beginEventNumbers_ = v; }
+        void setEndEventNumbers(long long v) { endEventNumbers_ = v; }
+
+        bool operator<(RunOrLumiIndexes const& right) const {
+          if (processHistoryIDIndex_ == right.processHistoryIDIndex()) {
+            if (run_ == right.run()) {
+              return lumi_ < right.lumi();
+            }
+            return run_ < right.run();
           }
-
-          int const& processHistoryIDIndex() const { return processHistoryIDIndex_; }
-          RunNumber_t const& run() const { return run_; }
-          LuminosityBlockNumber_t const& lumi() const { return lumi_; }
-          EventNumber_t const& event() const { return event_; }
-          EntryNumber_t const& entry() const { return entry_; }
-
-          void setProcessHistoryIDIndex(int v) { processHistoryIDIndex_ = v; }
-          void setRun(RunNumber_t v) { run_ = v; }
-          void setLumi(LuminosityBlockNumber_t v) { lumi_ = v; }
-          void setEvent(EventNumber_t v) { event_ = v; }
-          void setEntry(EntryNumber_t v) { entry_ = v; }
+          return processHistoryIDIndex_ < right.processHistoryIDIndex();
+        }
 
       private:
 
-          int processHistoryIDIndex_;
-          RunNumber_t run_;
-          LuminosityBlockNumber_t lumi_;
-          EventNumber_t event_;
-          EntryNumber_t entry_;
+        int processHistoryIDIndex_;
+      	RunNumber_t run_;
+        LuminosityBlockNumber_t lumi_;  // 0 indicates this is a run entry
+        int indexToGetEntry_;
+        // if the next two are equal there are no events associated with this PHID-Run-Lumi
+        long long beginEventNumbers_;          // -1 if a run, first event this PHID-Run-Lumi
+        long long endEventNumbers_;            // -1 if a run, one past last event this PHID-Run-Lumi
       };
 
-      typedef std::vector<Element>::const_iterator const_iterator;
-      typedef std::vector<Element>::iterator iterator;
+      //*****************************************************************************
+      //*****************************************************************************
 
-      void sortBy_Index_Run_Lumi_Event();
-      void sortBy_Index_Run_Lumi_Entry();
+      class EventEntry {
+      public:
+        EventEntry() : event_(invalidEvent), entry_(invalidEntry) { }
+        EventEntry(EventNumber_t event, EntryNumber_t entry) : event_(event), entry_(entry) { }
 
-      const_iterator
-      findPosition(RunNumber_t run, LuminosityBlockNumber_t lumi = 0U, EventNumber_t event = 0U) const;
+        EventNumber_t event() const { return event_; }
+        EntryNumber_t entry() const { return entry_; }
 
-      const_iterator
-      findEventPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const;
+	bool operator<(EventEntry const& right) const {
+          return event_ < right.event();
+	}
 
-      const_iterator
-      findEventEntryPosition(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event, EntryNumber_t entry) const;
+      private:
 
-      const_iterator
-      findLumiPosition(RunNumber_t run, LuminosityBlockNumber_t lumi) const;
+        EventNumber_t event_;
+        EntryNumber_t entry_;
+      };
 
-      const_iterator
-      findRunPosition(RunNumber_t run) const;
+      //*****************************************************************************
+      //*****************************************************************************
 
-      const_iterator
-      findNextRun(const_iterator const& iter) const;
+      class SortedRunOrLumiItr {
 
-      const_iterator
-      findNextLumiOrRun(const_iterator const& iter) const;
+      public:
+        SortedRunOrLumiItr(IndexIntoFile const* indexIntoFile, unsigned runOrLumi);
 
-      bool
-      containsItem(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const {
-	return event ? containsEvent(run, lumi, event) : (lumi ? containsLumi(run, lumi) : containsRun(run));
-      }
+	IndexIntoFile const* indexIntoFile() const { return indexIntoFile_; }
+        unsigned runOrLumi() const { return runOrLumi_; }
 
-      bool
-      containsEvent(RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) const {
-	return findEventPosition(run, lumi, event) != entries_.end();
-      }
+        bool operator==(SortedRunOrLumiItr const& right) const;
+        bool operator!=(SortedRunOrLumiItr const& right) const;
+        SortedRunOrLumiItr & operator++();
 
-      bool
-      containsLumi(RunNumber_t run, LuminosityBlockNumber_t lumi) const {
-        return findLumiPosition(run, lumi) != entries_.end();
-      }
+        bool isRun();
+ 
+        void getRange(long long & beginEventNumbers,
+                      long long & endEventNumbers,
+                      EntryNumber_t & beginEventEntry,
+                      EntryNumber_t & endEventEntry);
+      private:
 
-      bool
-      containsRun(RunNumber_t run) const {
-        return findRunPosition(run) != entries_.end();
-      }
+        IndexIntoFile const* indexIntoFile_;
 
-      const_iterator begin() const {return entries_.begin();}
+        // This is an index into runOrLumiIndexes_
+        // which gives the current position of the iteration
+        unsigned runOrLumi_;
+      };
 
-      const_iterator end() const {return entries_.end();}
 
-      iterator begin() {return entries_.begin();}
+      //*****************************************************************************
+      //*****************************************************************************
 
-      iterator end() {return entries_.end();}
+      class IndexIntoFileItrImpl {
 
-      iterator erase(iterator pos) {return entries_.erase(pos);}
+      public:
 
-      iterator erase(iterator begin, iterator end) {return entries_.erase(begin, end);}
+        IndexIntoFileItrImpl(IndexIntoFile const* indexIntoFile);
 
-      std::vector<Element>::size_type size() const {return entries_.size();}
+        IndexIntoFileItrImpl(IndexIntoFile const* indexIntoFile,
+                             EntryType entryType,
+                             int indexToRun,
+                             int indexToLumi,
+                             int indexToEventRange,
+                             long long indexToEvent,
+                             long long nEvents);
 
-      bool empty() const {return entries_.empty();}
+        virtual IndexIntoFileItrImpl* clone() const = 0;
 
-      bool allEventsInEntryOrder() const;
+	EntryType getEntryType() const { return type_; }
 
-      ProcessHistoryID const& processHistoryID(int i) const { return processHistoryIDs_.at(i); }
-      std::vector<ProcessHistoryID> const& processHistoryIDs() const { return processHistoryIDs_; }
+        void next ();
 
-      void fixIndexes(std::vector<ProcessHistoryID> & processHistoryIDs);
+        // Move to whatever is after the current event
+        // or next event if there is not a current event,
+        // but do not modify the type or run/lumi
+        // indexes unless it is necessary because there
+	// are no more events in the current run or lumi.
+        void skipEventForward(RunNumber_t & runOfSkippedEvent,
+                              LuminosityBlockNumber_t & lumiOfSkippedEvent,
+                              EntryNumber_t & skippedEventEntry);
 
-      enum SortState {kNotSorted, kSorted_Index_Run_Lumi_Event, kSorted_Index_Run_Lumi_Entry};
+        virtual int processHistoryIDIndex() const  = 0;
+        virtual RunNumber_t run() const = 0;
+        virtual LuminosityBlockNumber_t lumi() const = 0;
+        virtual EntryNumber_t entry() const = 0;
+        virtual LuminosityBlockNumber_t peekAheadAtLumi() const = 0;
+        virtual EntryNumber_t peekAheadAtEventEntry() const = 0;
+
+        void advanceToNextRun();
+        void advanceToNextLumiOrRun();
+        void initializeRun();
+
+        void initializeLumi() { initializeLumi_(); }
+
+        bool operator==(IndexIntoFileItrImpl const& right) const;
+
+      protected:
+
+        void setInvalid();
+
+        IndexIntoFile const* indexIntoFile_;
+        int size_;
+
+        EntryType type_;
+        int indexToRun_;
+        int indexToLumi_;
+        int indexToEventRange_;
+        long long indexToEvent_;
+        long long nEvents_;
+
+      private:
+
+        virtual void initializeLumi_() = 0;
+        virtual bool nextEventRange() = 0;
+        virtual bool skipLumiInRun() = 0;
+        virtual EntryType getRunOrLumiEntryType(int index) const = 0;
+        virtual bool lumiHasEvents() const = 0;
+        virtual bool isSameLumi(int index1, int index2) const = 0;
+        virtual bool isSameRun(int index1, int index2) const = 0;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class IndexIntoFileItrNoSort : public IndexIntoFileItrImpl {
+      public:
+
+        IndexIntoFileItrNoSort(IndexIntoFile const* indexIntoFile);
+
+        IndexIntoFileItrNoSort(IndexIntoFile const* indexIntoFile,
+                               EntryType entryType,
+                               int indexToRun,
+                               int indexToLumi,
+                               int indexToEventRange,
+                               long long indexToEvent,
+                               long long nEvents);
+
+        virtual IndexIntoFileItrImpl* clone() const;
+
+        virtual int processHistoryIDIndex() const;
+        virtual RunNumber_t run() const;
+        virtual LuminosityBlockNumber_t lumi() const;
+        virtual EntryNumber_t entry() const;
+        virtual LuminosityBlockNumber_t peekAheadAtLumi() const;
+        virtual EntryNumber_t peekAheadAtEventEntry() const;
+
+      private:
+
+        virtual void initializeLumi_();
+        virtual bool nextEventRange();
+        virtual bool skipLumiInRun();
+        virtual EntryType getRunOrLumiEntryType(int index) const;
+        virtual bool lumiHasEvents() const;
+        virtual bool isSameLumi(int index1, int index2) const;
+        virtual bool isSameRun(int index1, int index2) const;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class IndexIntoFileItrSorted : public IndexIntoFileItrImpl {
+      public:
+
+        IndexIntoFileItrSorted(IndexIntoFile const* indexIntoFile);
+
+        IndexIntoFileItrSorted(IndexIntoFile const* indexIntoFile,
+                               EntryType entryType,
+                               int indexToRun,
+                               int indexToLumi,
+                               int indexToEventRange,
+                               long long indexToEvent,
+                               long long nEvents);
+
+        virtual IndexIntoFileItrImpl* clone() const;
+        virtual int processHistoryIDIndex() const;
+        virtual RunNumber_t run() const;
+        virtual LuminosityBlockNumber_t lumi() const;
+        virtual EntryNumber_t entry() const;
+        virtual LuminosityBlockNumber_t peekAheadAtLumi() const;
+        virtual EntryNumber_t peekAheadAtEventEntry() const;
+
+      private:
+
+        virtual void initializeLumi_();
+        virtual bool nextEventRange();
+        virtual bool skipLumiInRun();
+        virtual EntryType getRunOrLumiEntryType(int index) const;
+        virtual bool lumiHasEvents() const;
+        virtual bool isSameLumi(int index1, int index2) const;
+        virtual bool isSameRun(int index1, int index2) const;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class IndexIntoFileItr {
+      public:
+
+        IndexIntoFileItr(IndexIntoFile const* indexIntoFile, bool sortMode);
+
+        IndexIntoFileItr(IndexIntoFile const* indexIntoFile,
+                         bool sortMode,
+                         EntryType entryType,
+                         int indexToRun,
+                         int indexToLumi,
+                         int indexToEventRange,
+                         long long indexToEvent,
+                         long long nEvents);
+
+
+        EntryType getEntryType() const { return impl_->getEntryType(); }
+        int processHistoryIDIndex() const { return impl_->processHistoryIDIndex(); }
+        RunNumber_t run() const { return impl_->run(); }
+        LuminosityBlockNumber_t lumi() const { return impl_->lumi(); }
+        EntryNumber_t entry() const { return impl_->entry(); }
+
+        // This is intentionally not implemented.
+        // It would be difficult to implement for the no sort mode,
+        // either slow or using extra memory.
+        // It would be easy to implement for the sorted iteration,
+        // but I did not implement it so both cases would offer a
+        // consistent interface.
+        // It looks like in all cases where this would be needed
+        // it would not be difficult to get the event number
+        // directly from the event auxiliary.
+        // We may need to revisit this decision in the future.
+        // EventNumber_t event() const;
+
+        IndexIntoFileItr &  operator++() {
+          impl_->next();
+          return *this;
+        }
+
+        void skipEventForward(RunNumber_t & runOfSkippedEvent,
+                              LuminosityBlockNumber_t & lumiOfSkippedEvent,
+                              EntryNumber_t & skippedEventEntry) {
+          impl_->skipEventForward(runOfSkippedEvent, lumiOfSkippedEvent, skippedEventEntry);
+        }
+
+        // NEED TO IMPLEMENT THIS
+        // void skipEventBackward() { 
+        // }
+
+        void initializeRun() { impl_->initializeRun(); }
+        void initializeLumi() { impl_->initializeLumi(); }
+        void advanceToNextRun() { impl_->advanceToNextRun(); }
+        void advanceToNextLumiOrRun() { impl_->advanceToNextLumiOrRun(); }
+
+        void advanceToEvent();
+        void advanceToLumi();
+
+        bool operator==(IndexIntoFileItr const& right) const {
+          return *impl_ == *right.impl_;
+        }
+
+        bool operator!=(IndexIntoFileItr const& right) const {
+          return !(*this == right);
+        }
+
+      private:
+
+        value_ptr<IndexIntoFileItrImpl> impl_;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class IndexRunKey {
+      public:
+        IndexRunKey(int index, RunNumber_t run) :
+          processHistoryIDIndex_(index),
+          run_(run) {
+        }
+
+        int processHistoryIDIndex() const { return processHistoryIDIndex_; }
+        RunNumber_t run() const { return run_; }
+
+        bool operator<(IndexRunKey const& right) const {
+          if (processHistoryIDIndex_ == right.processHistoryIDIndex()) {
+            return run_ < right.run();
+	  }
+          return processHistoryIDIndex_ < right.processHistoryIDIndex();
+        }
+
+      private:
+        int processHistoryIDIndex_;
+        RunNumber_t run_;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class IndexRunLumiKey {
+      public:
+        IndexRunLumiKey(int index, RunNumber_t run, LuminosityBlockNumber_t lumi) :
+          processHistoryIDIndex_(index),
+          run_(run),
+          lumi_(lumi) {
+        }
+
+        int processHistoryIDIndex() const { return processHistoryIDIndex_; }
+        RunNumber_t run() const { return run_; }
+        LuminosityBlockNumber_t lumi() const { return lumi_; }
+
+        bool operator<(IndexRunLumiKey const& right) const {
+          if (processHistoryIDIndex_ == right.processHistoryIDIndex()) {
+            if (run_ == right.run()) {
+              return lumi_ < right.lumi();
+            }
+            return run_ < right.run();
+	  }
+          return processHistoryIDIndex_ < right.processHistoryIDIndex();
+        }
+
+      private:
+        int processHistoryIDIndex_;
+        RunNumber_t run_;
+        LuminosityBlockNumber_t lumi_;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
 
       struct Transients {
 	Transients();
 	bool allInEntryOrder_;
 	bool resultCached_;
-	SortState sortState_;
         int previousAddedIndex_;
+        std::map<IndexRunKey, EntryNumber_t> runToFirstEntry_;
+        std::map<IndexRunLumiKey, EntryNumber_t> lumiToFirstEntry_;
+        EntryNumber_t beginEvents_;
+        EntryNumber_t endEvents_;
+        int currentIndex_;
+        RunNumber_t currentRun_;
+        LuminosityBlockNumber_t currentLumi_;
+        std::vector<RunOrLumiIndexes> runOrLumiIndexes_;
+        std::vector<EventNumber_t> eventNumbers_;
+        std::vector<EventEntry> eventEntries_;
       };
+
+      //*****************************************************************************
+      //*****************************************************************************
 
     private:
 
       bool& allInEntryOrder() const {return transients_.get().allInEntryOrder_;}
       bool& resultCached() const {return transients_.get().resultCached_;}
-      SortState& sortState() const {return transients_.get().sortState_;}
       int& previousAddedIndex() const {return transients_.get().previousAddedIndex_;}
+      std::map<IndexRunKey, EntryNumber_t>& runToFirstEntry() const {return transients_.get().runToFirstEntry_;}
+      std::map<IndexRunLumiKey, EntryNumber_t>& lumiToFirstEntry() const {return transients_.get().lumiToFirstEntry_;}
+      EntryNumber_t& beginEvents() const {return transients_.get().beginEvents_;}
+      EntryNumber_t& endEvents() const {return transients_.get().endEvents_;}
+      int& currentIndex() const {return transients_.get().currentIndex_;}
+      RunNumber_t& currentRun() const {return transients_.get().currentRun_;}
+      LuminosityBlockNumber_t& currentLumi() const {return transients_.get().currentLumi_;}
+      std::vector<RunOrLumiIndexes> & runOrLumiIndexes() const {return transients_.get().runOrLumiIndexes_;}
+      std::vector<EventNumber_t> & eventNumbers() const {return transients_.get(). eventNumbers_;}
+      std::vector<EventEntry> & eventEntries() const {return transients_.get(). eventEntries_;}
 
-      std::vector<Element> entries_;
+      std::vector<RunOrLumiEntry> const& runOrLumiEntries() const { return runOrLumiEntries_; }
+
       mutable Transient<Transients> transients_;
+
       std::vector<ProcessHistoryID> processHistoryIDs_;
+      std::vector<RunOrLumiEntry> runOrLumiEntries_;
+
+      friend class edm::RootFile;
   };
 
-  bool operator<(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
-
-  inline
-  bool operator>(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return rh < lh;}
-
-  inline
-  bool operator>=(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return !(lh < rh);}
-
-  inline
-  bool operator<=(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return !(rh < lh);}
-
-  inline
-  bool operator==(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return !(lh < rh || rh < lh);}
-
-  inline
-  bool operator!=(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh) {return lh < rh || rh < lh;}
-
-  class Compare_Index_Run_Lumi_Entry {
-  public:
-    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
+  template <>
+  struct value_ptr_traits<IndexIntoFile::IndexIntoFileItrImpl>
+  {
+    static IndexIntoFile::IndexIntoFileItrImpl * clone( IndexIntoFile::IndexIntoFileItrImpl const * p ) { return p->clone(); }
   };
 
-  class Compare_Index_Run_Lumi {
-  public:
-    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
-  };
 
   class Compare_Index_Run {
   public:
-    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
+    bool operator()(IndexIntoFile::RunOrLumiIndexes const& lh, IndexIntoFile::RunOrLumiIndexes const& rh);
   };
 
   class Compare_Index {
   public:
-    bool operator()(IndexIntoFile::Element const& lh, IndexIntoFile::Element const& rh);
+    bool operator()(IndexIntoFile::RunOrLumiIndexes const& lh, IndexIntoFile::RunOrLumiIndexes const& rh);
   };
 
   std::ostream&
