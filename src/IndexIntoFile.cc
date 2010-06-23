@@ -344,19 +344,35 @@ namespace edm {
         long long beginEventNumbers = iLumi->beginEventNumbers();
         long long endEventNumbers = iLumi->endEventNumbers();
         if (beginEventNumbers >= endEventNumbers) continue;
-        std::vector<EventNumber_t>::const_iterator eventIter = std::lower_bound(eventNumbers().begin() + beginEventNumbers,
-                                                                                eventNumbers().begin() + endEventNumbers,
-                                                                                event);
-        if (eventIter == (eventNumbers().begin() + endEventNumbers) ||
-            *eventIter != event) continue;
 
+
+        long long indexToEvent = 0;
+        if (!eventNumbers().empty()) {
+          std::vector<EventNumber_t>::const_iterator eventIter = std::lower_bound(eventNumbers().begin() + beginEventNumbers,
+                                                                                  eventNumbers().begin() + endEventNumbers,
+                                                                                  event);
+          if (eventIter == (eventNumbers().begin() + endEventNumbers) ||
+              *eventIter != event) continue;
+
+          indexToEvent = eventIter - eventNumbers().begin() - beginEventNumbers;
+        }
+        else {
+          assert(!eventEntries().empty());
+          std::vector<EventEntry>::const_iterator eventIter = std::lower_bound(eventEntries().begin() + beginEventNumbers,
+                                                                               eventEntries().begin() + endEventNumbers,
+                                                                               EventEntry(event, invalidEntry));
+          if (eventIter == (eventEntries().begin() + endEventNumbers) ||
+              eventIter->event() != event) continue;
+
+          indexToEvent = eventIter - eventEntries().begin() - beginEventNumbers;
+        }
         return IndexIntoFileItr(this,
                                 true,
                                 kRun,
                                 iRun - runOrLumiIndexes().begin(),
                                 iLumi - runOrLumiIndexes().begin(),
                                 iLumi - runOrLumiIndexes().begin(),
-                                eventIter - eventNumbers().begin() - beginEventNumbers,
+                                indexToEvent,
                                 endEventNumbers - beginEventNumbers);
       }
       if (lumiMissing) {
@@ -378,38 +394,33 @@ namespace edm {
           long long beginEventNumbers = iLumi->beginEventNumbers();
           long long endEventNumbers = iLumi->endEventNumbers();
           if (beginEventNumbers >= endEventNumbers) continue;
+
+          long long indexToEvent = 0;
           if (!eventNumbers().empty()) {
             std::vector<EventNumber_t>::const_iterator eventIter = std::lower_bound(eventNumbers().begin() + beginEventNumbers,
                                                                                     eventNumbers().begin() + endEventNumbers,
                                                                                     event);
             if (eventIter == (eventNumbers().begin() + endEventNumbers) ||
                 *eventIter != event) continue;
-
-            return IndexIntoFileItr(this,
-                                    true,
-                                    kRun,
-                                    iRun - runOrLumiIndexes().begin(),
-                                    iLumi - runOrLumiIndexes().begin(),
-                                    iLumi - runOrLumiIndexes().begin(),
-                                    eventIter - eventNumbers().begin() - beginEventNumbers,
-                                    endEventNumbers - beginEventNumbers);
+            indexToEvent = eventIter - eventNumbers().begin() - beginEventNumbers;
           }
           else {
+            assert(!eventEntries().empty());
             std::vector<EventEntry>::const_iterator eventIter = std::lower_bound(eventEntries().begin() + beginEventNumbers,
                                                                                  eventEntries().begin() + endEventNumbers,
                                                                                  EventEntry(event, invalidEntry));
             if (eventIter == (eventEntries().begin() + endEventNumbers) ||
                 eventIter->event() != event) continue;
-
-            return IndexIntoFileItr(this,
-                                    true,
-                                    kRun,
-                                    iRun - runOrLumiIndexes().begin(),
-                                    iLumi - runOrLumiIndexes().begin(),
-                                    iLumi - runOrLumiIndexes().begin(),
-                                    eventIter - eventEntries().begin() - beginEventNumbers,
-                                    endEventNumbers - beginEventNumbers);
+            indexToEvent = eventIter - eventEntries().begin() - beginEventNumbers;
           }
+          return IndexIntoFileItr(this,
+                                  true,
+                                  kRun,
+                                  iRun - runOrLumiIndexes().begin(),
+                                  iLumi - runOrLumiIndexes().begin(),
+                                  iLumi - runOrLumiIndexes().begin(),
+                                  indexToEvent,
+                                  endEventNumbers - beginEventNumbers);
         }
       }
     } // Loop over ProcessHistoryIDs
