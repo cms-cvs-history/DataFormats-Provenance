@@ -466,12 +466,139 @@ namespace edm {
     return findRunPosition(run).getEntryType() != kEnd;
   }
 
-  IndexIntoFile::SortedRunOrLumiItr IndexIntoFile::beginRunOrLumi() {
+  IndexIntoFile::SortedRunOrLumiItr IndexIntoFile::beginRunOrLumi() const {
     return SortedRunOrLumiItr(this, 0);
   }
 
-  IndexIntoFile::SortedRunOrLumiItr IndexIntoFile::endRunOrLumi() {
+  IndexIntoFile::SortedRunOrLumiItr IndexIntoFile::endRunOrLumi() const {
     return SortedRunOrLumiItr(this, runOrLumiIndexes().size());
+  }
+
+  void IndexIntoFile::set_intersection(IndexIntoFile const& indexIntoFile,
+                                       std::set<IndexRunLumiEventKey> & intersection) const {
+
+    SortedRunOrLumiItr iter1 = beginRunOrLumi();
+    SortedRunOrLumiItr iEnd1 = endRunOrLumi();
+
+    SortedRunOrLumiItr iter2 = indexIntoFile.beginRunOrLumi();
+    SortedRunOrLumiItr iEnd2 = indexIntoFile.endRunOrLumi();
+
+    RunOrLumiIndexes const* previousIndexes = 0;
+ 
+    // Loop through the both IndexIntoFile objects and look for matching lumis
+    while (iter1 != iEnd1 && iter2 != iEnd2) {
+
+      RunOrLumiIndexes const& indexes1 = iter1.runOrLumiIndexes();
+      RunOrLumiIndexes const& indexes2 = iter2.runOrLumiIndexes();
+      if (indexes1 < indexes2) {
+        ++iter1;
+      }
+      else if (indexes2 < indexes1) {
+        ++iter2;
+      }
+      else { // they are equal
+
+        // Skip them if it is a run or the same lumi
+        if (indexes1.isRun() ||
+            (previousIndexes && !(*previousIndexes < indexes1))) {
+          ++iter1;
+          ++iter2;
+        }
+        else {
+          // Found a matching lumi, now look for matching events
+
+          long long beginEventNumbers1 = indexes1.beginEventNumbers();
+          long long endEventNumbers1 = indexes1.endEventNumbers();
+
+          long long beginEventNumbers2 = indexes2.beginEventNumbers();
+          long long endEventNumbers2 = indexes2.endEventNumbers();
+
+          // there must be at least 1 event in each lumi for there to be any matches
+          if (beginEventNumbers1 >= endEventNumbers1) continue;
+          if (beginEventNumbers2 >= endEventNumbers2) continue;
+
+          if (!eventNumbers().empty()) {
+            assert(!indexIntoFile.eventNumbers().empty());
+	    std::vector<EventNumber_t> matchingEvents;
+            std::insert_iterator<std::vector<EventNumber_t> > insertIter(matchingEvents, matchingEvents.begin());
+	    std::set_intersection(eventNumbers().begin() + beginEventNumbers1,
+                                  eventNumbers().begin() + endEventNumbers1,
+                                  indexIntoFile.eventNumbers().begin() + beginEventNumbers2,
+                                  indexIntoFile.eventNumbers().begin() + endEventNumbers2,
+                                  insertIter);
+            for (std::vector<EventNumber_t>::const_iterator iEvent = matchingEvents.begin(),
+		                                              iEnd = matchingEvents.end();
+                 iEvent != iEnd; ++iEvent) {
+              intersection.insert(IndexRunLumiEventKey(indexes1.processHistoryIDIndex(),
+                                                       indexes1.run(),
+                                                       indexes1.lumi(),
+                                                       *iEvent));
+            }
+          }
+          else {
+            assert(!eventEntries().empty());
+            assert(!indexIntoFile.eventEntries().empty());
+	    std::vector<EventEntry> matchingEvents;
+            std::insert_iterator<std::vector<EventEntry> > insertIter(matchingEvents, matchingEvents.begin());
+	    std::set_intersection(eventEntries().begin() + beginEventNumbers1,
+                                  eventEntries().begin() + endEventNumbers1,
+                                  indexIntoFile.eventEntries().begin() + beginEventNumbers2,
+                                  indexIntoFile.eventEntries().begin() + endEventNumbers2,
+                                  insertIter);
+            for (std::vector<EventEntry>::const_iterator iEvent = matchingEvents.begin(),
+		                                           iEnd = matchingEvents.end();
+                 iEvent != iEnd; ++iEvent) {
+              intersection.insert(IndexRunLumiEventKey(indexes1.processHistoryIDIndex(),
+                                                       indexes1.run(),
+                                                       indexes1.lumi(),
+                                                       iEvent->event()));
+            }
+
+          }
+          previousIndexes = &indexes1;
+        }
+      }
+    }
+  }
+
+  bool IndexIntoFile::containsDuplicateEvents() const {
+
+    RunOrLumiIndexes const* previousIndexes = 0;
+
+    for (SortedRunOrLumiItr iter = beginRunOrLumi(),
+                            iEnd = endRunOrLumi();
+         iter != iEnd; ++iter) {
+
+      RunOrLumiIndexes const& indexes = iter.runOrLumiIndexes();
+
+      // Skip it if it is a run or the same lumi
+      if (indexes.isRun() ||
+          (previousIndexes && !(*previousIndexes < indexes))) {
+        continue;
+      }
+
+      long long beginEventNumbers = indexes.beginEventNumbers();
+      long long endEventNumbers = indexes.endEventNumbers();
+
+      // there must be more than 1 event in the lumi for there to be any duplicates
+      if (beginEventNumbers + 1 >= endEventNumbers) continue;
+
+      if (!eventNumbers().empty()) {
+        if (std::adjacent_find(eventNumbers().begin() + beginEventNumbers,
+                               eventNumbers().begin() + endEventNumbers) != eventNumbers().end()) {
+           return true;
+        }
+      }
+      else {
+        assert(!eventEntries().empty());
+        if (std::adjacent_find(eventEntries().begin() + beginEventNumbers,
+                               eventEntries().begin() + endEventNumbers) != eventEntries().end()) {
+          return true;
+        }
+      }
+      previousIndexes = &indexes;
+    }
+    return false;
   }
 
   IndexIntoFile::RunOrLumiEntry::RunOrLumiEntry() :
@@ -553,6 +680,12 @@ namespace edm {
     beginEventEntry = indexIntoFile_->runOrLumiEntries_.at(indexToGetEntry).beginEvents();
     endEventEntry = indexIntoFile_->runOrLumiEntries_.at(indexToGetEntry).endEvents();
   }
+
+  IndexIntoFile::RunOrLumiIndexes const&
+  IndexIntoFile::SortedRunOrLumiItr::runOrLumiIndexes() const {
+    return indexIntoFile_->runOrLumiIndexes().at(runOrLumi_);
+  }
+
 
   IndexIntoFile::IndexIntoFileItrImpl::IndexIntoFileItrImpl(IndexIntoFile const* indexIntoFile) :
     indexIntoFile_(indexIntoFile),
@@ -666,11 +799,17 @@ namespace edm {
     }
   }
 
-  void IndexIntoFile::IndexIntoFileItrImpl::skipEventForward(RunNumber_t & runOfSkippedEvent,
+  void IndexIntoFile::IndexIntoFileItrImpl::skipEventForward(int & phIndexOfSkippedEvent,
+                                                             RunNumber_t & runOfSkippedEvent,
                                                              LuminosityBlockNumber_t & lumiOfSkippedEvent,
                                                              EntryNumber_t & skippedEventEntry) {
-    if (indexToEvent_  < nEvents_) {
+    phIndexOfSkippedEvent = invalidIndex;
+    runOfSkippedEvent = invalidRun;
+    lumiOfSkippedEvent = invalidLumi;
+    skippedEventEntry = invalidEntry;
 
+    if (indexToEvent_  < nEvents_) {
+      phIndexOfSkippedEvent = processHistoryIDIndex();
       runOfSkippedEvent = run();
       lumiOfSkippedEvent = peekAheadAtLumi();
       skippedEventEntry = peekAheadAtEventEntry();
@@ -692,7 +831,7 @@ namespace edm {
     if (type_ == kRun) {
       while (skipLumiInRun()) {
         if (indexToEvent_  < nEvents_) {
-          skipEventForward(runOfSkippedEvent, lumiOfSkippedEvent, skippedEventEntry);
+          skipEventForward(phIndexOfSkippedEvent, runOfSkippedEvent, lumiOfSkippedEvent, skippedEventEntry);
           return;
         }
       }
@@ -701,11 +840,9 @@ namespace edm {
       next();
     }
     if (type_ == kEnd) {
-      runOfSkippedEvent = invalidRun;
-      lumiOfSkippedEvent = invalidLumi;
-      skippedEventEntry = invalidEntry;
       return;
     }
+    phIndexOfSkippedEvent = processHistoryIDIndex();
     runOfSkippedEvent = run();
     lumiOfSkippedEvent = lumi();
     skippedEventEntry = entry();
@@ -912,7 +1049,6 @@ namespace edm {
     }
     return false; // hit the end of the IndexIntoFile
   }
-
   bool IndexIntoFile::IndexIntoFileItrNoSort::skipLumiInRun() { 
     for(int i = 1; indexToEventRange_ + i <= size_; ++i) {
       if (indexIntoFile_->runOrLumiEntries_[indexToEventRange_ + i ].isRun()) {

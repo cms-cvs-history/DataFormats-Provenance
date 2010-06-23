@@ -18,6 +18,7 @@ IndexIntoFile.h
 #include <vector>
 #include <cassert>
 #include <iosfwd>
+#include <set>
 
 namespace edm {
 
@@ -29,6 +30,7 @@ namespace edm {
 
       class IndexIntoFileItr;
       class SortedRunOrLumiItr;
+      class IndexRunLumiEventKey;
 
       typedef long long EntryNumber_t;
       static int const invalidIndex = -1;
@@ -81,8 +83,11 @@ namespace edm {
       bool containsLumi(RunNumber_t run, LuminosityBlockNumber_t lumi) const;
       bool containsRun(RunNumber_t run) const;
 
-      SortedRunOrLumiItr beginRunOrLumi();
-      SortedRunOrLumiItr endRunOrLumi();
+      SortedRunOrLumiItr beginRunOrLumi() const;
+      SortedRunOrLumiItr endRunOrLumi() const;
+
+      void set_intersection(IndexIntoFile const& indexIntoFile, std::set<IndexRunLumiEventKey> & intersection) const;
+      bool containsDuplicateEvents() const;
 
       //*****************************************************************************
       //*****************************************************************************
@@ -205,6 +210,10 @@ namespace edm {
           return event_ < right.event();
 	}
 
+	bool operator==(EventEntry const& right) const {
+          return event_ == right.event();
+	}
+
       private:
 
         EventNumber_t event_;
@@ -232,6 +241,9 @@ namespace edm {
                       long long & endEventNumbers,
                       EntryNumber_t & beginEventEntry,
                       EntryNumber_t & endEventEntry);
+
+	RunOrLumiIndexes const& runOrLumiIndexes() const;
+
       private:
 
         IndexIntoFile const* indexIntoFile_;
@@ -270,7 +282,8 @@ namespace edm {
         // but do not modify the type or run/lumi
         // indexes unless it is necessary because there
 	// are no more events in the current run or lumi.
-        void skipEventForward(RunNumber_t & runOfSkippedEvent,
+        void skipEventForward(int & phIndexOfSkippedEvent,
+                              RunNumber_t & runOfSkippedEvent,
                               LuminosityBlockNumber_t & lumiOfSkippedEvent,
                               EntryNumber_t & skippedEventEntry);
 
@@ -426,10 +439,11 @@ namespace edm {
           return *this;
         }
 
-        void skipEventForward(RunNumber_t & runOfSkippedEvent,
+        void skipEventForward(int & phIndexOfSkippedEvent,
+                              RunNumber_t & runOfSkippedEvent,
                               LuminosityBlockNumber_t & lumiOfSkippedEvent,
                               EntryNumber_t & skippedEventEntry) {
-          impl_->skipEventForward(runOfSkippedEvent, lumiOfSkippedEvent, skippedEventEntry);
+          impl_->skipEventForward(phIndexOfSkippedEvent, runOfSkippedEvent, lumiOfSkippedEvent, skippedEventEntry);
         }
 
         // NEED TO IMPLEMENT THIS
@@ -511,6 +525,43 @@ namespace edm {
         int processHistoryIDIndex_;
         RunNumber_t run_;
         LuminosityBlockNumber_t lumi_;
+      };
+
+      //*****************************************************************************
+      //*****************************************************************************
+
+      class IndexRunLumiEventKey {
+      public:
+        IndexRunLumiEventKey(int index, RunNumber_t run, LuminosityBlockNumber_t lumi, EventNumber_t event) :
+          processHistoryIDIndex_(index),
+          run_(run),
+          lumi_(lumi),
+          event_(event) {
+        }
+
+        int processHistoryIDIndex() const { return processHistoryIDIndex_; }
+        RunNumber_t run() const { return run_; }
+        LuminosityBlockNumber_t lumi() const { return lumi_; }
+        EventNumber_t event() const { return event_; }
+
+        bool operator<(IndexRunLumiEventKey const& right) const {
+          if (processHistoryIDIndex_ == right.processHistoryIDIndex()) {
+            if (run_ == right.run()) {
+              if (lumi_ == right.lumi()) {
+                return event_ < right.event();
+              }
+              return lumi_ < right.lumi();
+            }
+            return run_ < right.run();
+	  }
+          return processHistoryIDIndex_ < right.processHistoryIDIndex();
+        }
+
+      private:
+        int processHistoryIDIndex_;
+        RunNumber_t run_;
+        LuminosityBlockNumber_t lumi_;
+        EventNumber_t event_;
       };
 
       //*****************************************************************************
