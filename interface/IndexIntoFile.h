@@ -587,6 +587,8 @@ namespace edm {
       //*****************************************************************************
       //*****************************************************************************
 
+      std::vector<EventEntry> & eventEntries() const {return transients_.get(). eventEntries_;}
+
     private:
 
       bool& allInEntryOrder() const {return transients_.get().allInEntryOrder_;}
@@ -601,7 +603,6 @@ namespace edm {
       LuminosityBlockNumber_t& currentLumi() const {return transients_.get().currentLumi_;}
       std::vector<RunOrLumiIndexes> & runOrLumiIndexes() const {return transients_.get().runOrLumiIndexes_;}
       std::vector<EventNumber_t> & eventNumbers() const {return transients_.get(). eventNumbers_;}
-      std::vector<EventEntry> & eventEntries() const {return transients_.get(). eventEntries_;}
 
       std::vector<RunOrLumiEntry> const& runOrLumiEntries() const { return runOrLumiEntries_; }
 
