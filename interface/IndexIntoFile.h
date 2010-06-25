@@ -60,10 +60,12 @@ namespace edm {
       void sortEvents();
       void sortEventEntries();
 
-      bool allEventsInEntryOrder(bool sortMode) const;
+      enum SortOrder { numericalOrder, firstAppearanceOrder };
 
-      IndexIntoFileItr begin(bool sortMode) const;
-      IndexIntoFileItr end(bool sortMode) const;
+      IndexIntoFileItr begin(SortOrder sortOrder) const;
+      IndexIntoFileItr end(SortOrder sortOrder) const;
+      bool iterationWillBeInEntryOrder(SortOrder sortOrder) const;
+
       bool empty() const;
 
       IndexIntoFileItr
@@ -151,8 +153,8 @@ namespace edm {
         RunNumber_t run_;
         LuminosityBlockNumber_t lumi_;  // 0 indicates this is a run entry
 
-        EntryNumber_t beginEvents_;      // -1 if a run
-        EntryNumber_t endEvents_;       // -1 if a run
+        EntryNumber_t beginEvents_;     // -1 if a run or a lumi with no events
+        EntryNumber_t endEvents_;       // -1 if a run or a lumi with no events
       };
 
       //*****************************************************************************
@@ -188,11 +190,17 @@ namespace edm {
 
         int processHistoryIDIndex_;
       	RunNumber_t run_;
-        LuminosityBlockNumber_t lumi_;  // 0 indicates this is a run entry
+        LuminosityBlockNumber_t lumi_;    // 0 indicates this is a run entry
         int indexToGetEntry_;
-        // if the next two are equal there are no events associated with this PHID-Run-Lumi
-        long long beginEventNumbers_;          // -1 if a run, first event this PHID-Run-Lumi
-        long long endEventNumbers_;            // -1 if a run, one past last event this PHID-Run-Lumi
+
+        // The next two data members are indexes into the vectors eventNumbers_ and
+        // eventEntries_ (which both have the same number of entries in the same order,
+        // the only difference being that one contains only events numbers and is
+        // smaller in memory).
+        // If there are no events, then the next two are equal (and the value is the
+        // index where the first event would have gone if there had been one)
+        long long beginEventNumbers_;     // first event this PHID-Run-Lumi (-1 if a run or not set)
+        long long endEventNumbers_;       // one past last event this PHID-Run-Lumi (-1 if a run or not set)
       };
 
       //*****************************************************************************
@@ -236,7 +244,7 @@ namespace edm {
         SortedRunOrLumiItr & operator++();
 
         bool isRun();
- 
+
         void getRange(long long & beginEventNumbers,
                       long long & endEventNumbers,
                       EntryNumber_t & beginEventEntry,
@@ -404,10 +412,10 @@ namespace edm {
       class IndexIntoFileItr {
       public:
 
-        IndexIntoFileItr(IndexIntoFile const* indexIntoFile, bool sortMode);
+        IndexIntoFileItr(IndexIntoFile const* indexIntoFile, SortOrder sortOrder);
 
         IndexIntoFileItr(IndexIntoFile const* indexIntoFile,
-                         bool sortMode,
+                         SortOrder sortOrder,
                          EntryType entryType,
                          int indexToRun,
                          int indexToLumi,

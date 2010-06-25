@@ -98,6 +98,7 @@ namespace edm {
   }
 
   void IndexIntoFile::fillRunOrLumiIndexes() {
+    runOrLumiIndexes().clear();
     int index = 0;
     for (std::vector<RunOrLumiEntry>::const_iterator iter = runOrLumiEntries_.begin(),
 	                                             iEnd = runOrLumiEntries_.end();
@@ -236,11 +237,38 @@ namespace edm {
     }
   }
 
-  bool IndexIntoFile::allEventsInEntryOrder(bool sortMode) const {
+  IndexIntoFile::IndexIntoFileItr IndexIntoFile::begin(SortOrder sortOrder) const {
+    if (empty()) {
+      return end(sortOrder);
+    }   
+    IndexIntoFileItr iter(this,
+                          sortOrder,
+                          kRun,
+                          0,
+                          invalidIndex,
+                          invalidIndex,
+                          0,
+                          0);
+    iter.initializeRun();
+    return iter;
+  }
+
+  IndexIntoFile::IndexIntoFileItr IndexIntoFile::end(SortOrder sortOrder) const {
+    return IndexIntoFileItr(this,
+                            sortOrder,
+                            kEnd,
+                            invalidIndex,
+                            invalidIndex,
+                            invalidIndex,
+                            0,
+                            0);
+  }
+
+  bool IndexIntoFile::iterationWillBeInEntryOrder(SortOrder sortOrder) const {
     if(!resultCached()) {
       resultCached() = true;
       EntryNumber_t maxEntry = invalidEntry;
-      for(IndexIntoFileItr it = begin(sortMode), itEnd = end(sortMode); it != itEnd; ++it) {
+      for(IndexIntoFileItr it = begin(sortOrder), itEnd = end(sortOrder); it != itEnd; ++it) {
         if(it.getEntryType() == kEvent) {
 	  if(it.entry() < maxEntry) {
 	    allInEntryOrder() = false;
@@ -253,33 +281,6 @@ namespace edm {
       return true;
     }
     return allInEntryOrder();
-  }
-
-  IndexIntoFile::IndexIntoFileItr IndexIntoFile::begin(bool sortMode) const {
-    if (empty()) {
-      return end(sortMode);
-    }   
-    IndexIntoFileItr iter(this,
-                          sortMode,
-                          kRun,
-                          0,
-                          invalidIndex,
-                          invalidIndex,
-                          0,
-                          0);
-    iter.initializeRun();
-    return iter;
-  }
-
-  IndexIntoFile::IndexIntoFileItr IndexIntoFile::end(bool sortMode) const {
-    return IndexIntoFileItr(this,
-                            sortMode,
-                            kEnd,
-                            invalidIndex,
-                            invalidIndex,
-                            invalidIndex,
-                            0,
-                            0);
   }
 
   bool IndexIntoFile::empty() const {
@@ -311,7 +312,7 @@ namespace edm {
 
       if (lumi == invalidLumi && event == invalidEvent) {
         IndexIntoFileItr indexItr(this,
-                                  true,
+                                  numericalOrder,
                                   kRun,
                                   iRun - runOrLumiIndexes().begin(),
                                   invalidIndex,
@@ -330,7 +331,7 @@ namespace edm {
 
         if (event == invalidEvent) {
           IndexIntoFileItr indexItr(this,
-                                    true,
+                                    numericalOrder,
                                     kRun,
                                     iRun - runOrLumiIndexes().begin(),
                                     iLumi - runOrLumiIndexes().begin(),
@@ -367,7 +368,7 @@ namespace edm {
           indexToEvent = eventIter - eventEntries().begin() - beginEventNumbers;
         }
         return IndexIntoFileItr(this,
-                                true,
+                                numericalOrder,
                                 kRun,
                                 iRun - runOrLumiIndexes().begin(),
                                 iLumi - runOrLumiIndexes().begin(),
@@ -414,7 +415,7 @@ namespace edm {
             indexToEvent = eventIter - eventEntries().begin() - beginEventNumbers;
           }
           return IndexIntoFileItr(this,
-                                  true,
+                                  numericalOrder,
                                   kRun,
                                   iRun - runOrLumiIndexes().begin(),
                                   iLumi - runOrLumiIndexes().begin(),
@@ -426,7 +427,7 @@ namespace edm {
     } // Loop over ProcessHistoryIDs
 
     return IndexIntoFileItr(this,
-                            true,
+                            numericalOrder,
                             kEnd,
                             invalidIndex,
                             invalidIndex,
@@ -656,6 +657,7 @@ namespace edm {
 
   IndexIntoFile::SortedRunOrLumiItr::SortedRunOrLumiItr(IndexIntoFile const* indexIntoFile, unsigned runOrLumi) :
     indexIntoFile_(indexIntoFile), runOrLumi_(runOrLumi) {
+    assert(indexIntoFile_->runOrLumiIndexes().size() == indexIntoFile_->runOrLumiEntries().size());
     assert(runOrLumi_ <= indexIntoFile_->runOrLumiIndexes().size());
   }
 
@@ -677,7 +679,7 @@ namespace edm {
   }
 
   bool IndexIntoFile::SortedRunOrLumiItr::isRun() {
-    return indexIntoFile_->runOrLumiIndexes().at(runOrLumi_).lumi() == 0;
+    return indexIntoFile_->runOrLumiIndexes().at(runOrLumi_).lumi() == invalidLumi;
   }
 
   void IndexIntoFile::SortedRunOrLumiItr::getRange(long long & beginEventNumbers,
@@ -1241,9 +1243,9 @@ namespace edm {
            indexIntoFile_->runOrLumiIndexes()[index2].processHistoryIDIndex();
   }
 
-  IndexIntoFile::IndexIntoFileItr::IndexIntoFileItr(IndexIntoFile const* indexIntoFile, bool sortMode) :
+  IndexIntoFile::IndexIntoFileItr::IndexIntoFileItr(IndexIntoFile const* indexIntoFile, SortOrder sortOrder) :
     impl_() {
-    if (sortMode) {
+    if (sortOrder == numericalOrder) {
       value_ptr<IndexIntoFileItrImpl> temp(new IndexIntoFileItrSorted(indexIntoFile));
       swap(temp, impl_);
     }
@@ -1254,7 +1256,7 @@ namespace edm {
   }
 
   IndexIntoFile::IndexIntoFileItr::IndexIntoFileItr(IndexIntoFile const* indexIntoFile,
-                   bool sortMode,
+                   SortOrder sortOrder,
                    EntryType entryType,
                    int indexToRun,
                    int indexToLumi,
@@ -1262,7 +1264,7 @@ namespace edm {
                    long long indexToEvent,
                    long long nEvents) :
     impl_() {
-    if (sortMode) {
+    if (sortOrder == numericalOrder) {
       value_ptr<IndexIntoFileItrImpl> temp(new IndexIntoFileItrSorted(indexIntoFile,
                                                                       entryType,
                                                                       indexToRun,
