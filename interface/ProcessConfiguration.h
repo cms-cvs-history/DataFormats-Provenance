@@ -53,7 +53,6 @@ namespace edm {
     ReleaseVersion releaseVersion_; 
     PassID passID_;
     mutable Transients transients_;
-    mutable bool dummy_;
   };
 
   bool

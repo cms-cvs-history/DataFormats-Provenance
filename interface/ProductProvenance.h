@@ -71,7 +71,6 @@ namespace edm {
     ProductStatus productStatus_;
     ParentageID parentageID_;
     mutable Transients transients_;
-    mutable bool dummy_;
   };
 
   inline

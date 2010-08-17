@@ -8,7 +8,6 @@
 namespace edm {
 
   IndexIntoFile::IndexIntoFile() : transients_(),
-                                   dummy_(),
                                    processHistoryIDs_(),
                                    runOrLumiEntries_() {
   }

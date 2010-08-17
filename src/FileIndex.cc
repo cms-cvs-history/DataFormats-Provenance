@@ -7,7 +7,7 @@
 
 namespace edm {
 
-  FileIndex::FileIndex() : entries_(), transients_(), dummy_(false) {}
+  FileIndex::FileIndex() : entries_(), transients_() {}
 
   // The default value for sortState_ reflects the fact that
   // the index is always sorted using Run, Lumi, and Event

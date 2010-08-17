@@ -16,7 +16,6 @@
  <class name="edm::RunAuxiliary"/>
  <class name="edm::ProductRegistry">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="std::map<edm::BranchKey,edm::BranchDescription>"/>
  <class name="std::pair<edm::BranchKey,edm::BranchDescription>"/>
@@ -34,35 +33,29 @@
  <class name="edm::BranchChildren"/>
  <class name="edm::ProductProvenance">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="std::vector<edm::ProductProvenance>"/>
  <class name="edm::BranchDescription">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="edm::ParameterSetBlob"/>
  <class name="edm::ProcessConfiguration">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="std::vector<edm::ProcessConfiguration>"/>
  <class name="edm::ProcessHistory">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="edm::FileFormatVersion"/>
  <class name="edm::FileIndex::Element"/>
  <class name="std::vector<edm::FileIndex::Element>"/>
  <class name="edm::FileIndex">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="edm::IndexIntoFile::RunOrLumiEntry"/>
  <class name="std::vector<edm::IndexIntoFile::RunOrLumiEntry>"/>
  <class name="edm::IndexIntoFile">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
  <class name="edm::ProcessHistoryID"/>
  <class name="std::set<edm::ProcessHistoryID >"/>
@@ -78,7 +71,6 @@
  <class name="edm::ParentageID"/>
  <class name="edm::Parentage">
    <field name="transients_" transient="true"/>
-   <field name="dummy_" transient="true"/>
  </class>
 
  <class name="std::map<edm::ProcessHistoryID,edm::ProcessHistory>"/>
@@ -114,46 +106,39 @@
  <class name="std::vector<ROOT::TSchemaHelper>"/>
  <class name="std::vector<TFormula*>"/>
 
- <ioread sourceClass="edm::ProductProvenance" targetClass="edm::ProductProvenance" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::ProductProvenance" targetClass="edm::ProductProvenance" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
- <ioread sourceClass="edm::ProductRegistry" targetClass="edm::ProductRegistry" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::ProductRegistry" targetClass="edm::ProductRegistry" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
- <ioread sourceClass="edm::BranchDescription" targetClass="edm::BranchDescription" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::BranchDescription" targetClass="edm::BranchDescription" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
- <ioread sourceClass="edm::ProcessConfiguration" targetClass="edm::ProcessConfiguration" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::ProcessConfiguration" targetClass="edm::ProcessConfiguration" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
- <ioread sourceClass="edm::ProcessHistory" targetClass="edm::ProcessHistory" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::ProcessHistory" targetClass="edm::ProcessHistory" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
- <ioread sourceClass="edm::FileIndex" targetClass="edm::FileIndex" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::FileIndex" targetClass="edm::FileIndex" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
- <ioread sourceClass="edm::Parentage" targetClass="edm::Parentage" version="[*]" source="" target="dummy_">
+ <ioread sourceClass="edm::Parentage" targetClass="edm::Parentage" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
-	dummy_ = true;
  ]]>
  </ioread>
  

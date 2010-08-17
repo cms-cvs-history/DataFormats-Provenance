@@ -9,11 +9,11 @@
 
 namespace edm {
   Parentage::Parentage() :
-    parents_(), transients_(), dummy_(false)
+    parents_(), transients_()
   {}
 
   Parentage::Parentage(std::vector<BranchID> const& parents) :
-    parents_(parents), transients_(), dummy_(false)
+    parents_(parents), transients_()
   {}
 
   ParentageID

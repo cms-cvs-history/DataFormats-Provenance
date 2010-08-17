@@ -52,8 +52,6 @@ namespace edm {
     // The Branch IDs of the parents
     std::vector<BranchID> parents_;
     mutable Transients transients_;
-    mutable bool dummy_;
-
   };
 
   // Free swap function

@@ -19,40 +19,36 @@ namespace edm {
     parentagePtr_.reset();
   }
 
-  ProductProvenance::ProductProvenance() :
-    branchID_(),
-    productStatus_(productstatus::uninitialized()),
-    parentageID_(),
-    transients_(),
-    dummy_(false)
-  {}
+   ProductProvenance::ProductProvenance() :
+     branchID_(),
+     productStatus_(productstatus::uninitialized()),
+     parentageID_(),
+     transients_() {
+  }
 
-  ProductProvenance::ProductProvenance(BranchID const& bid) :
-    branchID_(bid),
-    productStatus_(productstatus::uninitialized()),
-    parentageID_(),
-    transients_(),
-    dummy_(false)
-  {}
+   ProductProvenance::ProductProvenance(BranchID const& bid) :
+     branchID_(bid),
+     productStatus_(productstatus::uninitialized()),
+     parentageID_(),
+     transients_() {
+   }
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
 				    ProductStatus status) :
-    branchID_(bid),
-    productStatus_(status),
-    parentageID_(),
-    transients_(),
-    dummy_(false)
-  {}
+     branchID_(bid),
+     productStatus_(status),
+     parentageID_(),
+     transients_() {
+   }
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
 				    ProductStatus status,
 				    ParentageID const& edid) :
-    branchID_(bid),
-    productStatus_(status),
-    parentageID_(edid),
-    transients_(),
-    dummy_(false)
-  {}
+     branchID_(bid),
+     productStatus_(status),
+     parentageID_(edid),
+     transients_() {
+   }
 
    ProductProvenance::ProductProvenance(BranchID const& bid,
 				    ProductStatus status,
@@ -60,8 +56,7 @@ namespace edm {
     branchID_(bid),
     productStatus_(status),
     parentageID_(pPtr->id()),
-    transients_(),
-    dummy_(false) {
+    transients_() {
        parentagePtr() = pPtr;
        ParentageRegistry::instance()->insertMapped(*pPtr);
   }
@@ -72,8 +67,7 @@ namespace edm {
     branchID_(bid),
     productStatus_(status),
     parentageID_(),
-    transients_(),
-    dummy_(false) {
+    transients_() {
       parentagePtr() = boost::shared_ptr<Parentage>(new Parentage);
       parentagePtr()->parents() = parents;
       parentageID_ = parentagePtr()->id();

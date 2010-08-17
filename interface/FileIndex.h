@@ -132,7 +132,6 @@ namespace edm {
 
       std::vector<Element> entries_;
       mutable Transients transients_;
-      mutable bool dummy_;
   };
 
   bool operator<(FileIndex::Element const& lh, FileIndex::Element const& rh);

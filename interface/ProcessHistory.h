@@ -25,7 +25,7 @@ namespace edm {
 
     typedef collection_type::size_type size_type;
 
-    ProcessHistory() : data_(), transients_(), dummy_(false) {}
+    ProcessHistory() : data_(), transients_() {}
     explicit ProcessHistory(size_type n) : data_(n), transients_() {}
     explicit ProcessHistory(collection_type const& vec) : data_(vec), transients_() {}
 
@@ -75,7 +75,6 @@ namespace edm {
     ProcessHistoryID& phid() const {return transients_.phid_;}
     collection_type data_;
     mutable Transients transients_;
-    mutable bool dummy_;
   };
 
   // Free swap function

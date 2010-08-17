@@ -52,14 +52,12 @@ namespace edm {
 
   ProductRegistry::ProductRegistry() :
       productList_(),
-      transients_(),
-      dummy_(false) {
+      transients_() {
   }
 
   ProductRegistry::ProductRegistry(ProductList const& productList) :
       productList_(productList),
-      transients_(),
-      dummy_(false) {
+      transients_() {
     frozen() = true;
   }
 

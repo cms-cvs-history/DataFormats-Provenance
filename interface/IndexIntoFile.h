@@ -652,7 +652,6 @@ namespace edm {
       void initializeTransients() const {transients_.reset();}
 
       mutable Transients transients_;
-      mutable bool dummy_;
 
       std::vector<ProcessHistoryID> processHistoryIDs_;
       std::vector<RunOrLumiEntry> runOrLumiEntries_;

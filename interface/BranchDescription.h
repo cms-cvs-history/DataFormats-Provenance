@@ -187,7 +187,6 @@ namespace edm {
     std::set<std::string> branchAliases_;
 
     mutable Transients transients_;
-    mutable bool dummy_;
   };
 
   inline

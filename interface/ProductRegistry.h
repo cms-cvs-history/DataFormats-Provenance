@@ -161,8 +161,6 @@ namespace edm {
 
     ProductList productList_;
     mutable Transients transients_;
-    mutable bool dummy_;
-    
   };
 
   inline
