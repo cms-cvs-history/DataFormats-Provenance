@@ -65,6 +65,7 @@ namespace edm {
     std::string const& fileFormatVersionBranchName();
     std::string const& fileIdentifierBranchName();
     std::string const& fileIndexBranchName();
+    std::string const& indexIntoFileBranchName();
 
     // Event History Tree
     std::string const& eventHistoryTreeName();
@@ -72,6 +73,12 @@ namespace edm {
     // Branches on EventHistory Tree
     std::string const& eventHistoryBranchName();
 
+    //------------------------------------------------------------------
+    // ParameterSet Tree (1 entry per ParameterSet
+    std::string const& parameterSetsTreeName();
+    
+    std::string const& idToParameterSetBlobsBranchName();
+    
     //------------------------------------------------------------------
     // Other tree names
     std::string const& runTreeName();

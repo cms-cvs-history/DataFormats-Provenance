@@ -17,8 +17,6 @@ This class is not persistable.
 
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 
-#include "Reflex/Type.h"
-
 /*
   ConstBranchDescription
 

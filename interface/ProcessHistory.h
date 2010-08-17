@@ -57,7 +57,6 @@ namespace edm {
     collection_type const& data() const {return data_;}
     ProcessHistoryID id() const;
 
-
     // Return true, and fill in config appropriately, if the a process
     // with the given name is recorded in this ProcessHistory. Return
     // false, and do not modify config, if process with the given name
@@ -65,12 +64,6 @@ namespace edm {
     bool getConfigurationForProcess(std::string const& name, ProcessConfiguration& config) const;
 
     void initializeTransients() const {transients_.reset();}
-
-    // Used only for backward compatibility
-    // merges the other process history into this one.
-    // Returns true if successful.  Returns false if the merge cannot be done,
-    // in which case the process history will be unchanged.
-    bool mergeProcessHistory(ProcessHistory const& other);
 
     struct Transients {
       Transients() : phid_() {}

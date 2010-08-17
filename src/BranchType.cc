@@ -78,8 +78,12 @@ namespace edm {
     std::string const fileFormatVersion = "FileFormatVersion";
     std::string const fileIdentifier = "FileIdentifier";
     std::string const fileIndex = "FileIndex";
+    std::string const indexIntoFile = "IndexIntoFile";
     std::string const eventHistory = "EventHistory";
     std::string const eventBranchMapper = "EventBranchMapper";
+    
+    std::string const parameterSetsTree = "ParameterSets";
+    std::string const idToParameterSetBlobsBranch = "IdToParameterSetsBlobs";
   }
 
   std::string const& BranchTypeToString(BranchType const& branchType) {
@@ -206,11 +210,25 @@ namespace edm {
       return fileIndex;
     }
 
+    // Branch on MetaData Tree
+    std::string const& indexIntoFileBranchName() {
+      return indexIntoFile;
+    }
+
     // Branch on Event History Tree
     std::string const& eventHistoryBranchName() {
       return eventHistory;
     }
 
+    std::string const& parameterSetsTreeName() {
+      return parameterSetsTree;
+    }
+    // Branch on ParameterSets Tree
+    std::string const& idToParameterSetBlobsBranchName() {
+      return idToParameterSetBlobsBranch;
+    }
+    
+    
     std::string const& eventTreeName() {
       return events;
     }

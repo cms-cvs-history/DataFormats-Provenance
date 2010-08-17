@@ -63,8 +63,23 @@ namespace edm {
   }
 
   bool
-  FileFormatVersion::processHistorySameWithinRun() const {
+  FileFormatVersion::parameterSetsTree() const {
     return value_ >= 15;
+  }
+
+  bool
+  FileFormatVersion::processHistorySameWithinRun() const {
+    return value_ >= 16;
+  }
+
+  bool
+  FileFormatVersion::hasIndexIntoFile() const {
+    return value_ >= 16;
+  }
+
+  bool
+  FileFormatVersion::mergeOnlySequentialRunsOrLumis() const {
+    return value_ >= 16;
   }
 
   std::ostream&

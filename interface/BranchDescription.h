@@ -20,7 +20,6 @@ This description also applies to every product instance on the branch.
 #include "DataFormats/Provenance/interface/ProcessConfigurationID.h"
 
 #include "Reflex/Type.h"
-#include "FWCore/Utilities/interface/UseReflex.h"
 /*
   BranchDescription
 

@@ -23,11 +23,8 @@
 #include "DataFormats/Provenance/interface/BranchDescription.h"
 #include "DataFormats/Provenance/interface/ConstBranchDescription.h"
 #include "DataFormats/Provenance/interface/ProductTransientIndex.h"
-#include "FWCore/Utilities/interface/TypeID.h"
 
 #include "DataFormats/Provenance/interface/TransientProductLookupMap.h"
-
-#include "Reflex/Type.h"
 
 namespace edm {
 
