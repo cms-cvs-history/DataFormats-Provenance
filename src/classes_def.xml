@@ -150,6 +150,7 @@
  <![CDATA[
         if (onfile.luminosityBlock_ > 0U) {
           newObj->setLuminosityBlockNumber(onfile.luminosityBlock_);
+          onfile.luminosityBlock_ = 0U;
         }
  ]]>
  </ioread>
