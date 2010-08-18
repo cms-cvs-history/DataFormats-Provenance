@@ -627,6 +627,7 @@ namespace edm {
       void setEventFinder(boost::shared_ptr<EventFinder> ptr) const {transients_.eventFinder_ = ptr;}
       void fillEventNumbers() const;
       void fillEventEntries() const;
+      void initializeTransients() const {transients_.reset();}
 
     private:
 
@@ -649,7 +650,6 @@ namespace edm {
       EventNumber_t getEventNumberOfEntry(EntryNumber_t entry) const {
         return transients_.eventFinder_->getEventNumberOfEntry(entry);
       }
-      void initializeTransients() const {transients_.reset();}
 
       mutable Transients transients_;
 
