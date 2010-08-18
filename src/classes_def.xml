@@ -131,6 +131,11 @@
 	newObj->initializeTransients();
  ]]>
  </ioread>
+ <ioread sourceClass="edm::IndexIntoFile" targetClass="edm::IndexIntoFile" version="[*]" source="" target="transients_">
+ <![CDATA[
+	newObj->initializeTransients();
+ ]]>
+ </ioread>
  <ioread sourceClass="edm::FileIndex" targetClass="edm::FileIndex" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
@@ -139,6 +144,13 @@
  <ioread sourceClass="edm::Parentage" targetClass="edm::Parentage" version="[*]" source="" target="transients_">
  <![CDATA[
 	newObj->initializeTransients();
+ ]]>
+ </ioread>
+ <ioread sourceClass="edm::EventAuxiliary" targetClass="edm::EventID" version="[*]" source="unsigned int luminosityBlock_" target="luminosityBlock_">
+ <![CDATA[
+        if (onfile.luminosityBlock_ > 0U) {
+          newObj->setLuminosityBlockNumber(onfile.luminosityBlock_);
+        }
  ]]>
  </ioread>
  
