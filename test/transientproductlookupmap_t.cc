@@ -18,7 +18,6 @@
 #include "DataFormats/Provenance/interface/TransientProductLookupMap.h"
 #include "DataFormats/Provenance/interface/ConstBranchDescription.h"
 #include "DataFormats/Provenance/interface/ProductID.h"
-#include "DataFormats/Provenance/interface/ModuleDescription.h"
 #include "DataFormats/Provenance/interface/ProcessHistory.h"
 
 class testTransientProductLookupMap: public CppUnit::TestFixture {
@@ -49,7 +48,7 @@ testTransientProductLookupMap::constructTest() {
    std::list<ConstBranchDescription> cbdlist;
 
    {
-      ModuleDescription dummyDescription(ParameterSetID("thisisadummyitem"), "FooProd", "foo");
+      ParameterSetID psetID("thisisadummyitem");
       ProductTransientIndex index(0);
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -57,7 +56,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -67,7 +67,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -77,7 +78,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -88,7 +90,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -98,7 +101,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -108,7 +112,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -119,7 +124,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -129,7 +135,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -139,7 +146,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -150,7 +158,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -160,7 +169,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -170,7 +180,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -181,7 +192,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -191,7 +203,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -201,7 +214,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -212,7 +226,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -222,7 +237,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -232,7 +248,8 @@ testTransientProductLookupMap::constructTest() {
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
    }
@@ -290,7 +307,7 @@ testTransientProductLookupMap::reorderTest()
    std::list<ConstBranchDescription> cbdlist;
 
    {
-      ModuleDescription dummyDescription(ParameterSetID("thisisadummyitem"), "FooProd", "foo");
+      ParameterSetID psetID("thisisadummyitem");
       ProductTransientIndex index(0);
       cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
                                                                  "foo",
@@ -298,7 +315,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -308,7 +326,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -318,7 +337,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -329,7 +349,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -339,7 +360,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -349,7 +371,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::BranchID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -360,7 +383,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "a",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -370,7 +394,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::ProductID",
                                                                  "edmProductID",
                                                                  "b",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
@@ -380,7 +405,8 @@ testTransientProductLookupMap::reorderTest()
                                                                  "edm::BranchID",
                                                                  "edmBranchID",
                                                                  "",
-                                                                 dummyDescription,
+                                                                 "foo",
+                                                                 psetID,
                                                                  TypeID(typeid(edm::ProductID)))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
