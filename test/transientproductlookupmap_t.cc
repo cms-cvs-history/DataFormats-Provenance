@@ -20,6 +20,8 @@
 #include "DataFormats/Provenance/interface/ProductID.h"
 #include "DataFormats/Provenance/interface/ProcessHistory.h"
 
+#include "Cintex/Cintex.h"
+
 class testTransientProductLookupMap: public CppUnit::TestFixture {
    CPPUNIT_TEST_SUITE(testTransientProductLookupMap);
 
@@ -29,7 +31,7 @@ class testTransientProductLookupMap: public CppUnit::TestFixture {
 
    CPPUNIT_TEST_SUITE_END();
 public:
-   void setUp(){}
+   void setUp(){ ROOT::Cintex::Cintex::Enable(); }
    void tearDown(){}
 
    void constructTest();
