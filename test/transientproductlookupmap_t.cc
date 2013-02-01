@@ -52,207 +52,207 @@ testTransientProductLookupMap::constructTest() {
    {
       ParameterSetID psetID("thisisadummyitem");
       ProductTransientIndex index(0);
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "A",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "A",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "A",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "B",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "B",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "B",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "C",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "C",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "C",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
       //NOTE: need to put stuff in Run and Lumi since that went wrong elsewhere
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "A",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "A",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "A",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "B",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "B",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "B",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "C",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "C",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InRun,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InRun,
+                                             "foo",
+                                             "C",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
    }
 
@@ -311,105 +311,105 @@ testTransientProductLookupMap::reorderTest()
    {
       ParameterSetID psetID("thisisadummyitem");
       ProductTransientIndex index(0);
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "A",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "A",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "A",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "A",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "B",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "B",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "B",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::BranchID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "B",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::BranchID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "a",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "C",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "a",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::ProductID",
-                                                                 "edmProductID",
-                                                                 "b",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "C",
+                                             "edm::ProductID",
+                                             "edmProductID",
+                                             "b",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::ProductID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
-      cbdlist.push_back(ConstBranchDescription(BranchDescription(InEvent,
-                                                                 "foo",
-                                                                 "C",
-                                                                 "edm::BranchID",
-                                                                 "edmBranchID",
-                                                                 "",
-                                                                 "foo",
-                                                                 psetID,
-                                                                 TypeWithDict(typeid(edm::ProductID)))));
+      cbdlist.emplace_back(BranchDescription(InEvent,
+                                             "foo",
+                                             "C",
+                                             "edm::BranchID",
+                                             "edmBranchID",
+                                             "",
+                                             "foo",
+                                             psetID,
+                                             TypeWithDict(typeid(edm::ProductID))));
       fillFromMap[std::make_pair(TypeInBranchType(TypeID(typeid(edm::BranchID)), cbdlist.back().branchType()), &(cbdlist.back()))] = index++;
 
    }
@@ -422,9 +422,9 @@ testTransientProductLookupMap::reorderTest()
    //NOTE: order is oldest to newest
    std::vector<ProcessConfiguration> vPC;
    {
-      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("A", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      //vPC.push_back(ProcessConfiguration("B", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.emplace_back("C", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("A", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      //vPC.emplace_back("B", dummyParameterSetID, ReleaseVersion(""), PassID(""));
       ProcessHistory ph(vPC);
 
       tplm.reorderIfNecessary(InEvent, ph, "B");
@@ -466,7 +466,7 @@ testTransientProductLookupMap::reorderTest()
    {
       //No A this time
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.emplace_back("C", dummyParameterSetID, ReleaseVersion(""), PassID(""));
 
       ProcessHistory ph(vPC);
 
@@ -502,11 +502,11 @@ testTransientProductLookupMap::reorderTest()
    {
       //Add several steps which have no data saved in final file
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("Z", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("Y", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("A", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("X", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.emplace_back("Z", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("C", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("Y", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("A", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("X", dummyParameterSetID, ReleaseVersion(""), PassID(""));
 
       ProcessHistory ph(vPC);
 
@@ -543,9 +543,9 @@ testTransientProductLookupMap::reorderTest()
    {
       //There is no data in the present configuration
       vPC.clear();
-      vPC.push_back(ProcessConfiguration("C", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("B", dummyParameterSetID, ReleaseVersion(""), PassID("")));
-      vPC.push_back(ProcessConfiguration("A", dummyParameterSetID, ReleaseVersion(""), PassID("")));
+      vPC.emplace_back("C", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("B", dummyParameterSetID, ReleaseVersion(""), PassID(""));
+      vPC.emplace_back("A", dummyParameterSetID, ReleaseVersion(""), PassID(""));
 
       ProcessHistory ph(vPC);
 
